@@ -5,8 +5,8 @@ from django.shortcuts import render
 def index(request):
     return render(request, "index.html")
 
-def student_login(request):
-    pass
+def stud_login(request):
+    return render(request, "student/login.html")
 
 def main_page(request):
     pass 
@@ -17,5 +17,5 @@ def hostel_page(request):
 def search_page(request):
     pass
 
-def owner_login(request):
-    pass 
+def signin_student(request, type):
+    pass
