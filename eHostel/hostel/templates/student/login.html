@@ -5,5 +5,14 @@
     </head>
     <body>
         <h1>Student Login Page</h1>
+        
+        <form>
+
+        </form>
+        <form action="{% url 'stud_signin' 'signup' %}" method="post">
+            {% csrf_token %}
+            {{ signup }}
+        </form>
+
     </body>
 </html>
