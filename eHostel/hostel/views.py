@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    pass 
+    return render(request, "index.html")
 
 def student_login(request):
     pass
@@ -16,3 +16,6 @@ def hostel_page(request):
 
 def search_page(request):
     pass
+
+def owner_login(request):
+    pass 
