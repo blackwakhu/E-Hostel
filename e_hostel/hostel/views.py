@@ -58,8 +58,14 @@ def signin_student(request, req_type):
                 password=make_password(password),  # Hash the password
             )
 
-            login(request, student)
-            return redirect('main_page')  
+            # student.backend = 'django.contrib.auth.backends.ModelBackend'
+
+            # login(request, student)
+            # return redirect('main_page')  
+            student = authenticate(request, username=admission_number, password=password)
+            if student:
+                login(request, student)
+                return redirect('main_page')
 
         elif req_type == 'signin':
             admission_number = request.POST.get('admission_number')
