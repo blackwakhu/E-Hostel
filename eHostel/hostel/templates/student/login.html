@@ -1,17 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Student Login</title>
     </head>
     <body>
         <h1>Student Login Page</h1>
         
-        <form>
+        <form action="{% url 'stud_signin' 'signin' %}">
+            {% csrf_token %}
+            {{error_message_signin}}
+
+            <label>Admission Number</label>
+            <input type="text" name="adminNumberin" id="adminNumberIn" required>
+
+            <label>Password</label>
+            <input type="password" name="passwdin" id="passwdin" required>
+
+            <input type="submit" value="Sign in"/>
 
         </form>
+
+
         <form action="{% url 'stud_signin' 'signup' %}" method="post">
             {% csrf_token %}
-            {{ signup }}
+
+            {{error_message_signup}}
+
+            <label>Admission Number</label>
+            <input type="text" name="adminNumber" id="adminNumber" required>
+
+            <label>Fist Name</label>
+            <input type="text" name="fName" id="fName" required>
+            
+            <label>Last Name</label>
+            <input type="text" name="lName" id="lName" required>
+
+            <label>PassWord</label>
+            <input type="password" name="passwd" id="passwd" required>
+
+            <label>Repeat Password</label>
+            <input type="password" name="passwd1" id="passwd1" required>
+
+            <label>Email</label>
+            <input type="email" name="email" id="email" required>
+
+            <label>Phone Number</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" required>
+
+            <label>Gender</label>
+            <input type="radio" name="gender" id="male" value="M"> <label for="male">Male</label>
+            <input type="radio" name="gender" id="female" value="F"> <label for="female">Female</label>
+
+
+            <input type="submit" value="Sign Up"/>
         </form>
 
     </body>
