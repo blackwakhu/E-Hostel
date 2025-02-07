@@ -100,3 +100,5 @@ AUTHENTICATION_BACKENDS = [
     'hostel.authentication.MultiUserAuthBackend',  # Custom multi-user backend
     'django.contrib.auth.backends.ModelBackend',  # Default Django backend
 ]
+
+

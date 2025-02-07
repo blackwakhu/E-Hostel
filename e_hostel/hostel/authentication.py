@@ -1,6 +1,6 @@
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.hashers import check_password
-from your_app.models import AdminUser, Owner, Student  # Replace 'your_app' with your actual app name
+from .models import AdminUser, Owner, Student  # Replace 'your_app' with your actual app name
 
 class MultiUserAuthBackend(BaseBackend):
     """
