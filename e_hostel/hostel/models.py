@@ -140,6 +140,8 @@ class Student(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'admission_number'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'phone_number']
 
+    objects = StudentManager()
+
     # ✅ Avoid field conflicts
     groups = models.ManyToManyField(
         "auth.Group", related_name="student_users", blank=True

@@ -25,9 +25,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Ensures authentication works!
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'e_hostel.urls'
@@ -101,4 +100,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default Django backend
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Ensure session is stored in DB
+SESSION_COOKIE_AGE = 86400  # Set session expiration (optional)
 
