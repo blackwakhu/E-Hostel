@@ -6,12 +6,12 @@
     <body>
         <h1>Student Login Page</h1>
         
-        <form action="{% url 'stud_signin' 'signin' %}">
+        <form action="{% url 'stud_signin' 'signin' %}" method="post">
             {% csrf_token %}
             {{error_message_signin}}
 
             <label>Admission Number</label>
-            <input type="text" name="adminNumberin" id="adminNumberIn" required>
+            <input type="text" name="adminNumberin" id="adminNumberin" required>
 
             <label>Password</label>
             <input type="password" name="passwdin" id="passwdin" required>
