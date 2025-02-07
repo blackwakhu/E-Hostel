@@ -48,16 +48,16 @@ def signin_student(request, req_type):
                 return render(request, 'student/login.html', {'error_message_signup': "Email already exists."})
 
             # Create and save the Student object
-            student = Student(
+            student = Student.objects.create(
                 admission_number=admission_number,
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
                 phone_number=phone_number,
                 gender=gender,
-                password=make_password(password),
+                password=make_password(password),  # Hashing the password before saving
             )
-            student.save()
+
             user = authenticate(request, admission_number=admission_number, password=password)  # Authenticate
             if user is not None:
                 login(request, user)  # Log in
@@ -65,7 +65,7 @@ def signin_student(request, req_type):
             else:
                 # This should rarely happen if the user was just created, but handle it
                 error_message = "Error during login after registration. Please try again."
-                return render(request, 'student/login.html', {'error_message': error_message})
+                return render(request, 'student/login.html', {'error_message_signup': error_message})
         if req_type == 'signin':
             admission_number = request.POST.get('admission_number')
             password = request.POST.get('password')
