@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import *
+# from .forms import *
 
 # Create your views here.
 
@@ -7,8 +7,8 @@ def index(request):
     return render(request, "index.html")
 
 def stud_login(request):
-    signup_form = StudentSignUp()
-    return render(request, "student/login.html", {"signup": signup_form})
+    # signup_form = StudentSignUp()
+    return render(request, "student/login.html")
 
 def main_page(request):
     pass 
