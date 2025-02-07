@@ -1,7 +1,7 @@
 from django.db import models
 
 class Student(models.Model):
-    admission_number = models.IntegerField(primary_key=True)
+    admission_number = models.CharField(primary_key=True, max_length=15)
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=45)
     email = models.EmailField(unique=True)

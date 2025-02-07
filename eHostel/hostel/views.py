@@ -7,8 +7,8 @@ def index(request):
     return render(request, "index.html")
 
 def stud_login(request):
-    form = StudentSignUp()
-    return render(request, "student/login.html", {"signup": form})
+    signup_form = StudentSignUp()
+    return render(request, "student/login.html", {"signup": signup_form})
 
 def main_page(request):
     pass 
