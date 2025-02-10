@@ -1,0 +1,35 @@
+<form action="{% url 'owner_log' 'signin' %}" method="post">
+    {% csrf_token %}
+    <label>Username</label>
+    <input type="text" name="unamein" id="unamein"/>
+
+    <label>Password</label>
+    <input type="password" name="passwdin" id="passwdin"/>
+
+    <input type="submit" value="Sign in"/>
+</form>
+<form action="{% url 'owner_log' 'signup' %}" method="post">
+    {% csrf_token %}
+    <label>Username</label>
+    <input type="text" name="uname" id="uname"/>
+
+    <label>first name</label>
+    <input type="text" name="fname" id="fname"/>
+
+    <label>last name</label>
+    <input type="text" name="lname" id="lname"/>
+
+    <label>password</label>
+    <input type="password" name="passwd" id="passwd"/>
+
+    <label>repeat password</label>
+    <input type="password" name="passwd1" id="passwd"/>
+
+    <label>email</label>
+    <input type="email" name="email" id="email"/>
+
+    <label>phone number</label>
+    <input type="tel" name="phone_number" id="phone_number"/>
+
+    <input type="submit" value="Sign Up"/>
+</form>

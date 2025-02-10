@@ -18,12 +18,8 @@ def stud_log(request, req_type):
             admission_number = request.POST.get("adminNumberin")
             password = request.POST.get("passwdin")
             student = get_object_or_404(Student, pk=admission_number)
-            print("gotten the student")
-            print(student.first_name)
-            print(student.password)
             if check_password(password, student.password):
-                print("inside the password checker")
-                return redirect('main_page')
+                return redirect('student_main_page')
         elif req_type == 'signup':
             admission_number = request.POST.get('adminNumber')
             first_name = request.POST.get('fName')
@@ -44,12 +40,50 @@ def stud_log(request, req_type):
             )
 
             student.save()
-            return redirect('main_page')
+            return redirect('student_main_page')
 
     return redirect('stud_login')
 
-def main_page(request):
-    return render(request, 'main.html')
+def student_main_page(request):
+    return render(request, 'student/main.html')
+
+def owner_login(request):
+    return render(request, "owner/login.html")
+
+
+def owner_log(request, req_type):
+    if request.method == "POST":
+        if req_type == 'signin':
+            username = request.POST.get("unamein")
+            password = request.POST.get("passwdin")
+            owner = get_object_or_404(Owner, pk=username)
+            if check_password(password, owner.password):
+                return redirect('owner_main_page')
+        elif req_type == 'signup':
+            username = request.POST.get('uname')
+            first_name = request.POST.get('fname')
+            last_name = request.POST.get('lname')
+            email = request.POST.get('email')
+            phone_number = request.POST.get('phone_number')
+            password = request.POST.get('passwd')
+
+            owner = Owner(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                password=make_password(password)
+            )
+
+            owner.save()
+            return redirect('owner_main_page')
+
+    return redirect('owner_login')
+
+def owner_main_page(request):
+    return render(request, "owner/main.html")
+
 
 def logout(request):
     request.session.flush()
