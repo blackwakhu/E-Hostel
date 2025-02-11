@@ -28,7 +28,7 @@ class Owner(models.Model):
 
 class Hostel(models.Model):
     hostel_name = models.CharField(max_length=25)
-    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name="hostels")
     price_per_month = models.IntegerField()
     location = models.CharField(max_length=45)
     number_rooms = models.IntegerField(default=1, null=True, blank=True)
@@ -37,6 +37,9 @@ class Hostel(models.Model):
     county = models.CharField(max_length=45, null=True, blank=True)
     town = models.CharField(max_length=45, null=True, blank=True)
     locality = models.CharField(max_length=45, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.hostel_name}"
     
     class Meta:
         unique_together = ('owner', 'hostel_name')

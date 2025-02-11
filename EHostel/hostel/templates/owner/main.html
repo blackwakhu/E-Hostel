@@ -1,2 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dialog Form Example</title>
+<style>
+    #hotelDialog {
+        position: absolute; /* Changed to absolute */
+        top: 0; /* Position at the top */
+        left: 50%;
+        transform: translateX(-50%);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: none;
+        width: 500px; /* Set a specific width for the dialog */
+        max-height: 80vh; /* Set a maximum height */
+        overflow-y: auto; /* Enable vertical scrolling */
+        padding-right: 20px; /* Add padding for scrollbar */
+    }
+
+    #hotelDialog label {
+        display: block; /* Make labels stack on top of inputs */
+        margin-bottom: 5px;
+    }
+
+    #hotelDialog input,
+    #hotelDialog textarea {
+        width: calc(100% - 10px); /* Full width minus padding */
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    #hotelDialog textarea {
+        height: 100px; /* Set a reasonable height for the textarea */
+    }
+
+    #hotelDialog input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
 <h1>Main page for owners</h1>
 <a href="{% url 'logout' %}">Logout</a>
+<p>welcome {{ username }}</p>
+
+<form action="/">
+    
+</form>
+
+<button id="openHotelDialog">Add Hotel</button>
+
+<div id="hotelDialog">
+    <span class="close" onclick="closeDialog()">&times;</span>
+    <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" required>
+
+        <label for="rooms">Number of Rooms</label>
+        <input type="text" id="rooms" name="rooms" required>
+
+        <label for="room_type">Room Type</label>
+        <input type="text" id="room_type" name="room_type" required>
+
+        <label for="location_description">Location Description</label>
+        <textarea id="location_description" name="location_description"></textarea>
+
+        <label for="county">County</label>
+        <input type="text" id="county" name="county" required>
+
+        <label for="town">Town</label>
+        <input type="text" id="town" name="town" required>
+
+        <label for="locality">Locality</label>
+        <input type="text" id="locality" name="locality" required>
+
+        <input type="submit" value="Add Hotel">
+    </form>
+</div>
+
+  <div id="overlay"></div>
+
+  <script>
+    const dialog = document.getElementById("hotelDialog");
+    const overlay = document.getElementById("overlay");
+    const openBtn = document.getElementById("openHotelDialog");
+    const closeBtn = document.querySelector("#hotelDialog .close");
+    const form = document.getElementById("hotelForm");
+
+    openBtn.addEventListener("click", () => {
+        dialog.style.display = "block";
+        overlay.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", closeDialog);
+    overlay.addEventListener("click", closeDialog);
+
+    function closeDialog() {
+        dialog.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    form.addEventListener("submit", (event) => {
+        // event.preventDefault();
+
+        // Collect form data (replace with your actual submission logic)
+        const formData = new FormData(form); // Use FormData for easier handling
+
+        // Example: Log the data to the console
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+        closeDialog(); // Close the dialog after submission
+        form.reset(); // Reset the form fields
+    });
+</script>
+
+</body>
+</html>

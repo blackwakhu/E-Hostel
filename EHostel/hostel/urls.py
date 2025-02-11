@@ -12,6 +12,7 @@ urlpatterns = [
     path('owner/login', owner_login, name='owner_login'),
     path('owner/login/<str:req_type>', owner_log, name='owner_log'),
     path('owner/mainpage/', owner_main_page, name='owner_main_page'),
+    path('owner/hostel/add', add_hostel, name="add_hostel"),
 
     path('logout/', logout, name='logout')
 ]
