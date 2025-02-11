@@ -12,6 +12,9 @@ class Student(models.Model):
     password = models.CharField(max_length=255, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.admission_number} => {self.first_name}"
+
 class Owner(models.Model):
     username = models.CharField(primary_key=True, max_length=25)
     first_name = models.CharField(max_length=45)
@@ -19,3 +22,7 @@ class Owner(models.Model):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=10, unique=True)
     password = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.username
+    
