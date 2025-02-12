@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 
 from .models import *
@@ -97,7 +98,11 @@ def owner_log(request, req_type):
 
 def owner_main_page(request):
     if 'username' in request.session and request.session["user"] == "owner":
-        return render(request, "owner/main.html", {"username": request.session["username"]})
+        username = request.session["username"]
+        owner = Owner.objects.get(username=username)
+        hostels = Hostel.objects.filter(owner=owner)
+        print(hostels)
+        return render(request, "owner/main.html", {"username": request.session["username"], "hostels":hostels})
     else:
         return redirect('owner_login')
 
@@ -105,14 +110,18 @@ def add_hostel(request):
     username = request.session["username"]
     owner = Owner.objects.get(username=username)
     if request.method == "POST":
-        hostel_name = request.POST.get("name")
-        price_per_month = request.POST.get("price")
-        number_rooms = request.POST.get("rooms")
-        room_type = request.POST.get("room_type")
-        location = request.POST.get("location_description")
-        county = request.POST.get("county")
-        town = request.POST.get("town")
-        locality = request.POST.get("locality")
+        print(request.POST)
+        hostel_name = request.POST.get("hname")
+        price_per_month = int(request.POST.get("hprice"))
+        number_rooms = int(request.POST.get("hrooms"))
+        room_type = request.POST.get("hroom_type")
+        location = request.POST.get("hlocation_description")
+        county = request.POST.get("hcounty")
+        town = request.POST.get("htown")
+        locality = request.POST.get("hlocality")
+
+        if not hostel_name or not room_type or not location or not county or not town or not locality:
+            return HttpResponse("Please fill in all required fields.")
 
         hostel = Hostel(
             hostel_name = hostel_name,
@@ -126,6 +135,6 @@ def add_hostel(request):
             available_rooms = number_rooms,
             owner = owner
         )
-        hostel.save()
+        # hostel.save()
         return redirect('owner_main_page')
     return redirect('owner_main_page')
