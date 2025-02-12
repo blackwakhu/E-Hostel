@@ -1,0 +1,52 @@
+<table>
+    <tr>
+        <th>Hostel Name</th>
+        <td>{{ hostel.hostel_name }}</td>
+    </tr>
+    <tr>
+        <th>Owner</th>
+        <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
+    </tr>
+    <tr>
+        <th>Price of rent</th>
+        <td>ksh. {{ hostel.price_per_month }}</td>
+    </tr>
+    <tr>
+        <th>Number of rooms</th>
+        <td>{{ hostel.number_rooms }}</td>
+    </tr>
+    <tr>
+        <th>Room type</th>
+        <td>{{ hostel.room_type }}</td>
+    </tr>
+    <tr>
+        <th>Available rooms</th>
+        <td>{{ hostel.available_rooms }}</td>
+    </tr>
+    <tr>
+        <th>Amenities</th>
+        <td>
+            <ol>
+                {% for amenity in amenities %}
+                    <li>{{ amenity }}</li>
+                {% empty %}
+                    <p>No amenity Available</p>
+                {% endfor %}
+            </ol>
+        </td>
+    </tr>
+    <tr>
+        <th>Location</th>
+        <td>
+            {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
+            <br>{{ hostel.location }}
+        </td>
+    </tr>
+</table>
+
+<form action="{% url 'add_amenity' hostel.hostel_name %}" method="post">
+    {% csrf_token %}
+    <label>Amenity</label>
+    <input type="text" name="hamenity" id="hamenity"/>
+    <input type="submit" value="Add"/>
+</form>

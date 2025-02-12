@@ -110,7 +110,6 @@ def add_hostel(request):
     username = request.session["username"]
     owner = Owner.objects.get(username=username)
     if request.method == "POST":
-        print(request.POST)
         hostel_name = request.POST.get("hname")
         price_per_month = int(request.POST.get("hprice"))
         number_rooms = int(request.POST.get("hrooms"))
@@ -136,8 +135,24 @@ def add_hostel(request):
             owner = owner
         )
         hostel.save()
-        return redirect('owner_main_page')
+        return redirect('owner_hostel', hostel.hostel_name)
     return redirect('owner_main_page')
 
 def owner_hostel(request, hostel_name):
-    return redirect('owner/hostel.html')
+    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    amenities = HostelAmenities.objects.filter(hostel=hostel)
+    return render(request, 'owner/hostel.html', {
+        "hostel": hostel, 
+        "amenities": amenities
+        })
+
+def add_amenity(request, hostel_name):
+    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    if request.method == "POST":
+        amenity = request.POST.get("hamenity")
+        hamenity = HostelAmenities(
+            hostel = hostel,
+            amenity = amenity
+        )
+        hamenity.save()
+    return redirect("owner_hostel", hostel_name)
