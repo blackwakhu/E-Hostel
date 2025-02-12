@@ -135,6 +135,9 @@ def add_hostel(request):
             available_rooms = number_rooms,
             owner = owner
         )
-        # hostel.save()
+        hostel.save()
         return redirect('owner_main_page')
     return redirect('owner_main_page')
+
+def owner_hostel(request, hostel_name):
+    return redirect('owner/hostel.html')

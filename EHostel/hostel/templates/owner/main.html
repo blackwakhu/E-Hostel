@@ -82,7 +82,7 @@
 
 <button id="openHotelDialog">Add Hotel</button>
 
-<div id="hotelDialog">
+{% comment %} <div id="hotelDialog">
     <span class="close" onclick="closeDialog()">&times;</span>
     <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
         {% csrf_token %}
@@ -112,17 +112,46 @@
 
         <input type="submit" value="Add Hotel">
     </form>
-</div>
+</div> {% endcomment %}
 
-  <div id="overlay"></div>
+<form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
+    {% csrf_token %}
+    <label for="name">Name</label>
+    <input type="text" id="hname" name="hname" required>
+
+    <label for="price">Price</label>
+    <input type="number" min="500" value="1000" id="hprice" name="hprice" required>
+
+    <label for="rooms">Number of Rooms</label>
+    <input type="number" min="1" value="10" id="hrooms" name="hrooms" required>
+
+    <label for="room_type">Room Type</label>
+    <input type="text" id="hroom_type" name="hroom_type" required>
+
+    <label for="location_description">Location Description</label>
+    <textarea id="hlocation_description" name="hlocation_description"></textarea>
+
+    <label for="county">County</label>
+    <input type="text" id="hcounty" name="hcounty" required>
+
+    <label for="town">Town</label>
+    <input type="text" id="htown" name="htown" required>
+
+    <label for="locality">Locality</label>
+    <input type="text" id="hlocality" name="hlocality" required>
+
+    <input type="submit" value="Add Hotel">
+</form>
+
+  {% comment %} <div id="overlay"></div> {% endcomment %}
 
   <ul>
-    {% comment %} {% for hostel in hostels %}
+    {% for hostel in hostels %}
         <li>{{ hostel.hostel_name }}</li>
-    {% endfor %} {% endcomment %}
+    {% endfor %} 
   </ul>
 
-  <script>
+  {% comment %} <script>
     const dialog = document.getElementById("hotelDialog");
     const overlay = document.getElementById("overlay");
     const openBtn = document.getElementById("openHotelDialog");
@@ -156,7 +185,7 @@
         closeDialog(); // Close the dialog after submission
         form.reset(); // Reset the form fields
     });
-</script>
+</script> {% endcomment %}
 
 </body>
 </html>
