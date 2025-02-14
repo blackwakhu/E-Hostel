@@ -53,7 +53,10 @@ class HostelAmenities(models.Model):
 
 class HostelImages(models.Model):
     hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="hostel_images/", null=True, blank=True)        
+    image = models.ImageField(upload_to="hostel_images/", null=False, blank=False)        
+
+    def __str__(self):
+        return f"{self.hostel}"
 
 class Booking(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

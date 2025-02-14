@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 
 from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -141,10 +142,31 @@ def add_hostel(request):
 def owner_hostel(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name=hostel_name)
     amenities = HostelAmenities.objects.filter(hostel=hostel)
+    if request.method == "POST":
+        form = HostelImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            hostel_image = form.save(commit=False)
+            hostel_image.hostel=hostel 
+            hostel_image.save()
+            return redirect('owner_hostel', hostel_name)
+    else:
+        form = HostelImageForm()
     return render(request, 'owner/hostel.html', {
         "hostel": hostel, 
-        "amenities": amenities
+        "amenities": amenities,
+        "hostelImageForm": form
         })
+
+def add_image(request, hostel_name):
+    hostel = Hostel.objects.get(hostel_name= hostel_name)
+    if request.method == "POST":
+        form = HostelImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            hostel_image = form.save(commit=False)
+            hostel_image.hostel=hostel 
+            hostel_image.save()
+
+    return redirect('owner_hostel', hostel_name)
 
 def add_amenity(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name=hostel_name)
@@ -156,3 +178,4 @@ def add_amenity(request, hostel_name):
         )
         hamenity.save()
     return redirect("owner_hostel", hostel_name)
+
