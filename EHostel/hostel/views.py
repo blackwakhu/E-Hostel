@@ -157,36 +157,6 @@ def owner_hostel(request, hostel_name):
         "hostelImageForm": form
         })
 
-def add_image(request, hostel_name):
-    hostel = Hostel.objects.get(hostel_name= hostel_name)
-    # if request.method == "POST":
-    #     form = HostelImageForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         hostel_image = form.save(commit=False)
-    #         hostel_image.hostel=hostel 
-    #         hostel_image.save()
-
-    if request.method == 'POST':
-        print("Received POST request")
-        print("POST Data:", request.POST)
-        print("FILES Data:", request.FILES)
-        if 'image' in request.FILES:
-            image = request.FILES['image']
-            
-            # Debugging logs
-            print("POST Data:", request.POST)  
-            print("FILES Data:", request.FILES)  
-            print("Uploaded Image:", image)
-
-            # Save the image to the model
-            UploadedImage.objects.create(image=image)
-
-            return redirect('upload_success')  # Redirect to success page
-        else:
-            print("No image found in request.FILES")
-
-    return redirect('owner_hostel', hostel_name)
-
 def add_amenity(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name=hostel_name)
     if request.method == "POST":

@@ -18,5 +18,4 @@ urlpatterns = [
     path('owner/hostel/add', add_hostel, name="add_hostel"),
     path('owner/hostel/<str:hostel_name>', owner_hostel, name="owner_hostel"),
     path('owner/hostel/<str:hostel_name>/add_amenity', add_amenity, name="add_amenity"),
-    path('owner/hostel/<str:hostel_name>/add_image', add_image, name="add_image"),
 ]
