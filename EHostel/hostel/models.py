@@ -58,6 +58,9 @@ class HostelImages(models.Model):
     def __str__(self):
         return f"{self.hostel}"
 
+# class ImageHostel(models.Model):
+
+
 class Booking(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
