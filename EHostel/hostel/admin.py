@@ -43,5 +43,5 @@ admin.site.register(Student)
 admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Hostel, HostelAdmin)
 admin.site.register(HostelAmenities)
-# admin.site.register(HostelImages)
+admin.site.register(HostelImages)
 
