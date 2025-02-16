@@ -142,29 +142,29 @@ def add_hostel(request):
 def owner_hostel(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name=hostel_name)
     amenities = HostelAmenities.objects.filter(hostel=hostel)
-    if request.method == "POST":
-        form = HostelImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            hostel_image = form.save(commit=False)
-            hostel_image.hostel=hostel 
-            hostel_image.save()
-            return redirect('owner_hostel', hostel_name)
-    else:
-        form = HostelImageForm()
+    # if request.method == "POST":
+    #     form = HostelImageForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         hostel_image = form.save(commit=False)
+    #         hostel_image.hostel=hostel 
+    #         hostel_image.save()
+    #         return redirect('owner_hostel', hostel_name)
+    # else:
+    #     form = HostelImageForm()
     return render(request, 'owner/hostel.html', {
         "hostel": hostel, 
         "amenities": amenities,
-        "hostelImageForm": form
+        # "hostelImageForm": ""
         })
 
 def add_image(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name= hostel_name)
-    if request.method == "POST":
-        form = HostelImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            hostel_image = form.save(commit=False)
-            hostel_image.hostel=hostel 
-            hostel_image.save()
+    # if request.method == "POST":
+    #     form = HostelImageForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         hostel_image = form.save(commit=False)
+    #         hostel_image.hostel=hostel 
+    #         hostel_image.save()
 
     return redirect('owner_hostel', hostel_name)
 

@@ -51,8 +51,8 @@
     <input type="submit" value="Add"/>
 </form>
 
-<form enctype="mutlipart/form-data" method="post">
+{% comment %} <form enctype="mutlipart/form-data" method="post">
     {% csrf_token %}
     {{ hostelImageForm.as_p }}
     <input type="submit" value="Add"/>
-</form>
+</form> {% endcomment %}

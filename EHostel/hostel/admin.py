@@ -4,9 +4,9 @@ from django.contrib import admin
 
 from .models import * 
 
-class HostelImagesTabular(admin.TabularInline):
-    model = HostelImages
-    extra = 1
+# class HostelImagesTabular(admin.TabularInline):
+#     model = HostelImages
+#     extra = 1
 
 class HostelAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -18,7 +18,7 @@ class HostelAdmin(admin.ModelAdmin):
 
     list_display = ["hostel_name", "owner", "room_type", "available_rooms"]
     list_filter = ["owner", "room_type", "county", "town", "locality"]
-    inlines = [HostelImagesTabular]
+    # inlines = [HostelImagesTabular]
     
 
 class HostelInline(admin.TabularInline):
@@ -43,5 +43,5 @@ admin.site.register(Student)
 admin.site.register(Owner, OwnerAdmin)
 admin.site.register(Hostel, HostelAdmin)
 admin.site.register(HostelAmenities)
-admin.site.register(HostelImages)
+# admin.site.register(HostelImages)
 
