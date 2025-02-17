@@ -1,2 +1,8 @@
 <h1>Main Page</h1>
-<a href="{%url 'logout' %}">Logout</a>
+<a href="{% url 'logout' %}">Logout</a>
+
+<ul>
+    {% for hostel in hostels %}
+        <li><a href="{% url 'student_hostel' hostel.hostel_name %}">{{ hostel.hostel_name }}</a></li>
+    {% endfor %}
+</ul>

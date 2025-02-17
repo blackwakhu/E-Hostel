@@ -56,7 +56,23 @@ def stud_log(request, req_type):
     return redirect('stud_login')
 
 def student_main_page(request):
-    return render(request, 'student/main.html')
+    hostels = Hostel.objects.all()
+    return render(request, 'student/main.html', {
+        "hostels": hostels
+        })
+
+def student_hostel(request, hostel_name):
+    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    return render(request, 'student/hostel.html', {
+        "hostel": hostel
+    })
+
+def student_comment_hostel(request, hostel_name):
+    return render('student_hostel')
+
+def student_comment(request, hostel_name, comment_id):
+    return render('student_hostel')
+
 
 
 
