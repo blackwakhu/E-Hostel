@@ -63,15 +63,39 @@ def student_main_page(request):
 
 def student_hostel(request, hostel_name):
     hostel = Hostel.objects.get(hostel_name=hostel_name)
+    comments = Review.objects.filter(hostel=hostel)
     return render(request, 'student/hostel.html', {
-        "hostel": hostel
+        "hostel": hostel,
+        "comments": comments
     })
 
 def student_comment_hostel(request, hostel_name):
-    return render('student_hostel')
+    student = Student.objects.get(admission_number=request.session["admission_number"])
+    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    if request.method == "POST":
+        comment = request.POST.get("comment")
+        review = Review(
+            hostel=hostel,
+            comment=comment,
+            student=student
+        )
+        review.save()
+    return redirect('student_hostel', hostel_name)
 
 def student_comment(request, hostel_name, comment_id):
-    return render('student_hostel')
+    student = Student.objects.get(admission_number=request.session["admission_number"])
+    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    prev_review = Review.objects.get(pk=comment_id)
+    if request.method == "POST":
+        comment = request.POST.get("comment")
+        review = Review(
+            hostel=hostel,
+            comment=comment,
+            student=student,
+            parent_review=prev_review
+        )
+        review.save()
+    return redirect('student_hostel', hostel_name)
 
 
 

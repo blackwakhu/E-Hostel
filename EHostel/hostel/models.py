@@ -75,6 +75,11 @@ class Review(models.Model):
     rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    parent_review = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+
+    def __str__(self):
+        return f"review for {self.hostel.hostel_name} by {self.student.first_name}"
+
 class Payment(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=45, primary_key=True)
