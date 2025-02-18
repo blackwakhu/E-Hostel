@@ -66,7 +66,8 @@ def student_hostel(request, hostel_name):
     comments = Review.objects.filter(hostel=hostel)
     return render(request, 'student/hostel.html', {
         "hostel": hostel,
-        "comments": comments
+        "comments": comments,
+        "reviews": comments
     })
 
 def student_comment_hostel(request, hostel_name):
@@ -96,6 +97,10 @@ def student_comment(request, hostel_name, comment_id):
         )
         review.save()
     return redirect('student_hostel', hostel_name)
+
+    def student_profile(request):
+        student = Student.objects.get(admission_number=request.session["admission_number"])
+        return render(request, "student/student.html",{"student":student})
 
 
 

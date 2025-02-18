@@ -24,3 +24,96 @@
     </li>
 {% endfor %}
 </ul>
+
+<hr>
+
+{% comment %} {% for comment in comments %}  {# comments is a QuerySet of top-level comments #}
+    <div class="comment">  {# Wrap each comment in a div for styling #}
+        <p>{{ comment.comment }} ({{ comment.student.first_name }}) - Rating: {{ comment.rating }}</p>
+        <div class="replies">  {# Div for replies, for indentation #}
+            {% for reply in comment.replies.all %}
+                <div class="comment reply">  {# Add a "reply" class for styling #}
+                    <p>{{ reply.comment }} ({{ reply.student.first_name }}) - Rating: {{ reply.rating }}</p>
+                    {# Recursively display replies to replies #}
+                    {% if reply.replies.all %}  {# Check if the reply has its own replies #}
+                        <div class="replies">
+                            {% include "comment_template.html" with comments=reply.replies.all %}  {# Include the template recursively #}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+<hr>
+
+{% for comment in comments %}
+    <div class="comment">
+        <p>{{ comment.comment }} ({{ comment.student.first_name }}) - Rating: {{ comment.rating }}</p>
+        <div class="replies">
+            {% for reply in comment.replies.all %}
+                <div class="comment reply">
+                    <p>{{ reply.comment }} ({{ reply.student.first_name }}) - Rating: {{ reply.rating }}</p>
+                    {% if reply.replies.all %}
+                        <div class="replies">
+                            {% include "comment_template.html" with comments=reply.replies.all %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+<hr>
+
+{% for comment in comments %}
+    {% if not comment.parent_comment %} {# Only display top-level comments #}
+        <div class="comment">
+            <h3>{{ comment.student.first_name }}'s comment for {{ comment.hostel.hostel_name }}</h3>
+            <p>Rating: {{ comment.rating }} / 5</p>
+            <p>{{ comment.comment }}</p>
+            <p><small>Posted on {{ comment.created_at }}</small></p>
+            
+            {% if comment.replies.all %} {# Check for child comments #}
+                <div class="replies">
+                    {% for reply in comment.replies.all %}
+                        <div class="reply">
+                            <h4>{{ reply.student.first_name }} replied:</h4>
+                            <p>{{ reply.comment }}</p>
+                            <p><small>Posted on {{ reply.created_at }}</small></p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %} {% endcomment %}
+
+<hr>
+
+{% for review in reviews %}
+    {% if not review.parent_review %} {# Only display top-level reviews #}
+        <div class="review">
+            <h3>{{ review.student.first_name }}'s Review for {{ review.hostel.hostel_name }}</h3>
+            <p>Rating: {{ review.rating }} / 5</p>
+            <p>{{ review.comment }}</p>
+            <p><small>Posted on {{ review.created_at }}</small></p>
+
+            {% with review.replies.all as replies %}
+                {% if replies %}
+                    <div class="replies">
+                        {% for reply in replies %}
+                            <div class="reply">
+                                <h4>{{ reply.student.first_name }} replied:</h4>
+                                <p>{{ reply.comment }}</p>
+                                <p><small>Posted on {{ reply.created_at }}</small></p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    {% endif %}
+{% endfor %}
