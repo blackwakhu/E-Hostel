@@ -9,7 +9,8 @@ urlpatterns = [
 # deals with the student views
     path('student/login', stud_login, name='stud_login'),
     path('student/login/<str:req_type>', stud_log, name='stud_log'),
-    path('student/mainpage/', student_main_page, name='student_main_page'),
+    path('student/mainpage', student_main_page, name='student_main_page'),
+    path('student/profile', student_profile, name='student_profile' ),
     path('student/hostel/<int:hostel_id>', student_hostel, name="student_hostel"),
     path('student/hostel/<int:hostel_id>/comment', student_comment_hostel, name="student_comment_hostel"),
     path('student/hostel/<int:hostel_id>/comment/<comment_id>', student_comment, name="student_comment"),
