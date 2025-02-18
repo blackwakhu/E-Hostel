@@ -10,7 +10,16 @@
     <tr>
         <th>Hostels Booked</th>
         <td>
-            <table></table>
+            <table>
+                {% for hostel in hostels %}
+                    <tr>
+                        <td><a href="{% url 'student_hostel' hostel.hostel.id %}">{{ hostel.hostel.hostel_name }}</a></td>
+                        <td>{{ hostel.status }}</td>
+                    </tr>
+                {% empty %}
+                 <p>You currently have no hostel booked</p>
+                {% endfor %}
+            </table>
         </td>
     </tr>
 </table>

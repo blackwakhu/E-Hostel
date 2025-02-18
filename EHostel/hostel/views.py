@@ -111,7 +111,19 @@ def book_hostel(request, hostel_id):
 
 def student_profile(request):
     student = Student.objects.get(admission_number=request.session["admission_number"])
-    return render(request, "student/student.html",{"student":student})
+    hostels = Hostel.objects.all()
+    booked_hostels = []
+    for hostel in hostels:
+        try:
+            book = Booking.objects.get(hostel=hostel, student=student)
+            booked_hostels.append({'hostel': hostel, 'status': book.status})
+        except Booking.DoesNotExist:
+            pass  # No booking for this hostel by this student
+
+    return render(request, "student/student.html",{
+        "student":student, 
+        'hostels': booked_hostels
+    })
 
 
 
