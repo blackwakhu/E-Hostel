@@ -3,6 +3,6 @@
 
 <ul>
     {% for hostel in hostels %}
-        <li><a href="{% url 'student_hostel' hostel.hostel_name %}">{{ hostel.hostel_name }}</a></li>
+        <li><a href="{% url 'student_hostel' hostel.id %}">{{ hostel.hostel_name }}</a></li>
     {% endfor %}
 </ul>

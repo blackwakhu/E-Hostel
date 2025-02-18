@@ -61,8 +61,8 @@ def student_main_page(request):
         "hostels": hostels
         })
 
-def student_hostel(request, hostel_name):
-    hostel = Hostel.objects.get(hostel_name=hostel_name)
+def student_hostel(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
     comments = Review.objects.filter(hostel=hostel)
     return render(request, 'student/hostel.html', {
         "hostel": hostel,
@@ -70,9 +70,9 @@ def student_hostel(request, hostel_name):
         "reviews": comments
     })
 
-def student_comment_hostel(request, hostel_name):
+def student_comment_hostel(request, hostel_id):
     student = Student.objects.get(admission_number=request.session["admission_number"])
-    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    hostel = Hostel.objects.get(pk=hostel_id)
     if request.method == "POST":
         comment = request.POST.get("comment")
         review = Review(
@@ -81,11 +81,11 @@ def student_comment_hostel(request, hostel_name):
             student=student
         )
         review.save()
-    return redirect('student_hostel', hostel_name)
+    return redirect('student_hostel', hostel_id)
 
-def student_comment(request, hostel_name, comment_id):
+def student_comment(request, hostel_id, comment_id):
     student = Student.objects.get(admission_number=request.session["admission_number"])
-    hostel = Hostel.objects.get(hostel_name=hostel_name)
+    hostel = Hostel.objects.get(pk=hostel_id)
     prev_review = Review.objects.get(pk=comment_id)
     if request.method == "POST":
         comment = request.POST.get("comment")
@@ -96,14 +96,22 @@ def student_comment(request, hostel_name, comment_id):
             parent_review=prev_review
         )
         review.save()
-    return redirect('student_hostel', hostel_name)
+    return redirect('student_hostel', hostel_id)
 
-    def book_hostel(request, hostel_name):
-        return redirect('student_hostel', hostel_name)
+def book_hostel(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    student = Student.objects.get(admission_number=request.session["admission_number"])
+    book = Booking(
+        hostel=hostel,
+        student=student,
+        status="Pending"
+    )
+    book.save()
+    return redirect('student_hostel', hostel_id)
 
-    def student_profile(request):
-        student = Student.objects.get(admission_number=request.session["admission_number"])
-        return render(request, "student/student.html",{"student":student})
+def student_profile(request):
+    student = Student.objects.get(admission_number=request.session["admission_number"])
+    return render(request, "student/student.html",{"student":student})
 
 
 
