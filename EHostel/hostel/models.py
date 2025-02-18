@@ -26,18 +26,18 @@ class Owner(models.Model):
     def __str__(self):
         return self.username
 
-# class Message(models.Model):
-#     sender_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
-#     sender_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
-#     receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
-#     receiver_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
-#     content = models.TextField()
-#     timestamp = models.DateTimeField(default=timezone.now)
+class Message(models.Model):
+    sender_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
+    sender_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
+    receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
+    receiver_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         sender = self.sender_student if self.sender_student else self.sender_owner
-#         receiver = self.receiver_student if self.receiver_student else self.receiver_owner
-#         return f"{sender} → {receiver}: {self.content[:30]}"
+    def __str__(self):
+        sender = self.sender_student if self.sender_student else self.sender_owner
+        receiver = self.receiver_student if self.receiver_student else self.receiver_owner
+        return f"{sender} → {receiver}: {self.content[:30]}"
 
 class Hostel(models.Model):
     hostel_name = models.CharField(max_length=25)
@@ -76,7 +76,6 @@ class Booking(models.Model):
     hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=45, default='Pending')
-    payment_status = models.CharField(max_length=45, default='Pending')
     
     class Meta:
         unique_together = ('student', 'hostel', 'created_at')
@@ -92,10 +91,5 @@ class Review(models.Model):
 
     def __str__(self):
         return f"review for {self.hostel.hostel_name} by {self.student.first_name}"
-
-class Payment(models.Model):
-    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    payment_id = models.CharField(max_length=45, primary_key=True)
-    amount = models.CharField(max_length=45, null=True, blank=True)
-    date = models.DateTimeField(null=True, blank=True)    
+  
     
