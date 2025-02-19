@@ -1,6 +1,6 @@
 <form action="{% url 'stud_log' 'signin' %}" method="post">
     {% csrf_token %}
-    { {error_message_signin} }
+    {{ error_message_signin }}
     
     <label>Admission Number</label>
     <input type="text" name="adminNumberin" id="adminNumberin" required>
@@ -15,7 +15,7 @@
 <form action="{% url 'stud_log' 'signup' %}" method="post">
     {% csrf_token %}
 
-    { {error_message_signup} }
+    {{ error_message_signup }}
 
     <label>Admission Number</label>
     <input type="text" name="adminNumber" id="adminNumber" required>
