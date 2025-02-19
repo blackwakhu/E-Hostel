@@ -15,6 +15,9 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.admission_number} => {self.first_name}"
 
+    def getName(self):
+        return f"{self.first_name} {self.last_name}"
+
 class Owner(models.Model):
     username = models.CharField(primary_key=True, max_length=25)
     first_name = models.CharField(max_length=45)
@@ -79,6 +82,9 @@ class Booking(models.Model):
     
     class Meta:
         unique_together = ('student', 'hostel', 'created_at')
+
+    def __str__(self):
+        return f"{self.student.first_name} booked {self.hostel.hostel_name}"
 
 class Review(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

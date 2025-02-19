@@ -111,14 +111,10 @@ def book_hostel(request, hostel_id):
 
 def student_profile(request):
     student = Student.objects.get(admission_number=request.session["admission_number"])
-    hostels = Hostel.objects.all()
     booked_hostels = []
-    for hostel in hostels:
-        try:
-            book = Booking.objects.get(hostel=hostel, student=student)
-            booked_hostels.append({'hostel': hostel, 'status': book.status})
-        except Booking.DoesNotExist:
-            pass  # No booking for this hostel by this student
+    bookings = Booking.objects.filter(student=student)
+    for booking in bookings:
+        booked_hostels.append({'hostel': booking.hostel, 'status': booking.status})
 
     return render(request, "student/student.html",{
         "student":student, 
@@ -204,11 +200,15 @@ def add_hostel(request):
             owner = owner
         )
         hostel.save()
-        return redirect('owner_hostel', hostel.hostel_name)
+        return redirect('owner_hostel', hostel.id)
     return redirect('owner_main_page')
 
-def owner_hostel(request, hostel_name):
-    hostel = Hostel.objects.get(hostel_name=hostel_name)
+def owner_hostel(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    booked_people = []
+    bookings = Booking.objects.filter(hostel=hostel)
+    for booking in bookings:
+        booked_people.append({"id": booking.id,"status": booking.status, "student": booking.student})
     amenities = HostelAmenities.objects.filter(hostel=hostel)
     if request.method == "POST":
         form = HostelImageForm(request.POST, request.FILES)
@@ -216,17 +216,18 @@ def owner_hostel(request, hostel_name):
             hostel_image = form.save(commit=False)
             hostel_image.hostel=hostel 
             hostel_image.save()
-            return redirect('owner_hostel', hostel_name)
+            return redirect('owner_hostel', hostel_id)
     else:
         form = HostelImageForm()
     return render(request, 'owner/hostel.html', {
         "hostel": hostel, 
         "amenities": amenities,
-        "hostelImageForm": form
+        "hostelImageForm": form,
+        "bookings": booked_people
         })
 
-def add_amenity(request, hostel_name):
-    hostel = Hostel.objects.get(hostel_name=hostel_name)
+def add_amenity(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
     if request.method == "POST":
         amenity = request.POST.get("hamenity")
         hamenity = HostelAmenities(
@@ -234,5 +235,19 @@ def add_amenity(request, hostel_name):
             amenity = amenity
         )
         hamenity.save()
-    return redirect("owner_hostel", hostel_name)
+    return redirect("owner_hostel", hostel_id)
+
+
+def verify_booking(request, hostel_id, book_id, choice):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    book = Booking.objects.get(pk=book_id)
+    if book.status != 'Accepted' or book.status != "Rejected" and hostel.available_rooms > 0:
+        if choice == 'accept':
+            book.status = "Accepted"
+            hostel.available_rooms -= 1
+            hostel.save()
+        elif choice == 'reject':
+            book.status = "Rejected"
+        book.save()
+    return redirect("owner_hostel", hostel_id)
 
