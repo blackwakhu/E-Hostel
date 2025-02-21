@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'hostel/css/login.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'hostel/css/login.css' %}" type="text/css"/>
 {% endblock %}
 
 {% block body %}
@@ -14,15 +14,15 @@
 
             <div class="login-form">
                 <div class="sign-in-htm">
-                    <form action="{% url 'stud_log' 'signin' %}" method="post">
+                    <form action="{% url 'stud_log' 'signin' %}" method="post" autocomplete>
                         {% csrf_token %}
                         {{ error_message_signin }}
                         <div class="group">
-                            <label class="label">Admission Number</label>
+                            <label class="label" for="adminNumberin">Admission Number</label>
                             <input type="text" name="adminNumberin" id="adminNumberin" class="input" required>
                         </div>
                         <div class="group">
-                            <label class="label">Password</label>
+                            <label class="label" for="passwdin">Password</label>
                             <input type="password" name="passwdin" id="passwdin" data-type="password" class="input" required>
                         </div>
                         <div class="group">
