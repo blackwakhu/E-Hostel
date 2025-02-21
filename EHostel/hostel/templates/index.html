@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 
-<h1>The index Page</h1>
-<a href="{% url 'stud_login' %}">Student</a>
-<a href="{% url 'owner_login' %}">Owner</a>
+{% block body %}
+    <h1>The index Page</h1>
+    <a href="{% url 'stud_login' %}">Student</a>
+    <a href="{% url 'owner_login' %}">Owner</a>
+{% endblock %}
