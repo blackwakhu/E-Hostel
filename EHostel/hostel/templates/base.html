@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,11 +7,13 @@
         <meta author="Derrick Shibero">
         <meta title="E-Hostel Application">
         <title>E-Hostel</title>
+        <link rel="stylesheet" href="{% static 'hostel/css/style.css' %}" type="text/css"/>
     </head>
     <body>
         <div>
             {% block body %}{% endblock %}
         </div>
-        <script src="{% static 'vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery.js' %}"></script>
+        <script src="{% static 'hostel/js/function.js' %}"></script>
     </body>
 </html>

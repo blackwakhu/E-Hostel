@@ -125,6 +125,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'hostel/static'),
+)
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 MEDIA_URL = "/media/"
@@ -138,6 +143,3 @@ FILE_UPLOAD_HANDLERS = [
 SESSION_COOKIE_HTTPONLY = True
 
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
