@@ -8,6 +8,7 @@
         <meta title="E-Hostel Application">
         <title>E-Hostel</title>
         <link rel="stylesheet" href="{% static 'hostel/css/style.css' %}" type="text/css"/>
+        {% block css %}{% endblock %}
     </head>
     <body>
         <div>
@@ -15,5 +16,6 @@
         </div>
         <script src="{% static 'vendor/jquery.js' %}"></script>
         <script src="{% static 'hostel/js/function.js' %}"></script>
+        {% block js %}{% endblock %}
     </body>
 </html>
