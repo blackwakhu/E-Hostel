@@ -1,7 +1,9 @@
 .owner-html .home, 
 .owner-html .hostels,
 .owner-html .new-hostel,
-.owner-html .my-account,
+.owner-html .my-account{
+    border: none;
+}
 .main-content .hostels-html,
 .main-content .new-hostel-html,
 .main-content .my-account-html {

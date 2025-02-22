@@ -1,14 +1,14 @@
 .owner-html .home {
-  display: none;
+  border: none;
 }
 .owner-html .hostels {
-  display: none;
+  border: none;
 }
 .owner-html .new-hostel {
-  display: none;
+  border: none;
 }
 .owner-html .my-account {
-  display: none;
+  border: none;
 }
 
 .main-content .hostels-html {
