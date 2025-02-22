@@ -114,44 +114,58 @@
             <input type="submit" value="Add Hotel">
         </form>
     </div>  {% endcomment %}
-    <div>
-        <div>
-            <div>
-                <div></div>
-                <div>
+    <div class="owner-main-wrap">
+        <div class="owner-html">
+            <input id="tab-1" type="radio" name="tab" class="home" checked><label for="tab-1" class="tab">Home</label>
+            <input id="tab-2" type="radio" name="tab" class="hostels"><label for="tab-2" class="tab">My Hostels</label>
+            <input id="tab-3" type="radio" name="tab" class="new_hostel"><label for="tab-3" class="tab">New Hostel</label>
+            <input id="tab-4" type="radio" name="tab" class="my_account"><label for="tab-4" class="tab">My Account</label>
+            <div class="main-content">
+                <div class="home-html"></div>
+                <div class="new-hostel-html">
                      <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
                         {% csrf_token %}
-                        <label for="name">Name</label>
-                        <input type="text" id="hname" name="hname" required>
-
-                        <label for="price">Price</label>
-                        <input type="number" min="500" value="1000" id="hprice" name="hprice" required>
-
-                        <label for="rooms">Number of Rooms</label>
-                        <input type="number" min="1" value="10" id="hrooms" name="hrooms" required>
-
-                        <label for="room_type">Room Type</label>
-                        <input type="text" id="hroom_type" name="hroom_type" required>
-
-                        <label for="location_description">Location Description</label>
-                        <textarea id="hlocation_description" name="hlocation_description"></textarea>
-
-                        <label for="county">County</label>
-                        <input type="text" id="hcounty" name="hcounty" required>
-
-                        <label for="town">Town</label>
-                        <input type="text" id="htown" name="htown" required>
-
-                        <label for="locality">Locality</label>
-                        <input type="text" id="hlocality" name="hlocality" required>
-
-                        <input type="submit" value="Add Hotel">
+                        <div class="group">
+                            <label class="label" for="hname">Name</label>
+                            <input type="text" id="hname" name="hname" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="hprice">Price</label>
+                            <input type="number" min="500" value="1000" id="hprice" name="hprice" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="hrooms">Number of Rooms</label>
+                            <input type="number" min="1" value="10" id="hrooms" name="hrooms" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="hroom_type">Room Type</label>
+                            <input type="text" id="hroom_type" name="hroom_type" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="hlocation_description">Location Description</label>
+                            <textarea id="hlocation_description" name="hlocation_description" class="input"></textarea>
+                            </div>
+                        <div class="group">
+                            <label class="label" for="hcounty">County</label>
+                            <input type="text" id="hcounty" name="hcounty" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="htown">Town</label>
+                            <input type="text" id="htown" name="htown" required class="input">
+                        </div>
+                        <div class="group">
+                            <label class="label" for="hlocality">Locality</label>
+                            <input type="text" id="hlocality" name="hlocality" required class="input">
+                        </div>
+                        <div class="group">
+                            <input type="submit" value="Add Hotel" class="button">
+                        </div>
                     </form> 
 
                     <div id="overlay"></div> 
                 </div>
 
-                <div>
+                <div class="hostels-html">
                     <ul>
                         {% for hostel in hostels %}
                             <li>
@@ -162,7 +176,7 @@
                         {% endfor %} 
                     </ul>
                 </div>
-                <div></div>
+                <div class="my-account-html"></div>
             </div>
         </div>
     </div>
