@@ -1,247 +1,31 @@
-$dimgray_4d3227: #4d3227;
-$royalblue_1161ee: #1161ee;
-$silver_c8c8c8: #c8c8c8;
-$slategray_6a6f8c: #6a6f8c;
-$white_fff: #ffffff;
-
-* {
-  box-sizing: border-box;
-}
-
-:after {
-  box-sizing: border-box;
-}
-
-:before {
-  box-sizing: border-box;
-}
-
-.clearfix {
-  &:after {
-    clear: both;
-    content: "";
-    display: block;
-  }
-
-  &:before {
-    content: "";
-    display: table;
-  }
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-body {
-  background: $silver_c8c8c8;
-  color: $slategray_6a6f8c;
-  font: 700 16px/18px "Open Sans", sans-serif;
-  margin: 0;
-}
-
-.owner-main-wrap {
-  background: $dimgray_4d3227;
-  position: relative;
-}
-
 .owner-html {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: rgba(40, 57, 101, .9);
-
-  .home-html {
-    backface-visibility: hidden;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: rotateY(180deg);
-    transition: all .4s linear;
-  }
-
-  .hostels-html {
-    backface-visibility: hidden;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: rotateY(180deg);
-    transition: all .4s linear;
-  }
-
-  .new-hostel-html {
-    backface-visibility: hidden;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: rotateY(180deg);
-    transition: all .4s linear;
-  }
-
-  .my-account-html {
-    backface-visibility: hidden;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transform: rotateY(180deg);
-    transition: all .4s linear;
-  }
-
   .home {
     display: none;
-
-    &:checked {
-      +.tab {
-        border-color: blue;
-        color: yellowgreen;
-      }
-    }
   }
 
   .hostels {
     display: none;
-
-    &:checked {
-      +.tab {
-        border-color: blue;
-        color: yellowgreen;
-      }
-    }
   }
 
-  .new_hostel {
+  .new-hostel {
     display: none;
-
-    &:checked {
-      +.tab {
-        border-color: blue;
-        color: yellowgreen;
-      }
-    }
   }
 
-  .my_account {
+  .my-account {
     display: none;
-
-    &:checked {
-      +.tab {
-        border-color: blue;
-        color: yellowgreen;
-      }
-    }
-  }
-
-  .tab {
-    border-bottom: 2px solid transparent;
-    display: inline-block;
-    font-size: 22px;
-    margin: 0 15px 10px 0;
-    margin-right: 15px;
-    padding-bottom: 5px;
-    text-transform: uppercase;
   }
 }
 
 .main-content {
-  .group {
-    .label {
-      display: block;
-      font-size: 12px;
-      text-align: center;
-      text-transform: uppercase;
-      width: 100%;
-    }
-
-    .button {
-      background: $royalblue_1161ee;
-      border: none;
-      border-radius: 25px;
-      display: block;
-      padding: 15px 20px;
-      text-align: center;
-      text-transform: uppercase;
-      width: 100%;
-    }
-    margin-bottom: 15px;
-
-    .input {
-      border: none;
-      border-radius: 25px;
-      display: block;
-      padding: 15px 20px;
-      text-align: center;
-      width: 100%;
-    }
-
-    label {
-      .icon {
-        width: 15px;
-        height: 15px;
-        border-radius: 2px;
-        position: relative;
-        display: inline-block;
-        background: rgba(255, 255, 255, .1);
-
-        &:before {
-          background: $white_fff;
-          bottom: 6px;
-          content: "";
-          height: 2px;
-          left: 3px;
-          position: absolute;
-          transform: scale(0) rotate(0);
-          transition: all .2s ease-in-out 0s;
-          width: 5px;
-        }
-
-        &:after {
-          background: $white_fff;
-          content: "";
-          height: 2px;
-          position: absolute;
-          right: 0;
-          top: 6px;
-          transform: scale(0) rotate(0);
-          transition: all .2s ease-in-out 0s;
-          width: 10px;
-        }
-      }
-    }
-  }
-  position: relative;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-
-  .home {
-    &:checked {
-      +.tab {
-        +.main-content {
-          .home-html {
-            transform: rotate(0);
-          }
-        }
-      }
-    }
+  .hostels-html {
+    display: none;
   }
 
-  .hostels {
-    &:checked {
-      +.tab {
-        +.main-content {
-          .hostels-html {
-            transform: rotate(0);
-          }
-        }
-      }
-    }
+  .new-hostel-html {
+    display: none;
+  }
+
+  .my-account-html {
+    display: none;
   }
 }

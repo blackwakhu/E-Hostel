@@ -118,10 +118,12 @@
         <div class="owner-html">
             <input id="tab-1" type="radio" name="tab" class="home" checked><label for="tab-1" class="tab">Home</label>
             <input id="tab-2" type="radio" name="tab" class="hostels"><label for="tab-2" class="tab">My Hostels</label>
-            <input id="tab-3" type="radio" name="tab" class="new_hostel"><label for="tab-3" class="tab">New Hostel</label>
-            <input id="tab-4" type="radio" name="tab" class="my_account"><label for="tab-4" class="tab">My Account</label>
+            <input id="tab-3" type="radio" name="tab" class="new-hostel"><label for="tab-3" class="tab">New Hostel</label>
+            <input id="tab-4" type="radio" name="tab" class="my-account"><label for="tab-4" class="tab">My Account</label>
             <div class="main-content">
-                <div class="home-html"></div>
+                <div class="home-html">
+                    <h1>Home</h1>
+                </div>
                 <div class="new-hostel-html">
                      <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
                         {% csrf_token %}
@@ -176,7 +178,9 @@
                         {% endfor %} 
                     </ul>
                 </div>
-                <div class="my-account-html"></div>
+                <div class="my-account-html">
+                    <h1>Account</h1>
+                </div>
             </div>
         </div>
     </div>
