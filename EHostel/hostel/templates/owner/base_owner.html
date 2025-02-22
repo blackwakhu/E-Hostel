@@ -1,0 +1,18 @@
+{% extends '../base.html' %}
+
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'hostel/css/dist/owner.min.css' %}" type="text/css"/>
+{% endblock  %}
+
+{% block body %}
+    <nav>
+        <h1>Main page for owners</h1>
+        <a href="{% url 'logout' %}">Logout</a>
+        <p>welcome {{ username }}</p>
+    </nav>
+    <div>
+        {% block content %}{% endblock  %}
+    </div>
+{% endblock %}

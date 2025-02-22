@@ -1,0 +1,244 @@
+$darkgray_aaa: #aaaaaa;
+$dimgray_4d3227: #4d3227;
+$royalblue_1161ee: #1161ee;
+$silver_c8c8c8: #c8c8c8;
+$slategray_6a6f8c: #6a6f8c;
+$white_fff: #ffffff;
+
+body {
+  background: $silver_c8c8c8;
+  color: $slategray_6a6f8c;
+  font: 700 16px/18px "Open Sans", sans-serif;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:after {
+  box-sizing: border-box;
+}
+
+:before {
+  box-sizing: border-box;
+}
+
+.clearfix {
+  &:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+
+  &:before {
+    content: "";
+    display: table;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.login-wrap {
+  background: $dimgray_4d3227;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+  margin: auto;
+  max-width: 525px;
+  min-height: 900px;
+  position: relative;
+  width: 100%;
+}
+
+.login-html {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 90px 70px 50px 70px;
+  background: rgba(40, 57, 101, .9);
+
+  .sign-in-htm {
+    backface-visibility: hidden;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotateY(180deg);
+    transition: all .4s linear;
+  }
+
+  .sign-up-htm {
+    backface-visibility: hidden;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: rotateY(180deg);
+    transition: all .4s linear;
+  }
+
+  .sign-in {
+    display: none;
+
+    &:checked {
+      +.tab {
+        color: $white_fff;
+        border-color: $royalblue_1161ee;
+
+        +.sign-up {
+          +.tab {
+            +.login-form {
+              .sign-in-htm {
+                transform: rotate(0);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .sign-up {
+    display: none;
+
+    &:checked {
+      +.tab {
+        color: $white_fff;
+        border-color: $royalblue_1161ee;
+
+        +.login-form {
+          .sign-up-htm {
+            transform: rotate(0);
+          }
+        }
+      }
+    }
+  }
+
+  .tab {
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+    font-size: 22px;
+    margin: 0 15px 10px 0;
+    margin-right: 15px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+  }
+}
+
+.login-form {
+  .group {
+    .check {
+      display: none;
+
+      &:checked {
+        +label {
+          color: $white_fff;
+
+          .icon {
+            background: $royalblue_1161ee;
+
+            &:before {
+              transform: scale(1) rotate(45deg);
+            }
+
+            &:after {
+              transform: scale(1) rotate(-45deg);
+            }
+          }
+        }
+      }
+    }
+
+    .label {
+      color: $darkgray_aaa;
+      display: block;
+      font-size: 12px;
+      text-align: center;
+      text-transform: uppercase;
+      width: 100%;
+    }
+
+    .button {
+      background: $royalblue_1161ee;
+      border: none;
+      border-radius: 25px;
+      color: $white_fff;
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-transform: uppercase;
+      width: 100%;
+    }
+    margin-bottom: 15px;
+
+    .input {
+      background: rgba(255, 255, 255, .1);
+      border: none;
+      border-radius: 25px;
+      color: $white_fff;
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      width: 100%;
+    }
+
+    input[data-type=password] {
+      -webkit-text-security: circle;
+              text-security: circle;
+    }
+
+    label {
+      .icon {
+        width: 15px;
+        height: 15px;
+        border-radius: 2px;
+        position: relative;
+        display: inline-block;
+        background: rgba(255, 255, 255, .1);
+
+        &:before {
+          background: $white_fff;
+          bottom: 6px;
+          content: "";
+          height: 2px;
+          left: 3px;
+          position: absolute;
+          transform: scale(0) rotate(0);
+          transition: all .2s ease-in-out 0s;
+          width: 5px;
+        }
+
+        &:after {
+          background: $white_fff;
+          content: "";
+          height: 2px;
+          position: absolute;
+          right: 0;
+          top: 6px;
+          transform: scale(0) rotate(0);
+          transition: all .2s ease-in-out 0s;
+          width: 10px;
+        }
+      }
+    }
+  }
+  min-height: 345px;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.hr {
+  background: rgba(255, 255, 255, .2);
+  height: 2px;
+  margin: 60px 0 50px 0;
+}
+
+.foot-lnk {
+  text-align: center;
+}

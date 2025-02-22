@@ -166,7 +166,6 @@ def owner_main_page(request):
         username = request.session["username"]
         owner = Owner.objects.get(username=username)
         hostels = Hostel.objects.filter(owner=owner)
-        print(hostels)
         return render(request, "owner/main.html", {"username": request.session["username"], "hostels":hostels})
     else:
         return redirect('owner_login')
