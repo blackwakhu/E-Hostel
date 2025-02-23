@@ -5,7 +5,12 @@
         <div class="owner-html">
             <nav class="navbar">
                 <div class="logo">MyBrand</div>
-                <div class="nav-links">
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="nav-links" id="topNav">
                     <a href="#" class="home">Home</a>
                     <a href="#" class="hostels">My Hostels</a>
                     <a href="#" class="new-hostel">New Hostel</a>
@@ -77,4 +82,9 @@
             </div>
         </div>
     </div>
+    <script>
+        function toggleMenu ()  {
+            document.querySelector(".nav-links").classList.toggle("active");
+        }
+    </script>
 {% endblock %}
