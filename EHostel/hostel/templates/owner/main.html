@@ -69,7 +69,7 @@
                     <div class="card-container">
                         {% for hostel in hostels %}
                             <div class='card'>
-                                <img src="image.jpg" alt="{{ hostel.hostel_name }} image">
+                                <img src="image.jpg" height="200px" width="100%" alt="{{ hostel.hostel_name }} image">
                                 <div class="card-content">
                                     <a href="{% url 'owner_hostel' hostel.id %}">
                                         {{ hostel.hostel_name }}
