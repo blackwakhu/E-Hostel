@@ -51,11 +51,13 @@
                         </div>
                         <div class="group">
                             <label class="label" for="passwd">password</label>
-                            <input type="password" name="passwd" id="passwd" class="input" required data-type="password"/>
+                            <input type="password" name="passwd" id="passwdOwner" class="input" required data-type="password"/>
+                            <span id="message"></span>
                         </div>
                         <div class="group">
                             <label class="label" for="passwd1">repeat password</label>
-                            <input type="password" name="passwd1" id="passwd1" class="input" required data-type="password"/>
+                            <input type="password" name="passwd1" id="passwd1Owner" class="input" required data-type="password"/>
+                            <span id="messageConf"></span>
                         </div>
                         <div class="group">
                             <label class="label" for="email">email</label>
@@ -66,15 +68,16 @@
                             <input type="tel" name="phone_number" id="phone_number" class="input" required/>
                         </div>
                         <div class="group">
-                            <input type="submit" value="Sign Up" class="button"/>
+                            <input type="submit" value="Sign Up" class="button" id="submitOwnerBtn" disabled/>
                         </div>
                     </form>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <label for="tab-1">Already Member?</a>
+                        <label for="tab-1">Already Member?</label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{% static 'hostel/js/login.js' %}"></script>
 {% endblock %}
