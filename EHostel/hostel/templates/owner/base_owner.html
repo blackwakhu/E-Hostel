@@ -7,11 +7,6 @@
 {% endblock  %}
 
 {% block body %}
-    <nav>
-        <h1>Main page for owners</h1>
-        <a href="{% url 'logout' %}">Logout</a>
-        <p>welcome {{ username }}</p>
-    </nav>
     <div>
         {% block content %}{% endblock  %}
     </div>

@@ -1,7 +1,7 @@
-let home_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".home")
-let hostels_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".hostels")
-let new_hostel_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".new-hostel")
-let my_account_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".my-account")
+let home_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
+let hostels_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
+let new_hostel_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".new-hostel")
+let my_account_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".my-account")
 
 let home_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".home-html")
 let hostels_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".hostels-html")
@@ -9,14 +9,14 @@ let new_hostel_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".ne
 let my_account_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".my-account-html")
 
 let divElements: HTMLDivElement[] = [home_div, hostels_div, new_hostel_div, my_account_div]
-let buttonElements: HTMLButtonElement[] = [home_btn, hostels_btn, new_hostel_btn, my_account_btn]
-let btnObj: { button: HTMLButtonElement, div: HTMLDivElement }[] = new Array()
+let buttonElements: HTMLAnchorElement[] = [home_btn, hostels_btn, new_hostel_btn, my_account_btn]
+let btnObj: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
 for (let i = 0; i < divElements.length; i++) {
     btnObj.push({"button": buttonElements[i], "div": divElements[i]})
 }
 
-function hideDivElements(btn: HTMLButtonElement, buttons: HTMLButtonElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
+function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
         elem.style.display = "none"
     })

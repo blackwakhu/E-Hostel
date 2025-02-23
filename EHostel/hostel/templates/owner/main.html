@@ -1,129 +1,18 @@
 {% extends './base_owner.html' %}
 
 {% block content %}
-    {% comment %} <html>
-    <head>
-    <title>Dialog Form Example</title>
-    <style>
-        #hotelDialog {
-            position: absolute; /* Changed to absolute */
-            top: 0; /* Position at the top */
-            left: 50%;
-            transform: translateX(-50%);
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-            width: 500px; /* Set a specific width for the dialog */
-            max-height: 80vh; /* Set a maximum height */
-            overflow-y: auto; /* Enable vertical scrolling */
-            padding-right: 20px; /* Add padding for scrollbar */
-        }
-
-        #hotelDialog label {
-            display: block; /* Make labels stack on top of inputs */
-            margin-bottom: 5px;
-        }
-
-        #hotelDialog input,
-        #hotelDialog textarea {
-            width: calc(100% - 10px); /* Full width minus padding */
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        #hotelDialog textarea {
-            height: 100px; /* Set a reasonable height for the textarea */
-        }
-
-        #hotelDialog input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-    </style>
-    </head>
-    <body> {% endcomment %}
-
-
-
-    
-
-    {% comment %} <form action="/">
-        
-    </form> {% endcomment %}
-
-    {% comment %} <button id="openHotelDialog">Add Hotel</button>
-    <div id="hotelDialog">
-        <span class="close" onclick="closeDialog()">&times;</span>
-        <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
-            {% csrf_token %}
-            <label for="name">Name</label>
-            <input type="text" id="hname" name="hname" required>
-
-            <label for="price">Price</label>
-            <input type="number" min="500" value="1000" id="hprice" name="hprice" required>
-
-            <label for="rooms">Number of Rooms</label>
-            <input type="number" min="1" value="10" id="hrooms" name="hrooms" required>
-
-            <label for="room_type">Room Type</label>
-            <input type="text" id="hroom_type" name="hroom_type" required>
-
-            <label for="location_description">Location Description</label>
-            <textarea id="hlocation_description" name="hlocation_description"></textarea>
-
-            <label for="county">County</label>
-            <input type="text" id="hcounty" name="hcounty" required>
-
-            <label for="town">Town</label>
-            <input type="text" id="htown" name="htown" required>
-
-            <label for="locality">Locality</label>
-            <input type="text" id="hlocality" name="hlocality" required>
-
-            <input type="submit" value="Add Hotel">
-        </form>
-    </div>  {% endcomment %}
     <div class="owner-main-wrap">
         <div class="owner-html">
-            {% comment %} <input id="tab-1" type="radio" name="tab" class="home" checked><label for="tab-1" class="tab">Home</label>
-            <input id="tab-2" type="radio" name="tab" class="hostels"><label for="tab-2" class="tab">My Hostels</label>
-            <input id="tab-3" type="radio" name="tab" class="new-hostel"><label for="tab-3" class="tab">New Hostel</label>
-            <input id="tab-4" type="radio" name="tab" class="my-account"><label for="tab-4" class="tab">My Account</label> {% endcomment %}
-            <button class="home">Home</button>
-            <button class="hostels">My Hostels</button>
-            <button class="new-hostel">New Hostel</button>
-            <button class="my-account">Account</button>
+            <nav class="navbar">
+                <div class="logo">MyBrand</div>
+                <div class="nav-links">
+                    <a href="#" class="home">Home</a>
+                    <a href="#" class="hostels">My Hostels</a>
+                    <a href="#" class="new-hostel">New Hostel</a>
+                    <a href="#" class="my-account">Account</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </nav>
             <div class="main-content">
                 <div class="home-html">
                     <h1>Home</h1>
@@ -188,41 +77,4 @@
             </div>
         </div>
     </div>
-
-    {% comment %} <script>
-        const dialog = document.getElementById("hotelDialog");
-        const overlay = document.getElementById("overlay");
-        const openBtn = document.getElementById("openHotelDialog");
-        const closeBtn = document.querySelector("#hotelDialog .close");
-        const form = document.getElementById("hotelForm");
-
-        openBtn.addEventListener("click", () => {
-            dialog.style.display = "block";
-            overlay.style.display = "block";
-        });
-
-        closeBtn.addEventListener("click", closeDialog);
-        overlay.addEventListener("click", closeDialog);
-
-        function closeDialog() {
-            dialog.style.display = "none";
-            overlay.style.display = "none";
-        }
-
-        form.addEventListener("submit", (event) => {
-            // event.preventDefault();
-
-            // Collect form data (replace with your actual submission logic)
-            const formData = new FormData(form); // Use FormData for easier handling
-
-            // Example: Log the data to the console
-            for (let [key, value] of formData.entries()) {
-                console.log(key, value);
-            }
-
-            closeDialog(); // Close the dialog after submission
-            form.reset(); // Reset the form fields
-        });
-    </script>  {% endcomment %}
-
 {% endblock %}
