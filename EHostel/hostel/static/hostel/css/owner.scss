@@ -92,6 +92,19 @@ $dimgray_575757: #575757;
 
   .main-content {
     margin-top: 95px !important;
+
+    .new-hostel-html {
+      .input {
+        margin-left: 0;
+        width: 100% !important;
+      }
+
+      .label {
+        margin-left: 0;
+        width: 100% !important;
+      }
+      margin-left: 0 !important;
+    }
   }
 }
 
@@ -102,6 +115,44 @@ $dimgray_575757: #575757;
 
   .new-hostel-html {
     display: none;
+    margin-top: 90px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 20px;
+
+    .label {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 5px;
+      margin-left: 10%;
+      text-align: center;
+      text-transform: uppercase;
+      width: 80%;
+    }
+
+    .input {
+      border-radius: 20px;
+      font-size: 15px;
+      margin-bottom: 5px;
+      margin-left: 10%;
+      padding: 10px;
+      text-align: center;
+      width: 80%;
+    }
+
+    .button {
+      background: greenyellow;
+      border-radius: 20px;
+      font-size: 15px;
+      margin-left: 25%;
+      padding: 10px;
+      width: 50%;
+    }
+
+    .group {
+      margin-bottom: 10px;
+    }
   }
 
   .my-account-html {
