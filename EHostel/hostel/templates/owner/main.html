@@ -66,15 +66,20 @@
                 </div>
 
                 <div class="hostels-html">
-                    <ul>
+                    <div class="card-container">
                         {% for hostel in hostels %}
-                            <li>
-                                <a href="{% url 'owner_hostel' hostel.id %}">
-                                    {{ hostel.hostel_name }}
-                                </a>
-                            </li>
+                            <div class='card'>
+                                <img src="image.jpg" alt="{{ hostel.hostel_name }} image">
+                                <div class="card-content">
+                                    <a href="{% url 'owner_hostel' hostel.id %}">
+                                        {{ hostel.hostel_name }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>There are no hostels</p>
                         {% endfor %} 
-                    </ul>
+                    </div>
                 </div>
                 <div class="my-account-html">
                     <h1>Account</h1>
