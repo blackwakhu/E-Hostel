@@ -23,14 +23,20 @@ function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], s
     seeDiv.style.display = 'block'
 }
 
-// home_btn.addEventListener("click", () => {
-//     hideDivElements(home_btn, buttonElements, home_div, )
-// })
-
 btnObj.forEach((bObj) => {
     bObj.button.addEventListener("click", () => {
         hideDivElements(bObj.button, buttonElements, bObj.div, divElements)
     })
 })
 
-console.log(hostels_btn)
+function toggleMenu ()  {
+    document.querySelector(".nav-links")?.classList.toggle("active");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".nav-links a").forEach(link => {
+        link.addEventListener("click", function() {
+            document.querySelector(".nav-links")?.classList.remove("active");
+        });
+    });
+});

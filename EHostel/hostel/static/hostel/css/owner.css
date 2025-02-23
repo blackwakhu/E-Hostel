@@ -4,11 +4,6 @@
 .owner-html .my-account{
     border: none;
 }
-.main-content .hostels-html,
-.main-content .new-hostel-html,
-.main-content .my-account-html {
-    display: none;
-}
 
 .navbar {
     display: flex;
@@ -16,6 +11,10 @@
     align-items: center;
     background-color: #333;
     padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .navbar a {
@@ -44,6 +43,9 @@
     display: none;
     flex-direction: column;
     cursor: pointer;
+    padding: 10px;
+    background: transparent;
+    border: none;
 }
 
 .menu-toggle div {
@@ -51,6 +53,7 @@
     height: 3px;
     background: white;
     margin: 5px 0;
+    transition: 0.3s;
 }
 
 @media (max-width: 768px) {
@@ -70,4 +73,17 @@
     .menu-toggle{
         display: flex;
     }
+    .main-content{
+        margin-top: 95px !important;
+    }
+}
+
+.main-content .hostels-html,
+.main-content .new-hostel-html,
+.main-content .my-account-html {
+    display: none;
+}
+
+.main-content {
+    margin-top: 70px;
 }

@@ -11,22 +11,16 @@
   border: none;
 }
 
-.main-content .hostels-html {
-  display: none;
-}
-.main-content .new-hostel-html {
-  display: none;
-}
-.main-content .my-account-html {
-  display: none;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #333333;
   padding: 15px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 .navbar a {
   color: white;
@@ -53,11 +47,15 @@
   display: none;
   flex-direction: column;
   cursor: pointer;
+  padding: 10px;
+  background: transparent;
+  border: none;
 }
 .menu-toggle div {
   background: white;
   height: 3px;
   margin: 5px 0;
+  transition: 0.3s;
   width: 25px;
 }
 
@@ -78,4 +76,19 @@
   .menu-toggle {
     display: flex;
   }
+  .main-content {
+    margin-top: 95px !important;
+  }
+}
+.main-content {
+  margin-top: 70px;
+}
+.main-content .hostels-html {
+  display: none;
+}
+.main-content .new-hostel-html {
+  display: none;
+}
+.main-content .my-account-html {
+  display: none;
 }
