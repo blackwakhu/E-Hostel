@@ -11,41 +11,6 @@
   border: none;
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background-color: #333333;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    text-align: center;
-  }
-  .nav-links.active {
-    display: flex;
-  }
-  .menu-toggle {
-    display: flex;
-  }
-  .main-content {
-    margin-top: 95px !important;
-  }
-  .main-content .new-hostel-html {
-    margin-left: 0 !important;
-  }
-  .main-content .new-hostel-html .input {
-    margin-left: 0;
-    width: 100% !important;
-  }
-  .main-content .new-hostel-html .label {
-    margin-left: 0;
-    width: 100% !important;
-  }
-}
-.main-content {
-  margin-top: 70px;
-}
 .main-content .hostels-html {
   display: none;
 }
@@ -88,4 +53,15 @@
 }
 .main-content .my-account-html {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .main-content .new-hostel-html .input {
+    margin-left: 0;
+    width: 100% !important;
+  }
+  .main-content .new-hostel-html .label {
+    margin-left: 0;
+    width: 100% !important;
+  }
 }

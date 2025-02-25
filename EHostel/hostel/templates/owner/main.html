@@ -19,10 +19,10 @@
                 </div>
             </nav>
             <div class="main-content">
-                <div class="home-html">
+                <div class="home-html item">
                     <h1>Home</h1>
                 </div>
-                <div class="new-hostel-html">
+                <div class="new-hostel-html item">
                      <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
                         {% csrf_token %}
                         <div class="group">
@@ -65,7 +65,7 @@
                     <div id="overlay"></div> 
                 </div>
 
-                <div class="hostels-html">
+                <div class="hostels-html item">
                     <div class="card-container">
                         {% for hostel in hostels %}
                             <div class='card'>
@@ -81,7 +81,7 @@
                         {% endfor %} 
                     </div>
                 </div>
-                <div class="my-account-html">
+                <div class="my-account-html item">
                     <h1>Account</h1>
                 </div>
             </div>

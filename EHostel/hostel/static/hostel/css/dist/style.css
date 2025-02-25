@@ -123,6 +123,9 @@ body {
   .main-content {
     margin-top: 95px !important;
   }
+  .main-content .item {
+    margin: 0 !important;
+  }
 }
 .main-content {
   margin-top: 70px;
