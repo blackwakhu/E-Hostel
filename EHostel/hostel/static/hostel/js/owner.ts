@@ -1,3 +1,5 @@
+import { hideDivElements } from "./mymodules.js"
+
 let home_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
 let new_hostel_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".new-hostel")
@@ -14,15 +16,6 @@ let btnObj: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
 for (let i = 0; i < divElements.length; i++) {
     btnObj.push({"button": buttonElements[i], "div": divElements[i]})
-}
-
-function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
-    elems.forEach((elem) => {
-        if (!(elem.classList.contains("hide-elem"))) {
-            elem.classList.add("hide-elem")
-        }
-    })
-    seeDiv.classList.remove("hide-elem")
 }
 
 btnObj.forEach((bObj) => {

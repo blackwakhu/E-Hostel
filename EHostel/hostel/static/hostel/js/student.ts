@@ -1,3 +1,5 @@
+import { hideDivElements } from "./mymodules.js" 
+
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
 let my_hostel_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".my-hostel")
@@ -16,18 +18,9 @@ for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
 }
 
-function hideDivElements_student(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
-    elems.forEach((elem) => {
-        if (!(elem.classList.contains("hide-elem"))) {
-            elem.classList.add("hide-elem")
-        }
-    })
-    seeDiv.classList.remove("hide-elem")
-}
-
 btnObj_student.forEach((bObj) => {
     bObj.button.addEventListener("click", () => {
-        hideDivElements_student(bObj.button, buttonElements_student, bObj.div, divElements_student)
+        hideDivElements(bObj.button, buttonElements_student, bObj.div, divElements_student)
     })
 })
 
