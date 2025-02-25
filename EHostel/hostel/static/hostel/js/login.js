@@ -2,18 +2,22 @@ var passwdOwner = document.querySelector("#passwdOwner");
 var passwd1Owner = document.querySelector("#passwd1Owner");
 var submitOwner = document.querySelector("#submitOwnerBtn");
 var telOwner = document.querySelector("#phone_number_owner");
-var msgElement = document.querySelector("#message");
-var msgConfElement = document.querySelector("#messageConf");
-var msgTellElement = document.querySelector("#messageTell");
+var passwdStudent = document.querySelector("#passwdStudent");
+var passwd1Student = document.querySelector("#passwd1Student");
+var telStudent = document.querySelector("#phoneNumberStudent");
+var submitStudent = document.querySelector("#submitStudent");
+var msg = document.querySelector("#message");
+var msgConf = document.querySelector("#messageConf");
+var msgTell = document.querySelector("#messageTell");
 function validatePassword(password) {
     var regex = /^(?=.*[A-Za-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
 }
 function validateNumber(num) {
-    var regex = /^(?:\+?254)?(?:0|7|1)(?:(?:[1-9][0-9]{7})|(?:4[0-9]{6}))$/;
+    var regex = /^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/;
     return regex.test(num);
 }
-function checkPasswords(original, confirm, tellinp, submit, msg, msgConf, msgTell) {
+function checkPasswords(original, confirm, tellinp, submit) {
     var password = original.value;
     var password1 = confirm.value;
     var tell = tellinp.value;
@@ -51,12 +55,25 @@ function checkPasswords(original, confirm, tellinp, submit, msg, msgConf, msgTel
     }
     submit.disabled = !(isValid && passmatch && validTell);
 }
-passwdOwner.addEventListener("input", function () {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement);
-});
-passwd1Owner.addEventListener("input", function () {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement);
-});
-telOwner.addEventListener("input", function () {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement);
+var logObj = [
+    { "elem": passwdOwner, "status": "owner" },
+    { "elem": passwd1Owner, "status": "owner" },
+    { "elem": telOwner, "status": "owner" },
+    { "elem": passwdStudent, "status": "student" },
+    { "elem": passwd1Student, "status": "student" },
+    { "elem": telStudent, "status": "student" }
+];
+document.addEventListener('DOMContentLoaded', function () {
+    logObj.forEach(function (element) {
+        if (element.elem) {
+            element.elem.addEventListener("input", function () {
+                if (element.status === "owner") {
+                    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner);
+                }
+                else {
+                    checkPasswords(passwdStudent, passwd1Student, telStudent, submitStudent);
+                }
+            });
+        }
+    });
 });

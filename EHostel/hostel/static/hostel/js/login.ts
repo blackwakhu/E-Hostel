@@ -1,11 +1,16 @@
-let passwdOwner: HTMLInputElement = document.querySelector<HTMLInputElement>("#passwdOwner")
-let passwd1Owner: HTMLInputElement = document.querySelector<HTMLInputElement>("#passwd1Owner")
-let submitOwner: HTMLInputElement = document.querySelector<HTMLInputElement>("#submitOwnerBtn")
-let telOwner: HTMLInputElement = document.querySelector<HTMLInputElement>("#phone_number_owner") 
+let passwdOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#passwdOwner")
+let passwd1Owner: HTMLInputElement | null= document.querySelector<HTMLInputElement>("#passwd1Owner")
+let submitOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#submitOwnerBtn")
+let telOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#phone_number_owner") 
 
-let msgElement: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#message")
-let msgConfElement: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#messageConf")
-let msgTellElement: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#messageTell")
+let passwdStudent: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#passwdStudent")
+let passwd1Student: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#passwd1Student")
+let telStudent: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#phoneNumberStudent")
+let submitStudent: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#submitStudent")
+
+let msg: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#message")
+let msgConf: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#messageConf")
+let msgTell: HTMLSpanElement =  document.querySelector<HTMLSpanElement>("#messageTell")
 
 function validatePassword(password: string): boolean {
     const regex = /^(?=.*[A-Za-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -13,11 +18,11 @@ function validatePassword(password: string): boolean {
 }
 
 function validateNumber(num: string): boolean {
-    const regex = /^(?:\+?254)?(?:0|7|1)(?:(?:[1-9][0-9]{7})|(?:4[0-9]{6}))$/
+    const regex =/^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/
     return regex.test(num)
 }
 
-function checkPasswords(original: HTMLInputElement, confirm: HTMLInputElement, tellinp: HTMLInputElement, submit: HTMLInputElement, msg: HTMLSpanElement, msgConf: HTMLSpanElement, msgTell: HTMLSpanElement) {
+function checkPasswords(original: HTMLInputElement, confirm: HTMLInputElement, tellinp: HTMLInputElement, submit: HTMLInputElement) {
     const password: string = original.value
     const password1: string = confirm.value
     const tell: string = tellinp.value
@@ -57,14 +62,25 @@ function checkPasswords(original: HTMLInputElement, confirm: HTMLInputElement, t
 }
 
 
-passwdOwner.addEventListener("input", () => {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement)
-})
-passwd1Owner.addEventListener("input", () => {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement)
-})
-telOwner.addEventListener("input", () => {
-    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner, msgElement, msgConfElement, msgTellElement)
-})
+let logObj: { "elem": HTMLInputElement | null, "status": string }[] = [
+    { "elem": passwdOwner, "status": "owner" },
+    { "elem": passwd1Owner, "status": "owner" },
+    { "elem": telOwner, "status": "owner" },
+    { "elem": passwdStudent, "status": "student" },
+    { "elem": passwd1Student, "status": "student" },
+    { "elem": telStudent, "status": "student"}
+]
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    logObj.forEach(element => {
+        if (element.elem) {
+            element.elem.addEventListener("input", () => {
+                if (element.status === "owner") {
+                    checkPasswords(passwdOwner, passwd1Owner, telOwner, submitOwner)
+                } else {
+                    checkPasswords(passwdStudent, passwd1Student, telStudent, submitStudent)
+                }
+            })
+        }
+    });
+})
