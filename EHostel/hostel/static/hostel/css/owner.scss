@@ -1,5 +1,4 @@
 $darkslategray_333: #333333;
-$dimgray_575757: #575757;
 
 .owner-html {
   .home {
@@ -16,57 +15,6 @@ $dimgray_575757: #575757;
 
   .my-account {
     border: none;
-  }
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $darkslategray_333;
-  padding: 15px 20px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-
-  a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-
-    &:hover {
-      background: $dimgray_575757;
-      border-radius: 5px;
-    }
-  }
-}
-
-.nav-links {
-  display: flex;
-  gap: 10px;
-}
-
-.logo {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  padding: 10px;
-  background: transparent;
-  border: none;
-
-  div {
-    background: white;
-    height: 3px;
-    margin: 5px 0;
-    transition: .3s;
-    width: 25px;
   }
 }
 
