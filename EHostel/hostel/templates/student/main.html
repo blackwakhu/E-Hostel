@@ -24,7 +24,7 @@
                 <div class="home-html item">
                     <h1>Home</h1>
                 </div>
-                <div class="hostels-html item">
+                <div class="hostels-html item hide-elem">
                     <div class="card-container">
                         {% for hostel in hostels %}
                             <div class="card">
@@ -35,13 +35,15 @@
                             </div>
                         {% endfor %}
                     </div>
-                <div class="my-hostel-html item">
+                <div class="my-hostel-html item hide-elem">
                     <h1>My Hostel</h1>
                 </div>
-                <div class="my-account-html item">
+                <div class="my-account-html item hide-elem">
                     <h1>My Account</h1>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="{% static 'hostel/js/student.js' %}"></script>
 {% endblock %}

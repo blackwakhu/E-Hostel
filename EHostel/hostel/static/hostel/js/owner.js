@@ -14,24 +14,14 @@ for (var i = 0; i < divElements.length; i++) {
 }
 function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach(function (elem) {
-        elem.style.display = "none";
+        if (!(elem.classList.contains("hide-elem"))) {
+            elem.classList.add("hide-elem");
+        }
     });
-    seeDiv.style.display = 'block';
+    seeDiv.classList.remove("hide-elem");
 }
 btnObj.forEach(function (bObj) {
     bObj.button.addEventListener("click", function () {
         hideDivElements(bObj.button, buttonElements, bObj.div, divElements);
-    });
-});
-function toggleMenu() {
-    var _a;
-    (_a = document.querySelector(".nav-links")) === null || _a === void 0 ? void 0 : _a.classList.toggle("active");
-}
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".nav-links a").forEach(function (link) {
-        link.addEventListener("click", function () {
-            var _a;
-            (_a = document.querySelector(".nav-links")) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
-        });
     });
 });

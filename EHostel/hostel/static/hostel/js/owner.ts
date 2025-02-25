@@ -18,9 +18,11 @@ for (let i = 0; i < divElements.length; i++) {
 
 function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
-        elem.style.display = "none"
+        if (!(elem.classList.contains("hide-elem"))) {
+            elem.classList.add("hide-elem")
+        }
     })
-    seeDiv.style.display = 'block'
+    seeDiv.classList.remove("hide-elem")
 }
 
 btnObj.forEach((bObj) => {
@@ -29,14 +31,3 @@ btnObj.forEach((bObj) => {
     })
 })
 
-function toggleMenu ()  {
-    document.querySelector(".nav-links")?.classList.toggle("active");
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".nav-links a").forEach(link => {
-        link.addEventListener("click", function() {
-            document.querySelector(".nav-links")?.classList.remove("active");
-        });
-    });
-});

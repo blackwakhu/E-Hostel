@@ -139,3 +139,7 @@ body {
 .main-content {
     margin-top: 70px;
 }
+
+.hide-elem {
+    display: none;
+}
