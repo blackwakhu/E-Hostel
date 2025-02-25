@@ -35,11 +35,37 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
                 <div class="my-hostel-html item hide-elem">
                     <h1>My Hostel</h1>
                 </div>
                 <div class="my-account-html item hide-elem">
-                    <h1>My Account</h1>
+                    {% comment %} <h1>My Account</h1> {% endcomment %}
+                    <table>
+                        <tr>
+                            <th>Admission Number</th>
+                            <td>{{ student.admission_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td>{{ student.first_name }} {{ student.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Hostels Booked</th>
+                            <td>
+                                <table>
+                                    {% comment %} {% for hostel in hostels %}
+                                        <tr>
+                                            <td><a href="{% url 'student_hostel' hostel.hostel.id %}">{{ hostel.hostel.hostel_name }}</a></td>
+                                            <td>{{ hostel.status }}</td>
+                                        </tr>
+                                    {% empty %}
+                                     <p>You currently have no hostel booked</p>
+                                    {% endfor %} {% endcomment %}
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

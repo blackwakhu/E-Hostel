@@ -18,9 +18,14 @@ for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
 }
 
-btnObj_student.forEach((bObj) => {
-    bObj.button.addEventListener("click", () => {
-        hideDivElements(bObj.button, buttonElements_student, bObj.div, divElements_student)
+document.addEventListener("DOMContentLoaded", () => {
+    btnObj_student.forEach((bObj) => {
+        if (bObj){
+            bObj.button.addEventListener("click", () => {
+                hideDivElements(bObj.button, buttonElements_student, bObj.div, divElements_student)
+            })
+        }
     })
 })
+
 

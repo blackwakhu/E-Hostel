@@ -57,8 +57,10 @@ def stud_log(request, req_type):
 
 def student_main_page(request):
     hostels = Hostel.objects.all()
+    student = Student.objects.get(admission_number=request.session["admission_number"])
     return render(request, 'student/main.html', {
-        "hostels": hostels
+        "hostels": hostels,
+        "student": student
         })
 
 def student_hostel(request, hostel_id):
