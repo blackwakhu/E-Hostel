@@ -1,4 +1,4 @@
-import { hideDivElements } from "./mymodules.js" 
+import { hideDivElements, hideUrlDivElements } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
     })
+
+    hideUrlDivElements(home_div_student, divElements_student)
+    
 })
 
 

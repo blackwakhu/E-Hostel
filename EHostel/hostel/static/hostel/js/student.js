@@ -1,4 +1,4 @@
-import { hideDivElements } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements } from "./mymodules.js";
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
@@ -21,4 +21,5 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+    hideUrlDivElements(home_div_student, divElements_student);
 });

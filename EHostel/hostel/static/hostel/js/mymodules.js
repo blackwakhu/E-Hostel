@@ -6,3 +6,14 @@ export function hideDivElements(btn, buttons, seeDiv, elems) {
     });
     seeDiv.classList.remove("hide-elem");
 }
+export function hideUrlDivElements(defaultDiv, divList) {
+    const hash = window.location.hash.substring(1);
+    const targetDiv = document.querySelector(`.${hash}`);
+    if (hash && targetDiv) {
+        divList.forEach(elem => elem.classList.add("hide-elem"));
+        targetDiv.classList.remove("hide-elem");
+    }
+    else {
+        defaultDiv.classList.remove("hide-elem");
+    }
+}
