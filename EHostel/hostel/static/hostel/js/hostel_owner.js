@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 function fetchBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,6 +30,7 @@ function displayBookings(hostelId) {
         try {
             const bookings = yield fetchBookings(hostelId);
             console.log(bookings);
+            console.log(hostel_id);
             // Assuming you have a div with id="bookings-list" to display the bookings
             //   const bookingsListDiv = document.getElementById("bookings-list");
             //   if (bookingsListDiv) {

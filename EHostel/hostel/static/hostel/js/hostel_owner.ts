@@ -1,3 +1,5 @@
+let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
+
 async function fetchBookings(hostelId) {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
@@ -20,6 +22,7 @@ async function fetchBookings(hostelId) {
     try {
         const bookings = await fetchBookings(hostelId);
         console.log(bookings)
+        console.log(hostel_id)
   
       // Assuming you have a div with id="bookings-list" to display the bookings
     //   const bookingsListDiv = document.getElementById("bookings-list");
