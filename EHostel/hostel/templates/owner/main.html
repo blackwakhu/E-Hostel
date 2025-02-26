@@ -1,5 +1,7 @@
 {% extends './base_owner.html' %}
 
+{% load static %}
+
 {% block content %}
     <div class="owner-main-wrap">
         <div class="owner-html">
@@ -88,3 +90,7 @@
         </div>
     </div>
 {% endblock %}
+
+{% block script %}
+    <script type="module" src="{% static 'hostel/js/owner.js' %}"></script>
+{% endblock  %}

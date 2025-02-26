@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 
 from .models import *
@@ -16,6 +16,7 @@ def logout(request):
 
 
 
+# student views
 def stud_login(request):
     return render(request, "student/login.html")
 
@@ -126,6 +127,7 @@ def student_profile(request):
 
 
 
+# owner routes
 def owner_login(request):
     return render(request, "owner/login.html")
 
@@ -251,4 +253,14 @@ def verify_booking(request, hostel_id, book_id, choice):
             book.status = "Rejected"
         book.save()
     return redirect("owner_hostel", hostel_id)
+
+
+# API routes
+def get_bookings(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    booked_people = []
+    bookings = Booking.objects.filter(hostel=hostel)
+    for booking in bookings:
+        booked_people.append({"id": booking.id,"status": booking.status, "student": booking.student})
+    return JsonResponse({"bookings": booked_people}, safe=False)
 

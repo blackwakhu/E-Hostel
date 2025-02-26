@@ -15,7 +15,7 @@ for (let i = 0; i < divElements.length; i++) {
 }
 document.addEventListener("DOMContentLoaded", () => {
     btnObj.forEach((bObj) => {
-        if (bObj) {
+        if (bObj !== null) {
             bObj.button.addEventListener("click", () => {
                 hideDivElements(bObj.button, buttonElements, bObj.div, divElements);
             });

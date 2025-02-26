@@ -1,3 +1,9 @@
+{% extends './base_owner.html' %}
+
+{% load static %}
+
+{% block body %}
+
 <table>
     <tr>
         <th>Hostel Name</th>
@@ -69,3 +75,12 @@
     <p>There were no students booking the hostels</p>
     {% endfor %}
 </table>
+
+
+<div id="hostelBookings"></div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="module" src="{% static 'hostel/js/hostel_owner.js' %}"></script>
+{% endblock  %}
