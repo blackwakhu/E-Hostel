@@ -9,11 +9,16 @@ export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorEleme
 
 export function hideUrlDivElements(defaultDiv: HTMLDivElement, divList: HTMLDivElement []) {
     const hash = window.location.hash.substring(1);
-    const targetDiv = document.querySelector<HTMLDivElement>(`.${hash}`);
+    
+    if (hash) {
+        const targetDiv = document.querySelector<HTMLDivElement>(`.${hash}`);
 
-    if (hash && targetDiv) {
-        divList.forEach(elem => elem.classList.add("hide-elem"));
-        targetDiv.classList.remove("hide-elem");
+        if (hash && targetDiv) {
+            divList.forEach(elem => elem.classList.add("hide-elem"));
+            targetDiv.classList.remove("hide-elem");
+        } else {
+            defaultDiv.classList.remove("hide-elem");
+        }
     } else {
         defaultDiv.classList.remove("hide-elem");
     }

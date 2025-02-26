@@ -1,21 +1,14 @@
-.owner-html .home {
-  border: none;
-}
-.owner-html .hostels {
-  border: none;
-}
-.owner-html .new-hostel {
-  border: none;
-}
-.owner-html .my-account {
-  border: none;
-}
-
-.main-content .hostels-html {
-  display: none;
+@media (max-width: 768px) {
+  .main-content .new-hostel-html .input {
+    margin-left: 0;
+    width: 100% !important;
+  }
+  .main-content .new-hostel-html .label {
+    margin-left: 0;
+    width: 100% !important;
+  }
 }
 .main-content .new-hostel-html {
-  display: none;
   margin-top: 90px;
   width: 70%;
   margin-left: 15%;
@@ -50,18 +43,4 @@
 }
 .main-content .new-hostel-html .group {
   margin-bottom: 10px;
-}
-.main-content .my-account-html {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .main-content .new-hostel-html .input {
-    margin-left: 0;
-    width: 100% !important;
-  }
-  .main-content .new-hostel-html .label {
-    margin-left: 0;
-    width: 100% !important;
-  }
 }

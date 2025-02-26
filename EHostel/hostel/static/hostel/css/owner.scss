@@ -1,28 +1,21 @@
-.owner-html {
-  .home {
-    border: none;
-  }
+@media (max-width: 768px) {
+  .main-content {
+    .new-hostel-html {
+      .input {
+        margin-left: 0;
+        width: 100% !important;
+      }
 
-  .hostels {
-    border: none;
-  }
-
-  .new-hostel {
-    border: none;
-  }
-
-  .my-account {
-    border: none;
+      .label {
+        margin-left: 0;
+        width: 100% !important;
+      }
+    }
   }
 }
 
 .main-content {
-  .hostels-html {
-    display: none;
-  }
-
   .new-hostel-html {
-    display: none;
     margin-top: 90px;
     width: 70%;
     margin-left: 15%;
@@ -60,26 +53,6 @@
 
     .group {
       margin-bottom: 10px;
-    }
-  }
-
-  .my-account-html {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    .new-hostel-html {
-      .input {
-        margin-left: 0;
-        width: 100% !important;
-      }
-
-      .label {
-        margin-left: 0;
-        width: 100% !important;
-      }
     }
   }
 }
