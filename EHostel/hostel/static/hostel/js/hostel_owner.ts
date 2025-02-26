@@ -1,4 +1,7 @@
+import { table } from "console";
+
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
+let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")
 
 async function fetchBookings(hostelId) {
     try {
@@ -22,31 +25,38 @@ async function fetchBookings(hostelId) {
     try {
         const bookings = await fetchBookings(hostelId);
         console.log(bookings)
-        console.log(hostel_id)
+        // console.log(hostel_id)
   
       // Assuming you have a div with id="bookings-list" to display the bookings
-    //   const bookingsListDiv = document.getElementById("bookings-list");
-  
-    //   if (bookingsListDiv) {
-    //     bookingsListDiv.innerHTML = ""; // Clear previous content
-  
-    //     if (bookings && bookings.length > 0) {
-    //       bookings.forEach((booking) => {
-    //         const bookingItem = document.createElement("div");
-    //         bookingItem.innerHTML = `
-    //           <p>Booking ID: ${booking.id}</p>
-    //           <p>Status: ${booking.status}</p>
-    //           <p>Student: ${booking.student}</p>
-    //           <hr>
-    //         `;
-    //         bookingsListDiv.appendChild(bookingItem);
-    //       });
-    //     } else {
-    //       bookingsListDiv.innerHTML = "<p>No bookings found.</p>";
-    //     }
-    //   } else {
-    //     console.error("bookings-list div not found");
-    //   }
+        //   const bookingsListDiv = document.getElementById("bookings-list");
+        
+        if (bookingDiv) {
+            bookingDiv.innerHTML = ""
+            if (bookings && bookings.length > 0) {
+                let tableBook = document.createElement("table")
+                let titleBook = document.createElement("thead")
+                titleBook.innerHTML += "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>"
+                tableBook.appendChild(titleBook)
+                let bodyBook = document.createElement("tbody")
+                bookings.forEach((booking) => {
+                    let tempTr = document.createElement("tr")
+                    tempTr.innerHTML = `
+                        <td>${booking.student.admin}</td>
+                        <td>${booking.student.first_name} ${booking.student.last_name}</td>
+                        <td>${booking.student.email}</td>
+                        <td>${booking.student.contact}</td>
+                        <td>${booking.status}</td>
+                    `
+                    bodyBook.appendChild(tempTr)
+
+                } )
+                tableBook.appendChild(bodyBook)
+                bookingDiv.appendChild(tableBook)
+            } else {
+                bookingDiv.innerHTML = "<p>No Students have booked the hostels</p>"
+            }
+            
+        }
   
     } catch (error) {
       // Handle errors from fetchBookings()
@@ -60,5 +70,9 @@ async function fetchBookings(hostelId) {
   
   // Example: Call displayBookings with a hostel ID (e.g., 4)
   document.addEventListener("DOMContentLoaded", () => {
-      displayBookings(4); // Replace 4 with the desired hostel ID.
+      displayBookings(hostel_id); // Replace 4 with the desired hostel ID.
   });
+
+setInterval(() => {
+      displayBookings(hostel_id)
+  }, 5000)
