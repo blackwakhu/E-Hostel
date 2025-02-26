@@ -12,24 +12,18 @@ async function fetchBookings(hostelId) {
       }
   
       const data = await response.json();
-      return data.bookings; // Return the bookings array
+      return data.bookings; 
   
     } catch (error) {
       console.error("Error fetching bookings:", error);
-      throw error; // Rethrow the error to be handled by the caller
+      throw error; 
     }
   }
   
-  // Example usage:
+
   async function displayBookings(hostelId) {
     try {
         const bookings = await fetchBookings(hostelId);
-        console.log(bookings)
-        // console.log(hostel_id)
-  
-      // Assuming you have a div with id="bookings-list" to display the bookings
-        //   const bookingsListDiv = document.getElementById("bookings-list");
-        
         if (bookingDiv) {
             bookingDiv.innerHTML = ""
             if (bookings && bookings.length > 0) {
@@ -59,7 +53,6 @@ async function fetchBookings(hostelId) {
         }
   
     } catch (error) {
-      // Handle errors from fetchBookings()
       console.error("Error displaying bookings:", error);
       if(document.getElementById("bookings-list")){
           document.getElementById("bookings-list").innerHTML = "<p>Error loading bookings.</p>"
@@ -68,9 +61,8 @@ async function fetchBookings(hostelId) {
     }
   }
   
-  // Example: Call displayBookings with a hostel ID (e.g., 4)
   document.addEventListener("DOMContentLoaded", () => {
-      displayBookings(hostel_id); // Replace 4 with the desired hostel ID.
+      displayBookings(hostel_id);
   });
 
 setInterval(() => {

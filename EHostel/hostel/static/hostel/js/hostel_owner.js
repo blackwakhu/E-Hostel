@@ -17,23 +17,19 @@ function fetchBookings(hostelId) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = yield response.json();
-            return data.bookings; // Return the bookings array
+            return data.bookings;
         }
         catch (error) {
             console.error("Error fetching bookings:", error);
-            throw error; // Rethrow the error to be handled by the caller
+            throw error;
         }
     });
 }
-// Example usage:
 function displayBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const bookings = yield fetchBookings(hostelId);
             console.log(bookings);
-            // console.log(hostel_id)
-            // Assuming you have a div with id="bookings-list" to display the bookings
-            //   const bookingsListDiv = document.getElementById("bookings-list");
             if (bookingDiv) {
                 bookingDiv.innerHTML = "";
                 if (bookings && bookings.length > 0) {
@@ -62,7 +58,6 @@ function displayBookings(hostelId) {
             }
         }
         catch (error) {
-            // Handle errors from fetchBookings()
             console.error("Error displaying bookings:", error);
             if (document.getElementById("bookings-list")) {
                 document.getElementById("bookings-list").innerHTML = "<p>Error loading bookings.</p>";
@@ -70,9 +65,8 @@ function displayBookings(hostelId) {
         }
     });
 }
-// Example: Call displayBookings with a hostel ID (e.g., 4)
 document.addEventListener("DOMContentLoaded", () => {
-    displayBookings(hostel_id); // Replace 4 with the desired hostel ID.
+    displayBookings(hostel_id);
 });
 setInterval(() => {
     displayBookings(hostel_id);
