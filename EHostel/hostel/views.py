@@ -261,6 +261,14 @@ def get_bookings(request, hostel_id):
     booked_people = []
     bookings = Booking.objects.filter(hostel=hostel)
     for booking in bookings:
-        booked_people.append({"id": booking.id,"status": booking.status, "student": booking.student})
+        student = {
+            "admin": booking.student.admission_number,
+            "email": booking.student.email,
+            "first_name": booking.student.first_name,
+            "last_name": booking.student.last_name,
+            "contact": booking.student.phone_number,
+            "gender": booking.student.gender
+        }
+        booked_people.append({"id": booking.id,"status": booking.status, "student": student})
     return JsonResponse({"bookings": booked_people}, safe=False)
 
