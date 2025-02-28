@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
+let availRoomsTd = document.querySelector("#avail_rooms");
 function fetchBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -17,7 +18,7 @@ function fetchBookings(hostelId) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = yield response.json();
-            return data.bookings;
+            return data;
         }
         catch (error) {
             console.error("Error fetching bookings:", error);
@@ -28,11 +29,14 @@ function fetchBookings(hostelId) {
 function displayBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const bookings = yield fetchBookings(hostelId);
-            console.log(bookings);
+            const data = yield fetchBookings(hostelId);
+            const bookings = data.bookings;
+            console.log(data);
+            console.log(data.vacancies);
             if (bookingDiv) {
-                bookingDiv.innerHTML = "";
+                bookingDiv.innerHTML = data.vacancies;
                 if (bookings && bookings.length > 0) {
+                    availRoomsTd.innerText = bookings.vacancies;
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
                     titleBook.innerHTML += "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>";

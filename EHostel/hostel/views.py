@@ -269,6 +269,10 @@ def get_bookings(request, hostel_id):
             "contact": booking.student.phone_number,
             "gender": booking.student.gender
         }
-        booked_people.append({"id": booking.id,"status": booking.status, "student": student})
-    return JsonResponse({"bookings": booked_people}, safe=False)
+        booked_people.append({
+            "id": booking.id,
+            "status": booking.status, 
+            "student": student
+        })
+    return JsonResponse({"bookings": booked_people, "vacancies": hostel.available_rooms}, safe=False)
 
