@@ -1,12 +1,14 @@
 import { table } from "console";
 
+const url: string = "http://127.0.0.1:8001"
+
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")
 let availRoomsTd: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#avail_rooms")
 
 async function fetchBookings(hostelId) {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
+      const response = await fetch(`${url}/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
   
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
