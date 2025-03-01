@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements, hideEditElements, saveData } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick } from "./mymodules.js";
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
@@ -40,6 +40,7 @@ let updateElements = [
     //     "cancelBtn": document.querySelector("#stud_contact_cancel")
     // }
 ];
+const admin = document.querySelector("#stud-admin").textContent;
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({ "button": buttonElements_student[i], "div": divElements_student[i] });
 }
@@ -56,7 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div"); });
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
         elem.subbtn.addEventListener("click", () => {
-            saveData(elem.inputElem);
+            // saveData(elem.inputElem)
+            handleUpdateClick(admin, elem.column, elem.inputElem.value, elem.displayClass);
             hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
         });
     });

@@ -1,4 +1,4 @@
-import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, saveData } from "./mymodules.js" 
+import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -45,6 +45,8 @@ let updateElements: UpdatedElementsint[] = [
     // }
 ]
 
+const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
+
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
 }
@@ -64,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div") })
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
         elem.subbtn.addEventListener("click", () => {
-            saveData(elem.inputElem)
+            // saveData(elem.inputElem)
+            handleUpdateClick(admin, elem.column, elem.inputElem.value, elem.displayClass)
             hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
         })
     })

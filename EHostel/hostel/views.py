@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 from .forms import *
+import json
 
 # Create your views here.
 
@@ -126,9 +127,23 @@ def student_profile(request):
     })
 
 @csrf_exempt
-def stud_update(request, admin, column, value):
+def stud_update(request, admin, column):
     student = Student.objects.get(admission_number=admin)
-    return JsonResponse(safe=False)
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            item = data.get(column)
+            if item:
+                student[column] = item
+                student.save()
+                return JsonResponse({"message": "saved successfully", "output": student[column]})
+            else: 
+                return JsonResponse({"message": "Some information was not provided"}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON data."}, status=400)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+    return JsonResponse({"message": "Method not allowed"}, status=405)
 
 
 
