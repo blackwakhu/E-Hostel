@@ -1,4 +1,4 @@
-import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements } from "./mymodules.js" 
+import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, saveData } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div") })
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
         elem.subbtn.addEventListener("click", () => {
+            saveData(elem.inputElem)
             hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
         })
     })

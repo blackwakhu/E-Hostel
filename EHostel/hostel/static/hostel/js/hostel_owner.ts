@@ -1,6 +1,5 @@
 import { table } from "console";
-
-const url: string = "http://127.0.0.1:8001"
+import { url } from "./mymodules"
 
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")

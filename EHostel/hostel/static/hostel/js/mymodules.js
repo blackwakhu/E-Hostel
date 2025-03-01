@@ -1,3 +1,4 @@
+export const url = "http://127.0.0.1:8001";
 export function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
@@ -31,4 +32,7 @@ export function hideEditElements(btn, visibleClass, hideClass, extBtn, classStr)
     }
     visibleClass.classList.add(classStr);
     btn.classList.add(classStr);
+}
+export function saveData(inp) {
+    const data = inp.value;
 }

@@ -9,6 +9,7 @@ export interface UpdatedElementsint {
     column: string
 }
 
+export const url: string = "http://127.0.0.1:8001"
 
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
@@ -44,4 +45,8 @@ export function hideEditElements(btn: HTMLButtonElement, visibleClass: HTMLSpanE
     }
     visibleClass.classList.add(classStr)
     btn.classList.add(classStr)
+}
+
+export function saveData(inp: HTMLInputElement) {
+    const data = inp.value
 }
