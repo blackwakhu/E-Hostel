@@ -10,6 +10,9 @@ let my_account_div_student = document.querySelector(".my-account-html");
 let divElements_student = [home_div_student, hostels_div_student, my_hostel_div_student, my_account_div_student];
 let buttonElements_student = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student];
 let btnObj_student = new Array();
+let updateElements = [
+    { "editBtn": document.querySelector("#stud-fname-btn") }
+];
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({ "button": buttonElements_student[i], "div": divElements_student[i] });
 }
@@ -22,4 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     hideUrlDivElements(home_div_student, divElements_student);
+});
+updateElements.forEach((elem) => {
 });

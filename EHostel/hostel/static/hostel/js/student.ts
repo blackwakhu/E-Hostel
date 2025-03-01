@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements } from "./mymodules.js" 
+import { hideDivElements, hideUrlDivElements, updateEditElements } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -14,6 +14,10 @@ let divElements_student: HTMLDivElement[] = [home_div_student, hostels_div_stude
 let buttonElements_student: HTMLAnchorElement[] = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student]
 let btnObj_student: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
+let updateElements: { editBtn: HTMLButtonElement }[] = [
+    {"editBtn": document.querySelector<HTMLButtonElement>("#stud-fname-btn")}
+]
+
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
 }
@@ -28,6 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     hideUrlDivElements(home_div_student, divElements_student)
+    
+})
+
+updateElements.forEach((elem) => {
     
 })
 

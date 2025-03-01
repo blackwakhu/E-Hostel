@@ -23,3 +23,5 @@ export function hideUrlDivElements(defaultDiv: HTMLDivElement, divList: HTMLDivE
         defaultDiv.classList.remove("hide-elem");
     }
 }
+
+export function updateEditElements (editBtn: HTMLButtonElement) {}
