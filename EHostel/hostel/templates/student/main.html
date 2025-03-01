@@ -48,7 +48,10 @@
                         </tr>
                         <tr>
                             <th>First Name</th>
+                            <span id='stud_fname_display'>
                             <td>{{ student.first_name }} </td>
+                            <td><button>Edit</button></td>
+                            </span>
                         </tr>
                         <tr>
                             <th>Last Name</th>
@@ -72,21 +75,6 @@
                                 {% endif %}
                             </td>
                         </tr>
-                        {% comment %} <tr>
-                            <th>Hostels Booked</th>
-                            <td>
-                                <table>
-                                    {% comment %} {% for hostel in hostels %}
-                                        <tr>
-                                            <td><a href="{% url 'student_hostel' hostel.hostel.id %}">{{ hostel.hostel.hostel_name }}</a></td>
-                                            <td>{{ hostel.status }}</td>
-                                        </tr>
-                                    {% empty %}
-                                     <p>You currently have no hostel booked</p>
-                                    {% endfor %} {% endcomment %}
-                              {% comment %}  </table>
-                            </td>
-                        </tr> {% endcomment %}
                     </table>
                 </div>
             </div>

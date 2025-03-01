@@ -124,6 +124,10 @@ def student_profile(request):
         'hostels': booked_hostels
     })
 
+def stud_update(request, column, value):
+    student = Student.objects.get(admission_number=request.session["admission_number"])
+    return JsonResponse(safe=False)
+
 
 
 
