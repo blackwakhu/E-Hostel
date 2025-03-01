@@ -52,7 +52,7 @@
                                 <td>
                                     <span class="stud-fname-display">{{ student.first_name }} </span>
                                     <span class="hide-div stud-fname-input">
-                                        <form id="stud-fname-form">
+                                        <form>
                                             <input type="text" value="{{ student.first_name }}" id="stud-fname-inp"/>
                                             <input type="submit" value="save" id="stud-fname-sub"/>
                                         </form>
@@ -69,8 +69,8 @@
                                     <span class="stud-lname-display">{{ student.last_name }} </span>
                                     <span class="hide-div stud-lname-input">
                                         <form>
-                                            <input type="text" value="{{ student.last_name }}"/>
-                                            <input type="submit" value="save" />
+                                            <input type="text" value="{{ student.last_name }}" id="stud-lname-inp"/>
+                                            <input type="submit" value="save" id="stud-lname-sub"/>
                                         </form>
                                     </span>
                                 </td>
@@ -85,8 +85,8 @@
                                     <span class="stud-email-display">{{ student.email }} </span>
                                     <span class="hide-div stud-email-input">
                                         <form>
-                                            <input type="email" value="{{ student.email }}"/>
-                                            <input type="submit" value="save" />
+                                            <input type="email" value="{{ student.email }}" id="stud-email-inp"/>
+                                            <input type="submit" value="save" id="stud-email-sub"/>
                                         </form>
                                     </span>
                                 </td>
@@ -101,8 +101,8 @@
                                     <span class="stud-contact-display">{{ student.phone_number }} </span>
                                     <span class="hide-div stud-contact-input">
                                         <form>
-                                            <input type="text" value="{{ student.phone_number }}"/>
-                                            <input type="submit" value="save" />
+                                            <input type="text" value="{{ student.phone_number }}" id="stud-contact-inp"/>
+                                            <input type="submit" value="save" id="stud-contact-sub"/>
                                         </form>
                                     </span>
                                 </td>

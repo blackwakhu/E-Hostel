@@ -1,3 +1,4 @@
+import { validateNumber, validatePassword } from "./mymodules";
 let passwdOwner = document.querySelector("#passwdOwner");
 let passwd1Owner = document.querySelector("#passwd1Owner");
 let submitOwner = document.querySelector("#submitOwnerBtn");
@@ -9,14 +10,6 @@ let submitStudent = document.querySelector("#submitStudent");
 let msg = document.querySelector("#message");
 let msgConf = document.querySelector("#messageConf");
 let msgTell = document.querySelector("#messageTell");
-function validatePassword(password) {
-    const regex = /^(?=.*[A-Za-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return regex.test(password);
-}
-function validateNumber(num) {
-    const regex = /^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/;
-    return regex.test(num);
-}
 function checkPasswords(original, confirm, tellinp, submit) {
     const password = original.value;
     const password1 = confirm.value;

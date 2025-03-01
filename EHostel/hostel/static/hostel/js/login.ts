@@ -1,3 +1,5 @@
+import { validateNumber, validatePassword } from "./mymodules"
+
 let passwdOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#passwdOwner")
 let passwd1Owner: HTMLInputElement | null= document.querySelector<HTMLInputElement>("#passwd1Owner")
 let submitOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#submitOwnerBtn")
@@ -11,16 +13,6 @@ let submitStudent: HTMLInputElement | null = document.querySelector<HTMLInputEle
 let msg: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#message")
 let msgConf: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#messageConf")
 let msgTell: HTMLSpanElement =  document.querySelector<HTMLSpanElement>("#messageTell")
-
-function validatePassword(password: string): boolean {
-    const regex = /^(?=.*[A-Za-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    return regex.test(password)
-}
-
-function validateNumber(num: string): boolean {
-    const regex =/^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/
-    return regex.test(num)
-}
 
 function checkPasswords(original: HTMLInputElement, confirm: HTMLInputElement, tellinp: HTMLInputElement, submit: HTMLInputElement) {
     const password: string = original.value

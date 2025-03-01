@@ -1,4 +1,4 @@
-import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick } from "./mymodules.js" 
+import { url, UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -20,29 +20,37 @@ let updateElements: UpdatedElementsint[] = [
         displayClass: document.querySelector(".stud-fname-display"),
         inputClass: document.querySelector(".stud-fname-input"),
         cancelBtn: document.querySelector("#stud_fname_cancel"),
-        formElem: document.querySelector("#stud-fname-form"),
         inputElem: document.querySelector("#stud-fname-inp"),
         subbtn: document.querySelector("#stud-fname-sub"),
         column: "first_name"
     },
-    // {
-    //     "editBtn": document.querySelector("#stud-lname-btn"),
-    //     "displayClass": document.querySelector(".stud-lname-display"),
-    //     "inputClass": document.querySelector(".stud-lname-input"),
-    //     "cancelBtn": document.querySelector("#stud_lname_cancel")
-    // },
-    // {
-    //     "editBtn": document.querySelector("#stud-email-btn"),
-    //     "displayClass": document.querySelector(".stud-email-display"),
-    //     "inputClass": document.querySelector(".stud-email-input"),
-    //     "cancelBtn": document.querySelector("#stud_email_cancel")
-    // },
-    // {
-    //     "editBtn": document.querySelector("#stud-contact-btn"),
-    //     "displayClass": document.querySelector(".stud-contact-display"),
-    //     "inputClass": document.querySelector(".stud-contact-input"),
-    //     "cancelBtn": document.querySelector("#stud_contact_cancel")
-    // }
+    {
+        editBtn: document.querySelector("#stud-lname-btn"),
+        displayClass: document.querySelector(".stud-lname-display"),
+        inputClass: document.querySelector(".stud-lname-input"),
+        cancelBtn: document.querySelector("#stud_lname_cancel"),
+        inputElem: document.querySelector("#stud-lname-inp"),
+        subbtn: document.querySelector("#stud-lname-sub"),
+        column: "last_name"
+    },
+    {
+        editBtn: document.querySelector("#stud-email-btn"),
+        displayClass: document.querySelector(".stud-email-display"),
+        inputClass: document.querySelector(".stud-email-input"),
+        cancelBtn: document.querySelector("#stud_email_cancel"),
+        inputElem: document.querySelector("#stud-email-inp"),
+        subbtn: document.querySelector("#stud-email-sub"),
+        column: "email"
+    },
+    {
+        editBtn: document.querySelector("#stud-contact-btn"),
+        displayClass: document.querySelector(".stud-contact-display"),
+        inputClass: document.querySelector(".stud-contact-input"),
+        cancelBtn: document.querySelector("#stud_contact_cancel"),
+        inputElem: document.querySelector("#stud-contact-inp"),
+        subbtn: document.querySelector("#stud-contact-sub"),
+        column: "phone_number"
+    }
 ]
 
 const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
@@ -67,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
         elem.subbtn.addEventListener("click", () => {
             // saveData(elem.inputElem)
-            handleUpdateClick(admin, elem.column, elem.inputElem.value, elem.displayClass)
+            const elemurl: string = `${url}/api/student/update/${admin}/${elem.column}/`
+            handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
             hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
         })
     })

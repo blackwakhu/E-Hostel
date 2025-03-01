@@ -3,7 +3,6 @@ export interface UpdatedElementsint {
     displayClass: HTMLSpanElement,
     inputClass: HTMLSpanElement,
     cancelBtn: HTMLButtonElement,
-    formElem: HTMLFormElement,
     inputElem: HTMLInputElement,
     subbtn: HTMLInputElement,
     column: string
@@ -47,11 +46,11 @@ export function hideEditElements(btn: HTMLButtonElement, visibleClass: HTMLSpanE
     btn.classList.add(classStr)
 }
 
-async function updateStudent(admissionNumber: string, column: string, newValue: any): Promise<any> {
+async function updateData(myurl: string, column: string, newValue: any): Promise<any> {
     const csrfToken = (document.querySelector('input[name="csrfmiddlewaretoken"]') as HTMLInputElement)?.value;
   
     try {
-      const response = await fetch(`${url}/api/student/update/${admissionNumber}/${column}/`, {
+      const response = await fetch(myurl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,55 +69,26 @@ async function updateStudent(admissionNumber: string, column: string, newValue: 
   
     } catch (error) {
       console.error('Error updating student:', error);
-      throw error; // Re-throw the error to be handled by the caller
+      throw error; 
     }
   }
   
-  // Example usage within an event handler or other function:
-  export async function handleUpdateClick(admissionNumber: string, column: string, newValue: any, messageElement: HTMLElement) {
+export async function handleUpdateClick(myurl: string, column: string, newValue: any, messageElement: HTMLSpanElement) {
     try {
-      const result = await updateStudent(admissionNumber, column, newValue);
+      const result = await updateData(myurl, column, newValue);
       messageElement.textContent = result.output;
-      console.log('Update result:', result);
-      // You can also access result.output if it's available
     } catch (error: any) {
         let errmsg: string = error.message || 'An error occurred during update.';
         alert(errmsg)
     }
-  }
+}
 
-// export function saveData(inp: HTMLInputElement) {
-//     const data = inp.value
-    
-// }
+export function validatePassword(password: string): boolean {
+    const regex = /^(?=.*[A-Za-z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    return regex.test(password)
+}
 
-// updateButton.addEventListener('click', () => {
-//     const firstName = firstNameInput.value;
-//     const studentId = (document.getElementById('studentId') as HTMLInputElement).value; // Get student ID from a hidden input
-
-//     fetch(`/update_student_name/${studentId}/`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'X-CSRFToken': (document.querySelector('input[name="csrfmiddlewaretoken"]') as HTMLInputElement).value, // Get CSRF token
-//         },
-//         body: JSON.stringify({ firstName: firstName }),
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         if (data && data.message) {
-//             messageElement.textContent = data.message;
-//         } else {
-//             messageElement.textContent = "Response missing message";
-//         }
-//     })
-//     .catch(error => {
-//         console.error('There has been a problem with your fetch operation:', error);
-//         messageElement.textContent = 'Error updating student name.';
-//     });
-// });
+export function validateNumber(num: string): boolean {
+    const regex =/^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/
+    return regex.test(num)
+}
