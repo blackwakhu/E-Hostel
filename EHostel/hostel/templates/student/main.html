@@ -53,7 +53,7 @@
                                     <span class="stud-fname-display">{{ student.first_name }} </span>
                                     <span class="hide-div stud-fname-input">
                                         <form>
-                                            <input type="text"/>
+                                            <input type="text" value="{{ student.first_name }}"/>
                                             <input type="submit" value="save" />
                                         </form>
                                     </span>
@@ -65,15 +65,51 @@
                             </tr>
                             <tr>
                                 <th>Last Name</th>
-                                <td>{{ student.last_name }}</td>
+                                <td>
+                                    <span class="stud-lname-display">{{ student.last_name }} </span>
+                                    <span class="hide-div stud-lname-input">
+                                        <form>
+                                            <input type="text" value="{{ student.last_name }}"/>
+                                            <input type="submit" value="save" />
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="stud-lname-display" id="stud-lname-btn">Edit</button>
+                                    <button class="hide-div stud-lname-input" id="stud_lname_cancel">Cancel</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <td> {{ student.email }} </td>
+                                <td>
+                                    <span class="stud-email-display">{{ student.email }} </span>
+                                    <span class="hide-div stud-email-input">
+                                        <form>
+                                            <input type="email" value="{{ student.email }}"/>
+                                            <input type="submit" value="save" />
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="stud-email-display" id="stud-email-btn">Edit</button>
+                                    <button class="hide-div stud-email-input" id="stud_email_cancel">Cancel</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Phone Number</th>
-                                <td>{{ student.phone_number }} </td>
+                                <td>
+                                    <span class="stud-contact-display">{{ student.phone_number }} </span>
+                                    <span class="hide-div stud-contact-input">
+                                        <form>
+                                            <input type="text" value="{{ student.phone_number }}"/>
+                                            <input type="submit" value="save" />
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="stud-contact-display" id="stud-contact-btn">Edit</button>
+                                    <button class="hide-div stud-contact-input" id="stud_contact_cancel">Cancel</button>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Gender</th>

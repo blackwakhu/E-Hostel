@@ -16,10 +16,28 @@ let btnObj_student: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new A
 
 let updateElements: { editBtn: HTMLButtonElement, displayClass: HTMLElement, inputClass: HTMLElement, cancelBtn: HTMLButtonElement }[] = [
     {
-        "editBtn": document.querySelector<HTMLButtonElement>("#stud-fname-btn"),
+        "editBtn": document.querySelector("#stud-fname-btn"),
         "displayClass": document.querySelector(".stud-fname-display"),
         "inputClass": document.querySelector(".stud-fname-input"),
         "cancelBtn": document.querySelector("#stud_fname_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-lname-btn"),
+        "displayClass": document.querySelector(".stud-lname-display"),
+        "inputClass": document.querySelector(".stud-lname-input"),
+        "cancelBtn": document.querySelector("#stud_lname_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-email-btn"),
+        "displayClass": document.querySelector(".stud-email-display"),
+        "inputClass": document.querySelector(".stud-email-input"),
+        "cancelBtn": document.querySelector("#stud_email_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-contact-btn"),
+        "displayClass": document.querySelector(".stud-contact-display"),
+        "inputClass": document.querySelector(".stud-contact-input"),
+        "cancelBtn": document.querySelector("#stud_contact_cancel")
     }
 ]
 

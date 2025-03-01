@@ -16,6 +16,24 @@ let updateElements = [
         "displayClass": document.querySelector(".stud-fname-display"),
         "inputClass": document.querySelector(".stud-fname-input"),
         "cancelBtn": document.querySelector("#stud_fname_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-lname-btn"),
+        "displayClass": document.querySelector(".stud-lname-display"),
+        "inputClass": document.querySelector(".stud-lname-input"),
+        "cancelBtn": document.querySelector("#stud_lname_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-email-btn"),
+        "displayClass": document.querySelector(".stud-email-display"),
+        "inputClass": document.querySelector(".stud-email-input"),
+        "cancelBtn": document.querySelector("#stud_email_cancel")
+    },
+    {
+        "editBtn": document.querySelector("#stud-contact-btn"),
+        "displayClass": document.querySelector(".stud-contact-display"),
+        "inputClass": document.querySelector(".stud-contact-input"),
+        "cancelBtn": document.querySelector("#stud_contact_cancel")
     }
 ];
 for (let i = 0; i < divElements_student.length; i++) {
