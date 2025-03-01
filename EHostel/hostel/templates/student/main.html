@@ -49,16 +49,18 @@
                             </tr>
                             <tr>
                                 <th>First Name</th>
-                                <td><span class="stud-fname-display">{{ student.first_name }} </span></td>
-                                <td><button class="stud-fname-display" id="stud-fname-btn">Edit</button></td>
-                                <td><span class="hide-div stud_fname_edit">
-                                    <form>
-                                        <input type="text"/>
-                                        <input type="submit" value="save" />
-                                    </form>
                                 <td>
+                                    <span class="stud-fname-display">{{ student.first_name }} </span>
+                                    <span class="hide-div stud-fname-input">
+                                        <form>
+                                            <input type="text"/>
+                                            <input type="submit" value="save" />
+                                        </form>
+                                    </span>
+                                </td>
                                 <td>
-                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                                    <button class="stud-fname-display" id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div stud-fname-input" id="stud_fname_cancel">Cancel</button>
                                 </td>
                             </tr>
                             <tr>

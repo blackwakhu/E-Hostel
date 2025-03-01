@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements, hideEditElements } from "./mymodules.js";
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
@@ -11,7 +11,12 @@ let divElements_student = [home_div_student, hostels_div_student, my_hostel_div_
 let buttonElements_student = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student];
 let btnObj_student = new Array();
 let updateElements = [
-    { "editBtn": document.querySelector("#stud-fname-btn") }
+    {
+        "editBtn": document.querySelector("#stud-fname-btn"),
+        "displayClass": document.querySelector(".stud-fname-display"),
+        "inputClass": document.querySelector(".stud-fname-input"),
+        "cancelBtn": document.querySelector("#stud_fname_cancel")
+    }
 ];
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({ "button": buttonElements_student[i], "div": divElements_student[i] });
@@ -25,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     hideUrlDivElements(home_div_student, divElements_student);
-});
-updateElements.forEach((elem) => {
+    updateElements.forEach((elem) => {
+        elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div"); });
+        elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
+    });
 });

@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements, updateEditElements } from "./mymodules.js" 
+import { hideDivElements, hideUrlDivElements, hideEditElements } from "./mymodules.js" 
 
 let home_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -14,8 +14,13 @@ let divElements_student: HTMLDivElement[] = [home_div_student, hostels_div_stude
 let buttonElements_student: HTMLAnchorElement[] = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student]
 let btnObj_student: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
-let updateElements: { editBtn: HTMLButtonElement }[] = [
-    {"editBtn": document.querySelector<HTMLButtonElement>("#stud-fname-btn")}
+let updateElements: { editBtn: HTMLButtonElement, displayClass: HTMLElement, inputClass: HTMLElement, cancelBtn: HTMLButtonElement }[] = [
+    {
+        "editBtn": document.querySelector<HTMLButtonElement>("#stud-fname-btn"),
+        "displayClass": document.querySelector(".stud-fname-display"),
+        "inputClass": document.querySelector(".stud-fname-input"),
+        "cancelBtn": document.querySelector("#stud_fname_cancel")
+    }
 ]
 
 for (let i = 0; i < divElements_student.length; i++) {
@@ -32,11 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     hideUrlDivElements(home_div_student, divElements_student)
+
+    updateElements.forEach((elem) => {
+        elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div") })
+        elem.cancelBtn.addEventListener("click", ()=> { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
+    })
     
 })
 
-updateElements.forEach((elem) => {
-    
-})
+
 
 

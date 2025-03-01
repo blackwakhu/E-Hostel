@@ -22,4 +22,13 @@ export function hideUrlDivElements(defaultDiv, divList) {
         defaultDiv.classList.remove("hide-elem");
     }
 }
-export function updateEditElements(editBtn) { }
+export function hideEditElements(btn, visibleClass, hideClass, extBtn, classStr) {
+    if (hideClass.classList.contains(classStr)) {
+        hideClass.classList.remove(classStr);
+    }
+    if (extBtn.classList.contains(classStr)) {
+        extBtn.classList.remove(classStr);
+    }
+    visibleClass.classList.add(classStr);
+    btn.classList.add(classStr);
+}

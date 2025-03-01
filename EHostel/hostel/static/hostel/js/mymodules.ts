@@ -24,4 +24,12 @@ export function hideUrlDivElements(defaultDiv: HTMLDivElement, divList: HTMLDivE
     }
 }
 
-export function updateEditElements (editBtn: HTMLButtonElement) {}
+export function hideEditElements(btn: HTMLButtonElement, visibleClass: HTMLElement, hideClass: HTMLElement, extBtn: HTMLButtonElement, classStr: string) {
+    if (hideClass.classList.contains(classStr)) {
+        hideClass.classList.remove(classStr)
+    } if (extBtn.classList.contains(classStr)) {
+        extBtn.classList.remove(classStr)
+    }
+    visibleClass.classList.add(classStr)
+    btn.classList.add(classStr)
+}
