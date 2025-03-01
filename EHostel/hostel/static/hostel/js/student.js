@@ -1,4 +1,4 @@
-import { url, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick } from "./mymodules.js";
+import { url, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
@@ -66,9 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
         elem.subbtn.addEventListener("click", () => {
             // saveData(elem.inputElem)
-            const elemurl = `${url}/api/student/update/${admin}/${elem.column}/`;
-            handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass);
-            hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
+            if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
+                alert("The phone number is not valid");
+            }
+            else {
+                const elemurl = `${url}/api/student/update/${admin}/${elem.column}/`;
+                handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass);
+                hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
+            }
         });
     });
 });

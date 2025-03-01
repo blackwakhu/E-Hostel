@@ -38,9 +38,21 @@
                 </div>
                 <div id="my-hostel-html" class="my-hostel-html item hide-elem">
                     <h1>My Hostel</h1>
+                    <div class="card-container">
+                        {% for book in booked_hostels %}
+                            <div class="card">
+                                <img src="image.jpg" width="100%" height="200px" alt="{{ book.hostel.hostel_name }} image">
+                                <div class="card-content">
+                                    <a href="{% url 'student_hostel' book.hostel.id %}">{{ book.hostel.hostel_name }}</a>           
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p>You currently have no hostels booked</p>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div id="my-account-html" class="my-account-html item hide-elem">
-                    {% comment %} <h1>My Account</h1> {% endcomment %}
+                    <h1>My Account</h1> 
                     <div class="account-div">
                         <table>
                             <tr>

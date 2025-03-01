@@ -29,19 +29,6 @@ class Owner(models.Model):
     def __str__(self):
         return self.username
 
-# class Message(models.Model):
-#     sender_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
-#     sender_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="sent_messages")
-#     receiver_student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
-#     receiver_owner = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, blank=True, related_name="received_messages")
-#     content = models.TextField()
-#     timestamp = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         sender = self.sender_student if self.sender_student else self.sender_owner
-#         receiver = self.receiver_student if self.receiver_student else self.receiver_owner
-#         return f"{sender} → {receiver}: {self.content[:30]}"
-
 class Hostel(models.Model):
     hostel_name = models.CharField(max_length=25)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name="hostels")

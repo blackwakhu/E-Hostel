@@ -61,9 +61,14 @@ def stud_log(request, req_type):
 def student_main_page(request):
     hostels = Hostel.objects.all()
     student = Student.objects.get(admission_number=request.session["admission_number"])
+    booked_hostels = []
+    bookings = Booking.objects.filter(student=student)
+    for booking in bookings:
+        booked_hostels.append({'hostel': booking.hostel, 'status': booking.status})
     return render(request, 'student/main.html', {
         "hostels": hostels,
-        "student": student
+        "student": student,
+        "booked_hostels": booked_hostels
         })
 
 def student_hostel(request, hostel_id):
@@ -125,27 +130,6 @@ def student_profile(request):
         "student":student, 
         'hostels': booked_hostels
     })
-
-@csrf_exempt
-def stud_update(request, admin, column):
-    student = Student.objects.get(admission_number=admin)
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            item = data.get(column)
-            if item:
-                setattr(student, column, item)
-                student.save()
-                return JsonResponse({"message": "saved successfully", "output": getattr(student, column)})
-            else: 
-                return JsonResponse({"message": "Some information was not provided"}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({"message": "Invalid JSON data."}, status=400)
-        except Exception as e:
-            return JsonResponse({"message": str(e)}, status=500)
-    return JsonResponse({"message": "Method not allowed"}, status=405)
-
-
 
 
 # owner routes
@@ -296,4 +280,23 @@ def get_bookings(request, hostel_id):
             "student": student
         })
     return JsonResponse({"bookings": booked_people, "vacancies": hostel.available_rooms}, safe=False)
+
+@csrf_exempt
+def stud_update(request, admin, column):
+    student = Student.objects.get(admission_number=admin)
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            item = data.get(column)
+            if item:
+                setattr(student, column, item)
+                student.save()
+                return JsonResponse({"message": "saved successfully", "output": getattr(student, column)})
+            else: 
+                return JsonResponse({"message": "Some information was not provided"}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON data."}, status=400)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+    return JsonResponse({"message": "Method not allowed"}, status=405)
 
