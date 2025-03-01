@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 from .forms import *
@@ -124,8 +125,9 @@ def student_profile(request):
         'hostels': booked_hostels
     })
 
-def stud_update(request, column, value):
-    student = Student.objects.get(admission_number=request.session["admission_number"])
+@csrf_exempt
+def stud_update(request, admin, column, value):
+    student = Student.objects.get(admission_number=admin)
     return JsonResponse(safe=False)
 
 

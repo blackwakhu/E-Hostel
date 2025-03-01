@@ -52,15 +52,15 @@
                                 <td>
                                     <span class="stud-fname-display">{{ student.first_name }} </span>
                                     <span class="hide-div stud-fname-input">
-                                        <form>
-                                            <input type="text" value="{{ student.first_name }}"/>
-                                            <input type="submit" value="save" />
+                                        <form id="stud-fname-form">
+                                            <input type="text" value="{{ student.first_name }}" id="stud-fname-inp"/>
+                                            <input type="submit" value="save" id="stud-fname-sub"/>
                                         </form>
                                     </span>
                                 </td>
                                 <td>
-                                    <button class="stud-fname-display" id="stud-fname-btn">Edit</button>
-                                    <button class="hide-div stud-fname-input" id="stud_fname_cancel">Cancel</button>
+                                    <button id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
                                 </td>
                             </tr>
                             <tr>
