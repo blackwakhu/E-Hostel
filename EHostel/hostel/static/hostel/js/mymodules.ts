@@ -78,7 +78,7 @@ async function updateStudent(admissionNumber: string, column: string, newValue: 
   export async function handleUpdateClick(admissionNumber: string, column: string, newValue: any, messageElement: HTMLElement) {
     try {
       const result = await updateStudent(admissionNumber, column, newValue);
-      messageElement.textContent = result.message;
+      messageElement.textContent = result.output;
       console.log('Update result:', result);
       // You can also access result.output if it's available
     } catch (error: any) {

@@ -73,7 +73,7 @@ export function handleUpdateClick(admissionNumber, column, newValue, messageElem
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield updateStudent(admissionNumber, column, newValue);
-            messageElement.textContent = result.message;
+            messageElement.textContent = result.output;
             console.log('Update result:', result);
             // You can also access result.output if it's available
         }

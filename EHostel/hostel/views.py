@@ -134,9 +134,9 @@ def stud_update(request, admin, column):
             data = json.loads(request.body)
             item = data.get(column)
             if item:
-                student[column] = item
+                setattr(student, column, item)
                 student.save()
-                return JsonResponse({"message": "saved successfully", "output": student[column]})
+                return JsonResponse({"message": "saved successfully", "output": getattr(student, column)})
             else: 
                 return JsonResponse({"message": "Some information was not provided"}, status=400)
         except json.JSONDecodeError:
