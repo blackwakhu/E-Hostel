@@ -23,7 +23,7 @@ class Owner(models.Model):
     first_name = models.CharField(max_length=45)
     last_name = models.CharField(max_length=45)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=10, unique=True)
+    phone_number = models.CharField(max_length=14, unique=True)
     password = models.CharField(max_length=255)
 
     def __str__(self):

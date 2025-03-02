@@ -1,4 +1,4 @@
-import { validateNumber, validatePassword } from "./mymodules"
+import { validateNumber, validatePassword } from "./mymodules.js"
 
 let passwdOwner: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#passwdOwner")
 let passwd1Owner: HTMLInputElement | null= document.querySelector<HTMLInputElement>("#passwd1Owner")
