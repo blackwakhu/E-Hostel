@@ -1,5 +1,5 @@
 import { table } from "console";
-import { url } from "./mymodules"
+import { url } from "./mymodules.js"
 
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")

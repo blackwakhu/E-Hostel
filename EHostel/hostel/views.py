@@ -10,9 +10,11 @@ import json
 # Create your views here.
 
 def index(request):
+    """This is the route to the first the first page the the user sees when they access the system"""
     return render(request, "index.html")
 
 def logout(request):
+    """This is the view that when pressed logs out the user and closes their account"""
     request.session.flush()
     return redirect('index')
 
