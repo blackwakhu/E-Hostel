@@ -1,14 +1,5 @@
 import { hideDivElements, hideUrlDivElements } from "./mymodules.js"
 
-interface bookingStudent {
-    admission_number: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    phone_number: string,
-    gender: string
-}
-
 let home_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
 let new_hostel_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".new-hostel")
@@ -28,6 +19,8 @@ for (let i = 0; i < divElements.length; i++) {
     btnObj.push({"button": buttonElements[i], "div": divElements[i]})
 }
 
+const uname: string = document.querySelector("#owner-uname").textContent
+
 document.addEventListener("DOMContentLoaded", () => {
     btnObj.forEach((bObj) => {
         if (bObj !== null){
@@ -38,7 +31,5 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     hideUrlDivElements(home_div, divElements)
-
-    
-    
+   
 })

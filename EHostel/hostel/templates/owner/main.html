@@ -84,18 +84,79 @@
                     </div>
                 </div>
                 <div id="my-account-html" class="my-account-html item hide-elem">
-                    <h1>Account</h1>
-                    <table>
-                        <tr>
-                            <th>Username</th>
-                        </tr>
-                        <tr>
-                            <th>First Name</th>
-                        </tr>
-                        <tr>
-                            <th>Last Name</th>
-                        </tr>
-                    </table>
+                    <div class="account-div">
+                        <h1>Account</h1>
+                        <table>
+                            <tr>
+                                <th>Username</th>
+                                <td><span id="owner-uname">{{ owner.username }}</span></td>
+                            </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <td>
+                                    <span class="stud-fname-display">{{ owner.first_name }} </span>
+                                    <span class="hide-div stud-fname-input">
+                                        <form>
+                                            <input type="text" value="{{ owner.first_name }}" id="stud-fname-inp"/>
+                                            <input type="submit" value="save" id="stud-fname-sub"/>
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Last Name</th>
+                                <td>
+                                    <span class="stud-fname-display">{{ owner.first_name }} </span>
+                                    <span class="hide-div stud-fname-input">
+                                        <form>
+                                            <input type="text" value="{{ owner.first_name }}" id="stud-fname-inp"/>
+                                            <input type="submit" value="save" id="stud-fname-sub"/>
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>
+                                    <span class="stud-fname-display">{{ owner.first_name }} </span>
+                                    <span class="hide-div stud-fname-input">
+                                        <form>
+                                            <input type="text" value="{{ owner.first_name }}" id="stud-fname-inp"/>
+                                            <input type="submit" value="save" id="stud-fname-sub"/>
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Phone Number</th>
+                                <td>
+                                    <span class="stud-fname-display">{{ owner.first_name }} </span>
+                                    <span class="hide-div stud-fname-input">
+                                        <form>
+                                            <input type="text" value="{{ owner.first_name }}" id="stud-fname-inp"/>
+                                            <input type="submit" value="save" id="stud-fname-sub"/>
+                                        </form>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button id="stud-fname-btn">Edit</button>
+                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

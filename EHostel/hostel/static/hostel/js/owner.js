@@ -13,6 +13,7 @@ let btnObj = new Array();
 for (let i = 0; i < divElements.length; i++) {
     btnObj.push({ "button": buttonElements[i], "div": divElements[i] });
 }
+const uname = document.querySelector("#owner-uname").textContent;
 document.addEventListener("DOMContentLoaded", () => {
     btnObj.forEach((bObj) => {
         if (bObj !== null) {

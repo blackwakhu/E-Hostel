@@ -175,7 +175,7 @@ def owner_main_page(request):
         username = request.session["username"]
         owner = Owner.objects.get(username=username)
         hostels = Hostel.objects.filter(owner=owner)
-        return render(request, "owner/main.html", {"username": request.session["username"], "hostels":hostels})
+        return render(request, "owner/main.html", {"username": request.session["username"], "hostels":hostels, "owner": owner})
     else:
         return redirect('owner_login')
 
@@ -244,7 +244,6 @@ def add_amenity(request, hostel_id):
         )
         hamenity.save()
     return redirect("owner_hostel", hostel_id)
-
 
 def verify_booking(request, hostel_id, book_id, choice):
     hostel = Hostel.objects.get(pk=hostel_id)

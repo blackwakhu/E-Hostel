@@ -134,3 +134,7 @@ body {
 .hide-elem {
   display: none;
 }
+
+.account-div .hide-div {
+  display: none;
+}
