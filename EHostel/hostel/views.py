@@ -299,3 +299,21 @@ def stud_update(request, admin, column):
             return JsonResponse({"message": str(e)}, status=500)
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
+@csrf_exempt
+def owner_update(request, uname, column):
+    owner = Owner.objects.get(username=uname)
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            item = data.get(column)
+            if item:
+                setattr(owner, column, item)
+                owner.save()
+                return JsonResponse({"message": "saved successfully", "output": getattr(owner, column)})
+            else: 
+                return JsonResponse({"message": "Some information was not provided"}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"message": "Invalid JSON data."}, status=400)
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+    return JsonResponse({"message": "Method not allowed"}, status=405)

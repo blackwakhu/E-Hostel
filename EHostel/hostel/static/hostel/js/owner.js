@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements, hideEditElements, url, validateNumber } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements, hideEditElements, url, validateNumber, handleUpdateClick } from "./mymodules.js";
 let home_btn = document.querySelector(".home");
 let hostels_btn = document.querySelector(".hostels");
 let new_hostel_btn = document.querySelector(".new-hostel");
@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("The phone number is not valid");
             }
             else {
-                const elemurl = `${url}/api/student/update/${uname}/${elem.column}/`;
-                // handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
+                const elemurl = `${url}/api/owner/update/${uname}/${elem.column}/`;
+                handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass);
                 hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
             }
         });

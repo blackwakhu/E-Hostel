@@ -26,9 +26,12 @@ urlpatterns = [
     path('owner/hostel/<int:hostel_id>/book/<int:book_id>/<str:choice>/', verify_booking, name='verify_booking'),
 
 # some api routes
-# for the owners
+# for the hostel
     path('api/owner/student_bookings/<hostel_id>/', get_bookings, name="get_bookings"),
 
+# for the owner
+    path('api/owner/update/<str:uname>/<str:column>/', owner_update, name="owner_update"),
+
 # for the student
-    path('api/student/update/<admin>/<str:column>/', stud_update, name="student_update")
+    path('api/student/update/<admin>/<str:column>/', stud_update, name="student_update"),
 ]

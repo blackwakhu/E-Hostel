@@ -78,8 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
                     alert("The phone number is not valid")
                 } else {
-                    const elemurl: string = `${url}/api/student/update/${uname}/${elem.column}/`
-                    // handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
+                    const elemurl: string = `${url}/api/owner/update/${uname}/${elem.column}/`
+                    handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
                     hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
                 }
             })
