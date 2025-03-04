@@ -28,11 +28,11 @@ async function fetchBookings(hostelId) {
         const data = await fetchBookings(hostelId);
         const bookings = data.bookings
         console.log(data)
-        console.log(data.vacancies)
+      console.log(data.vacancies)
+      availRoomsTd.textContent = `${bookings.vacancies}`
         if (bookingDiv) {
-            bookingDiv.innerHTML = data.vacancies
+          bookingDiv.innerHTML = ""
             if (bookings && bookings.length > 0) {
-                availRoomsTd.innerText = bookings.vacancies
                 let tableBook = document.createElement("table")
                 let titleBook = document.createElement("thead")
                 titleBook.innerHTML += "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>"
