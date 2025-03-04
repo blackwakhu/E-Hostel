@@ -34,7 +34,7 @@ function displayBookings(hostelId) {
             const bookings = data.bookings;
             console.log(data);
             console.log(data.vacancies);
-            availRoomsTd.textContent = `${bookings.vacancies}`;
+            availRoomsTd.textContent = `${data.vacancies}`;
             if (bookingDiv) {
                 bookingDiv.innerHTML = "";
                 if (bookings && bookings.length > 0) {
