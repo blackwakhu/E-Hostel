@@ -5,10 +5,27 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import *
 from .forms import *
+
+from functools import wraps
+
 import json
 
 # Create your views here.
 
+# decorators
+def user_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if 'username' in request.session and request.session['user'] == "owner":
+            return view_func(request, *args, **kwargs)
+        elif 'admission_number' in request.session and request.session['user'] == 'student':
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('index')
+    return _wrapped_view
+
+
+# main views
 def index(request):
     """This is the route to the first the first page the the user sees when they access the system"""
     return render(request, "index.html")
@@ -60,7 +77,10 @@ def stud_log(request, req_type):
 
     return redirect('stud_login')
 
+@user_required
 def student_main_page(request):
+    if "admission_number" not in request.session:
+        return redirect('index')
     hostels = Hostel.objects.all()
     student = Student.objects.get(admission_number=request.session["admission_number"])
     booked_hostels = []
@@ -319,3 +339,51 @@ def owner_update(request, uname, column):
         except Exception as e:
             return JsonResponse({"message": str(e)}, status=500)
     return JsonResponse({"message": "Method not allowed"}, status=405)
+
+@csrf_exempt
+def create_review(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            student_id = data.get('student_id')
+            hostel_id = data.get('hostel_id')
+            comment = data.get('comment')
+            rating = data.get('rating')
+            parent_review_id = data.get('parent_review_id')
+            student = get_object_or_404(Student, pk=student_id)
+            hostel = get_object_or_404(Hostel, pk=hostel_id)
+
+            parent_review = None
+
+            if parent_review_id:
+                parent_review = get_object_or_404(Review, pk=parent_review_id)
+            
+            review = Review(student=student, hostel=hostel, comment=comment, rating=rating, parent_review=parent_review)
+            review.save()
+
+            return JsonResponse({'message': 'Review created successfully', 'review_id': review.id}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except (KeyError, ValueError):
+            return JsonResponse({'error': 'Missing or invalid data'}, status=400)
+        except Student.DoesNotExist:
+            return JsonResponse({'error': 'Student not found'}, status=404)
+        except Hostel.DoesNotExist:
+            return JsonResponse({'error': 'Hostel not found'}, status=404)
+        except Review.DoesNotExist:
+            return JsonResponse({'error': 'Parent review not found'}, status=404)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+def get_reviews(request):
+    reviews = Review.objects.all().order_by('-created_at') #get all reviews, ordered by newest first.
+    reviews_data = [{
+        'id': review.id,
+        'student': review.student.admission_number, #or other student data.
+        'hostel': review.hostel.hostel_name, #or other hostel data.
+        'comment': review.comment,
+        'rating': review.rating,
+        'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S')
+    } for review in reviews]
+    return JsonResponse(reviews_data, safe=False)

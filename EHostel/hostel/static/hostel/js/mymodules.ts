@@ -9,6 +9,7 @@ export interface UpdatedElementsint {
 }
 
 export const url: string = "http://127.0.0.1:8001"
+export const commentDiv: HTMLDivElement = document.querySelector(".comments-div")
 
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
