@@ -27,8 +27,6 @@ async function fetchBookings(hostelId) {
     try {
         const data = await fetchBookings(hostelId);
         const bookings = data.bookings
-        console.log(data)
-      console.log(data.vacancies)
       availRoomsTd.textContent = `${data.vacancies}`
         if (bookingDiv) {
           bookingDiv.innerHTML = ""
