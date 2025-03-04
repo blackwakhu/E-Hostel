@@ -89,3 +89,16 @@ export function validateNumber(num) {
     const regex = /^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/;
     return regex.test(num);
 }
+export function updateReviews(hostel_id) {
+    fetch(`${url}/api/student/hostel/comment/${hostel_id}`)
+        .then(response => response.json())
+        .then(reviews => {
+        commentDiv.innerHTML = '';
+        reviews.forEach(element => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Student: ${reviews.student}, Comment: ${reviews.comment}, Rating: ${reviews.rating}`;
+            commentDiv.appendChild(listItem);
+        });
+    })
+        .catch(error => console.error('Error fetching reviews:', error));
+}

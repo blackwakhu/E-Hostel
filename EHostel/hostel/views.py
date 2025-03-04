@@ -99,7 +99,8 @@ def student_hostel(request, hostel_id):
     return render(request, 'student/hostel.html', {
         "hostel": hostel,
         "comments": comments,
-        "reviews": comments
+        "reviews": comments,
+        "admission_number": request.session["admission_number"]
     })
 
 def student_comment_hostel(request, hostel_id):
@@ -376,12 +377,13 @@ def create_review(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-def get_reviews(request):
-    reviews = Review.objects.all().order_by('-created_at') #get all reviews, ordered by newest first.
+def get_reviews(request, hostel_id):
+    hostel = get_object_or_404(Hostel, pk=hostel_id) #get the hostel or return 404
+    reviews = Review.objects.filter(hostel=hostel).order_by('-created_at') #filter reviews by hostel
     reviews_data = [{
         'id': review.id,
-        'student': review.student.admission_number, #or other student data.
-        'hostel': review.hostel.hostel_name, #or other hostel data.
+        'student': review.student.admission_number,
+        'hostel': review.hostel.hostel_name,
         'comment': review.comment,
         'rating': review.rating,
         'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S')

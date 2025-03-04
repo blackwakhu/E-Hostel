@@ -22,15 +22,25 @@
                 <td>{{ hostel.location }}</td>
             </tr>
         </table>
-
+        <div style="display: none;">
+            <span id="stud_admin">{{admission_number}}</span>
+            <span id="hostel_id">{{hostel.id}}</span>
+        </div>
         <button><a href="{% url 'book_hostel' hostel.id %}">Book</a></button>
 
-        <form method="post" action="{% url 'student_comment_hostel' hostel.id %}">
+        {% comment %} <form method="post" action="{% url 'student_comment_hostel' hostel.id %}">
             {% csrf_token %}
             <label>comment</label>
             <input type="text" name="comment"/>
             <input type="submit" value="submit"/>
-        </form>
+        </form> {% endcomment %}
+
+        <div>
+            <form>
+                <input type="text" id="comment-inp-0" placeholder="Comment"/>
+                <input type="submit" id="comment-sub-0" value="Submit"/>
+            </form>
+        <div>
 
         <ul>
         {% for comment in comments %}

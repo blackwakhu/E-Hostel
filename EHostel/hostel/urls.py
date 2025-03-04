@@ -28,7 +28,7 @@ urlpatterns = [
 # some api routes
 # for the hostel
     path('api/owner/student_bookings/<hostel_id>/', get_bookings, name="get_bookings"),
-    path('api/student/hostel/comment/create/<hostel_id>/<stud_id>', create_review, name="create_review"),
+    path('api/student/hostel/comment/create/', create_review, name="create_review"),
     path('api/student/hostel/comment/<hostel_id>', get_reviews, name="get_reviews"),
 
 # for the owner
