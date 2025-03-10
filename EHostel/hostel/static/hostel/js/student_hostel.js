@@ -10,6 +10,7 @@ function createComment(comment, rating, parent_review_id) {
         parent_review_id: parent_review_id,
     };
     let myurl = `${url}/api/student/hostel/comment/create/`;
+    console.log(myurl);
     fetch(myurl, {
         method: 'POST',
         headers: {

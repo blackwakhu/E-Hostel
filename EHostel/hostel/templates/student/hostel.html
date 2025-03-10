@@ -38,7 +38,7 @@
         <div>
             <form>
                 <input type="text" id="comment-inp-0" placeholder="Comment"/>
-                <input type="submit" id="comment-sub-0" value="Submit"/>
+                <button id="comment-sub-0">Submit</button>
             </form>
         <div>
 
@@ -56,32 +56,6 @@
         </ul>
 
         <hr>
-
-
-        {% for review in reviews %}
-            {% if not review.parent_review %} {# Only display top-level reviews #}
-                <div class="review">
-                    <h3>{{ review.student.first_name }}'s Review for {{ review.hostel.hostel_name }}</h3>
-                    <p>Rating: {{ review.rating }} / 5</p>
-                    <p>{{ review.comment }}</p>
-                    <p><small>Posted on {{ review.created_at }}</small></p>
-
-                    {% with review.replies.all as replies %}
-                        {% if replies %}
-                            <div class="replies">
-                                {% for reply in replies %}
-                                    <div class="reply">
-                                        <h4>{{ reply.student.first_name }} replied:</h4>
-                                        <p>{{ reply.comment }}</p>
-                                        <p><small>Posted on {{ reply.created_at }}</small></p>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
-            {% endif %}
-        {% endfor %}
 
         <div class="comments-div"></div>
 

@@ -12,6 +12,7 @@ function createComment(comment: string, rating: number | 0, parent_review_id: st
         parent_review_id: parent_review_id,
     }
     let myurl = `${url}/api/student/hostel/comment/create/`
+    console.log(myurl)
     fetch(myurl, {
         method: 'POST',
         headers: {
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateReviews(hostel_id)
 })
 
-document.querySelector<HTMLInputElement>("#comment-sub-0").addEventListener("click", () => {
+document.querySelector<HTMLButtonElement>("#comment-sub-0").addEventListener("click", () => {
     const comment: string = document.querySelector<HTMLInputElement>("#comment-inp-0").value
     const rating: number = 3
     createComment(comment, rating, null)

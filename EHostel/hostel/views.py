@@ -378,14 +378,30 @@ def create_review(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 def get_reviews(request, hostel_id):
-    hostel = get_object_or_404(Hostel, pk=hostel_id) #get the hostel or return 404
-    reviews = Review.objects.filter(hostel=hostel).order_by('-created_at') #filter reviews by hostel
-    reviews_data = [{
-        'id': review.id,
-        'student': review.student.admission_number,
-        'hostel': review.hostel.hostel_name,
-        'comment': review.comment,
-        'rating': review.rating,
-        'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S')
-    } for review in reviews]
+    hostel = get_object_or_404(Hostel, pk=hostel_id)
+    reviews = Review.objects.filter(hostel=hostel).order_by('-created_at')
+
+    reviews_data = []
+    for review in reviews:
+        review_data = {
+            'id': review.id,
+            'student': review.student.first_name, #or other student data.
+            'hostel': review.hostel.hostel_name, #or other hostel data.
+            'comment': review.comment,
+            'rating': review.rating,
+            'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'parent_review_id': review.parent_review.id if review.parent_review else None,
+            'replies': []
+        }
+        replies = review.replies.all().order_by('created_at') #get replies, in order.
+        for reply in replies:
+            reply_data = {
+                'id': reply.id,
+                'student': reply.student.first_name, #or other student data.
+                'comment': reply.comment,
+                'created_at': reply.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            review_data['replies'].append(reply_data)
+        reviews_data.append(review_data)
+
     return JsonResponse(reviews_data, safe=False)

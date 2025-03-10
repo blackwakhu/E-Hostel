@@ -9,7 +9,6 @@ export interface UpdatedElementsint {
 }
 
 export const url: string = "http://127.0.0.1:8001"
-export const commentDiv: HTMLDivElement = document.querySelector(".comments-div")
 
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
@@ -98,11 +97,63 @@ export function updateReviews(hostel_id: number) {
     fetch(`${url}/api/student/hostel/comment/${hostel_id}`)
         .then(response => response.json())
         .then(reviews => {
-            commentDiv.innerHTML = ''
-            reviews.forEach(element => {
-                const listItem = document.createElement('li')
-                listItem.textContent = `Student: ${reviews.student}, Comment: ${reviews.comment}, Rating: ${reviews.rating}`
-                commentDiv.appendChild(listItem)
+            const commentDiv: HTMLDivElement = document.querySelector(".comments-div")
+            commentDiv.innerHTML = ""
+            reviews.forEach(review => {
+                if (!review.parent_review_id) { // Only top-level reviews
+                    const reviewDiv = document.createElement('div');
+                    reviewDiv.classList.add('review');
+
+                    const h3 = document.createElement('h3');
+                    h3.textContent = `${review.student}'s Review for ${review.hostel}`; // Assuming student and hostel are strings from json.
+
+                    const ratingP = document.createElement('p');
+                    ratingP.textContent = `Rating: ${review.rating} / 5`;
+
+                    const commentP = document.createElement('p');
+                    commentP.textContent = review.comment;
+
+                    const createdAtP = document.createElement('p');
+                    const small = document.createElement('small');
+                    small.textContent = `Posted on ${review.created_at}`;
+                    createdAtP.appendChild(small);
+
+                    reviewDiv.appendChild(h3);
+                    reviewDiv.appendChild(ratingP);
+                    reviewDiv.appendChild(commentP);
+                    reviewDiv.appendChild(createdAtP);
+
+                    if (review.replies && review.replies.length > 0) {
+                        const repliesDiv = document.createElement('div');
+                        repliesDiv.classList.add('replies');
+
+                        review.replies.forEach(reply => {
+                            const replyDiv = document.createElement('div');
+                            replyDiv.classList.add('reply');
+
+                            const h4 = document.createElement('h4');
+                            h4.textContent = `${reply.student} replied:`;
+
+                            const replyCommentP = document.createElement('p');
+                            replyCommentP.textContent = reply.comment;
+
+                            const replyCreatedAtP = document.createElement('p');
+                            const replySmall = document.createElement('small');
+                            replySmall.textContent = `Posted on ${reply.created_at}`;
+                            replyCreatedAtP.appendChild(replySmall);
+
+                            replyDiv.appendChild(h4);
+                            replyDiv.appendChild(replyCommentP);
+                            replyDiv.appendChild(replyCreatedAtP);
+
+                            repliesDiv.appendChild(replyDiv);
+                        });
+
+                        reviewDiv.appendChild(repliesDiv);
+                    }
+
+                    commentDiv.appendChild(reviewDiv);
+                }
             });
         })
         .catch(error => console.error('Error fetching reviews:',error))
