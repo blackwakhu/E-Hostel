@@ -55,6 +55,7 @@ let updateElements = [
         column: "phone_number"
     }
 ];
+// this gets the student admission number fromt the html file
 const admin = document.querySelector("#stud-admin").textContent;
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({ "button": buttonElements_student[i], "div": divElements_student[i] });
@@ -67,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
+    console.log(divElements_student);
+    console.log(buttonElements_student);
+    console.log(btnObj_student);
     hideUrlDivElements(home_div_student, divElements_student);
     updateElements.forEach((elem) => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div"); });

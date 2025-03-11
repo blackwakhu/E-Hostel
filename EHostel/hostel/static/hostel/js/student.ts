@@ -63,6 +63,7 @@ let updateElements: UpdatedElementsint[] = [
     }
 ]
 
+// this gets the student admission number fromt the html file
 const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
 
 for (let i = 0; i < divElements_student.length; i++) {
@@ -77,7 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
     })
-
+    console.log(divElements_student)
+    console.log(buttonElements_student)
+    console.log(btnObj_student)
     hideUrlDivElements(home_div_student, divElements_student)
 
     updateElements.forEach((elem) => {
