@@ -1,14 +1,21 @@
 import { url, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
+// this will reference the menu buttons
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
 let my_account_btn_student = document.querySelector(".my-account");
+let search_btn_student = document.querySelector(".search");
+// this are the major div elements that display information in the student.html file
 let home_div_student = document.querySelector(".home-html");
 let hostels_div_student = document.querySelector(".hostels-html");
 let my_hostel_div_student = document.querySelector(".my-hostel-html");
 let my_account_div_student = document.querySelector(".my-account-html");
-let divElements_student = [home_div_student, hostels_div_student, my_hostel_div_student, my_account_div_student];
-let buttonElements_student = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student];
+let search_div_student = document.querySelector(".search-html");
+// this array includes all the major iv elements that divide the student.html file
+let divElements_student = [home_div_student, hostels_div_student, my_hostel_div_student, my_account_div_student, search_div_student];
+// this array contains all the menu items
+let buttonElements_student = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student, search_btn_student];
+// this array contains a an interface that will the above to be efficiently manipulated
 let btnObj_student = new Array();
 let updateElements = [
     {
