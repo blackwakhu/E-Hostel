@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from .models import *
 from .forms import *
@@ -405,3 +406,16 @@ def get_reviews(request, hostel_id):
         reviews_data.append(review_data)
 
     return JsonResponse(reviews_data, safe=False)
+
+def get_hostel_search(request):
+    search_term = request.GET.get('search', '')
+    if search_term:
+        hostels = Hostel.objects.filter(
+                Q(hostel_name__icontains=search_term) |
+                Q(county__icontains=search_term) |
+                Q(town__icontains=search_term) |
+                Q(locality__icontains=search_term)
+            ).values() #values() converts the queryset to a list of dictionaries.
+        return JsonResponse(list(hostels), safe=False) #safe=False allows non-dict objects to be serialized.
+    else:
+        return JsonResponse([], safe=False)

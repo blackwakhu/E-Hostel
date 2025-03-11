@@ -15,6 +15,9 @@ let my_hostel_div_student: HTMLDivElement = document.querySelector<HTMLDivElemen
 let my_account_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".my-account-html")
 let search_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".search-html")
 
+// this gets the student admission number fromt the html file
+const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
+
 // this array includes all the major iv elements that divide the student.html file
 let divElements_student: HTMLDivElement[] = [home_div_student, hostels_div_student, my_hostel_div_student, my_account_div_student, search_div_student]
 
@@ -24,6 +27,7 @@ let buttonElements_student: HTMLAnchorElement[] = [home_btn_student, hostels_btn
 // this array contains a an interface that will the above to be efficiently manipulated
 let btnObj_student: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
+// this is an interface that contains elements that will form variables for updatng the student account
 let updateElements: UpdatedElementsint[] = [
     {
         editBtn: document.querySelector("#stud-fname-btn"),
@@ -63,11 +67,40 @@ let updateElements: UpdatedElementsint[] = [
     }
 ]
 
-// this gets the student admission number fromt the html file
-const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
+
 
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
+}
+
+
+async function searchButtonFind() {
+    // the div element element that will display all the seach results
+    let search_results_div_stud: HTMLDivElement = document.querySelector<HTMLDivElement>(".search_results_div")
+    let query_item_: string = document.querySelector<HTMLInputElement>("#name_query_input").value
+    try {
+        const response = await fetch(`${url}/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`)
+        if (!response.ok) {
+            throw new Error(`HTTP error status: ${response.status}`)
+        }
+        const data = await response.json();
+        search_results_div_stud.innerHTML = ''
+        if (data.length === 0) {
+            search_results_div_stud.innerHTML = '<p>No results found</p>'
+            return
+        }
+        data.forEach(hostel => {
+            const hostelDiv = document.createElement('div')
+            hostelDiv.innerHTML = `
+                <h3>${hostel.hostel_name}</h3>
+                <p>status: ${hostel.status}</p>
+                <hr>`
+            search_results_div_stud.appendChild(hostelDiv)
+        })
+    } catch (error) {
+        console.error('Error getching hostels:', error)
+        search_results_div_stud.innerHTML = '<p>An error occured while searching</p>'
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -78,10 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
     })
-    console.log(divElements_student)
-    console.log(buttonElements_student)
-    console.log(btnObj_student)
+
     hideUrlDivElements(home_div_student, divElements_student)
+
+    // this function will deal with displaying the search 
+    document.querySelector<HTMLButtonElement>("#search_button").addEventListener("click", () => {
+        searchButtonFind()
+    })
 
     updateElements.forEach((elem) => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div") })

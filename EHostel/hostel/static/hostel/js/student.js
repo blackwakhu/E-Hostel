@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { url, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
 // this will reference the menu buttons
 let home_btn_student = document.querySelector(".home");
@@ -11,12 +20,15 @@ let hostels_div_student = document.querySelector(".hostels-html");
 let my_hostel_div_student = document.querySelector(".my-hostel-html");
 let my_account_div_student = document.querySelector(".my-account-html");
 let search_div_student = document.querySelector(".search-html");
+// this gets the student admission number fromt the html file
+const admin = document.querySelector("#stud-admin").textContent;
 // this array includes all the major iv elements that divide the student.html file
 let divElements_student = [home_div_student, hostels_div_student, my_hostel_div_student, my_account_div_student, search_div_student];
 // this array contains all the menu items
 let buttonElements_student = [home_btn_student, hostels_btn_student, my_hostel_btn_student, my_account_btn_student, search_btn_student];
 // this array contains a an interface that will the above to be efficiently manipulated
 let btnObj_student = new Array();
+// this is an interface that contains elements that will form variables for updatng the student account
 let updateElements = [
     {
         editBtn: document.querySelector("#stud-fname-btn"),
@@ -55,10 +67,39 @@ let updateElements = [
         column: "phone_number"
     }
 ];
-// this gets the student admission number fromt the html file
-const admin = document.querySelector("#stud-admin").textContent;
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({ "button": buttonElements_student[i], "div": divElements_student[i] });
+}
+function searchButtonFind() {
+    return __awaiter(this, void 0, void 0, function* () {
+        // the div element element that will display all the seach results
+        let search_results_div_stud = document.querySelector(".search_results_div");
+        let query_item_ = document.querySelector("#name_query_input").value;
+        try {
+            const response = yield fetch(`${url}/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error status: ${response.status}`);
+            }
+            const data = yield response.json();
+            search_results_div_stud.innerHTML = '';
+            if (data.length === 0) {
+                search_results_div_stud.innerHTML = '<p>No results found</p>';
+                return;
+            }
+            data.forEach(hostel => {
+                const hostelDiv = document.createElement('div');
+                hostelDiv.innerHTML = `
+                <h3>${hostel.hostel_name}</h3>
+                <p>status: ${hostel.status}</p>
+                <hr>`;
+                search_results_div_stud.appendChild(hostelDiv);
+            });
+        }
+        catch (error) {
+            console.error('Error getching hostels:', error);
+            search_results_div_stud.innerHTML = '<p>An error occured while searching</p>';
+        }
+    });
 }
 document.addEventListener("DOMContentLoaded", () => {
     btnObj_student.forEach((bObj) => {
@@ -68,10 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     });
-    console.log(divElements_student);
-    console.log(buttonElements_student);
-    console.log(btnObj_student);
     hideUrlDivElements(home_div_student, divElements_student);
+    // this function will deal with displaying the search 
+    document.querySelector("#search_button").addEventListener("click", () => {
+        searchButtonFind();
+    });
     updateElements.forEach((elem) => {
         elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div"); });
         elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
