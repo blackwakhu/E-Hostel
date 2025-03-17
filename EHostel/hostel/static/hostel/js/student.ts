@@ -8,6 +8,11 @@ let my_hostel_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchor
 let my_account_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".my-account")
 let search_btn_student: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".search")
 
+// for pagination
+const hostel_page: HTMLDivElement = document.querySelector<HTMLDivElement>(".hostel_page")
+const prevButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#prev-button');
+const nextButton: HTMLButtonElement = document.querySelector<HTMLButtonElement>('#next-button');
+
 // this are the major div elements that display information in the student.html file
 let home_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".home-html")
 let hostels_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".hostels-html")
@@ -103,6 +108,101 @@ async function searchButtonFind() {
     }
 }
 
+interface hostelInputs {
+    hostel_div: HTMLDivElement,
+    prev: HTMLButtonElement,
+    next: HTMLButtonElement
+};
+
+interface Hostel {
+    id: number;
+    hostel_name: string;
+    price_per_month: number;
+    location: string;
+    number_rooms: number;
+    room_type: string;
+    available_rooms: number;
+    county: string;
+    town: string;
+    locality: string;
+    // Add other relevant fields
+  }
+  
+  interface HostelResponse {
+    hostels: Hostel[];
+    page: number;
+    num_pages: number;
+    has_previous: boolean;
+    has_next: boolean;
+    previous_page_number: number | null;
+    next_page_number: number | null;
+  }
+  
+  class HostelList {
+    private currentPage: number = 1;
+    private hostels: Hostel[] = [];
+      private numPages: number = 0;
+      private inputs: hostelInputs
+  
+    async fetchHostels(page: number = 1): Promise<void> {
+      const response = await fetch(`${url}/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
+      const data: HostelResponse = await response.json();
+  
+      this.hostels = data.hostels;
+      this.currentPage = data.page;
+      this.numPages = data.num_pages;
+  
+      this.updateUI();
+    }
+  
+    nextPage(): void {
+      if (this.currentPage < this.numPages) {
+        this.fetchHostels(this.currentPage + 1);
+      }
+    }
+  
+    previousPage(): void {
+      if (this.currentPage > 1) {
+        this.fetchHostels(this.currentPage - 1);
+      }
+    }
+  
+    updateUI(): void {
+      if (this.inputs.hostel_div) {
+          this.inputs.hostel_div.innerHTML = ''; // Clear previous list
+          this.hostels.forEach(hostel => {
+              const hostelItem = document.createElement('li');
+              hostelItem.textContent = hostel.hostel_name;
+              this.inputs.hostel_div.appendChild(hostelItem);
+          });
+      }
+  
+      if(this.inputs.prev){
+          this.inputs.prev.disabled = !(this.currentPage > 1);
+      }
+      if(this.inputs.next){
+          this.inputs.next.disabled = !(this.currentPage < this.numPages);
+      }
+    }
+  
+      constructor(inputs: hostelInputs) {
+        this.inputs = inputs
+        this.fetchHostels(1);
+      if(this.inputs.prev){
+          this.inputs.prev.addEventListener('click', () => this.previousPage());
+      }
+      if(this.inputs.next){
+          this.inputs.next.addEventListener('click', () => this.nextPage());
+      }
+    }
+  }
+  
+new HostelList({
+    hostel_div: hostel_page,
+    prev: prevButton,
+    next: nextButton
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     btnObj_student.forEach((bObj) => {
         if (bObj){
@@ -133,6 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     })
+    new HostelList({
+        hostel_div: hostel_page,
+        prev: prevButton,
+        next: nextButton
+    });
     
 })
 

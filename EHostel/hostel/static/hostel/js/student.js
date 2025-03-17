@@ -14,6 +14,10 @@ let hostels_btn_student = document.querySelector(".hostels");
 let my_hostel_btn_student = document.querySelector(".my-hostel");
 let my_account_btn_student = document.querySelector(".my-account");
 let search_btn_student = document.querySelector(".search");
+// for pagination
+const hostel_page = document.querySelector(".hostel_page");
+const prevButton = document.querySelector('#prev-button');
+const nextButton = document.querySelector('#next-button');
 // this are the major div elements that display information in the student.html file
 let home_div_student = document.querySelector(".home-html");
 let hostels_div_student = document.querySelector(".hostels-html");
@@ -101,6 +105,63 @@ function searchButtonFind() {
         }
     });
 }
+;
+class HostelList {
+    fetchHostels() {
+        return __awaiter(this, arguments, void 0, function* (page = 1) {
+            const response = yield fetch(`${url}/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
+            const data = yield response.json();
+            this.hostels = data.hostels;
+            this.currentPage = data.page;
+            this.numPages = data.num_pages;
+            this.updateUI();
+        });
+    }
+    nextPage() {
+        if (this.currentPage < this.numPages) {
+            this.fetchHostels(this.currentPage + 1);
+        }
+    }
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.fetchHostels(this.currentPage - 1);
+        }
+    }
+    updateUI() {
+        if (this.inputs.hostel_div) {
+            this.inputs.hostel_div.innerHTML = ''; // Clear previous list
+            this.hostels.forEach(hostel => {
+                const hostelItem = document.createElement('li');
+                hostelItem.textContent = hostel.hostel_name;
+                this.inputs.hostel_div.appendChild(hostelItem);
+            });
+        }
+        if (this.inputs.prev) {
+            this.inputs.prev.disabled = !(this.currentPage > 1);
+        }
+        if (this.inputs.next) {
+            this.inputs.next.disabled = !(this.currentPage < this.numPages);
+        }
+    }
+    constructor(inputs) {
+        this.currentPage = 1;
+        this.hostels = [];
+        this.numPages = 0;
+        this.inputs = inputs;
+        this.fetchHostels(1);
+        if (this.inputs.prev) {
+            this.inputs.prev.addEventListener('click', () => this.previousPage());
+        }
+        if (this.inputs.next) {
+            this.inputs.next.addEventListener('click', () => this.nextPage());
+        }
+    }
+}
+new HostelList({
+    hostel_div: hostel_page,
+    prev: prevButton,
+    next: nextButton
+});
 document.addEventListener("DOMContentLoaded", () => {
     btnObj_student.forEach((bObj) => {
         if (bObj) {
@@ -128,5 +189,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
             }
         });
+    });
+    new HostelList({
+        hostel_div: hostel_page,
+        prev: prevButton,
+        next: nextButton
     });
 });
