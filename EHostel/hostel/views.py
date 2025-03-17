@@ -410,30 +410,29 @@ def get_reviews(request, hostel_id):
 
 def get_hostel_list(request):
     page_number = request.GET.get('page', 1)
-    hostels = Hostel.objects.all().order_by('id')  # Order by ID for consistent pagination
+    hostels = Hostel.objects.all().order_by('id')
 
-    paginator = Paginator(hostels, 25)  # 25 hostels per page
+    paginator = Paginator(hostels, 25)
 
     try:
         page = paginator.page(page_number)
     except PageNotAnInteger:
-        page = paginator.page(1)  # Default to first page
+        page = paginator.page(1)
     except EmptyPage:
-        page = paginator.page(paginator.num_pages)  # Last page if out of range
+        page = paginator.page(paginator.num_pages)
 
-    hostel_data = [{
-        'id': hostel.id,
-        'hostel_name': hostel.hostel_name,
-        'price_per_month': hostel.price_per_month,
-        'location': hostel.location,
-        'number_rooms': hostel.number_rooms,
-        'room_type': hostel.room_type,
-        'available_rooms': hostel.available_rooms,
-        'county': hostel.county,
-        'town': hostel.town,
-        'locality': hostel.locality,
-        # Add other relevant fields
-    } for hostel in page.object_list]
+    hostel_data = []
+    for hostel in page.object_list:
+        first_image = HostelImages.objects.filter(hostel=hostel).first()
+        image_url = first_image.image.url if first_image else None
+
+        hostel_data.append({
+            'id': hostel.id,
+            'hostel_name': hostel.hostel_name,
+            'price_per_month': hostel.price_per_month,
+            'locality': hostel.locality,
+            'image': image_url,
+        })
 
     response_data = {
         'hostels': hostel_data,

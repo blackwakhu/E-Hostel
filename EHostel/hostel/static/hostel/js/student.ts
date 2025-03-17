@@ -114,19 +114,40 @@ interface hostelInputs {
     next: HTMLButtonElement
 };
 
+interface hostelCardProps {
+    hostel: Hostel
+}
+
+function HostelCard(props: hostelCardProps): HTMLDivElement {
+    const card: HTMLDivElement = document.createElement("div")
+    card.classList.add('hostel-card'); // Add a CSS class for styling
+
+    const image = document.createElement('img');
+    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
+    image.alt = props.hostel.hostel_name;
+    card.appendChild(image);
+
+    const name = document.createElement('h3');
+    name.textContent = props.hostel.hostel_name;
+    card.appendChild(name);
+
+    const price = document.createElement('p');
+    price.textContent = `Price: $${props.hostel.price_per_month}/month`;
+    card.appendChild(price);
+
+    const locality = document.createElement('p');
+    locality.textContent = `Locality: ${props.hostel.locality}`;
+    card.appendChild(locality);
+    return card
+}
+
 interface Hostel {
     id: number;
     hostel_name: string;
     price_per_month: number;
-    location: string;
-    number_rooms: number;
-    room_type: string;
-    available_rooms: number;
-    county: string;
-    town: string;
     locality: string;
-    // Add other relevant fields
-  }
+    image: string | null;
+  };
   
   interface HostelResponse {
     hostels: Hostel[];
@@ -171,9 +192,8 @@ interface Hostel {
       if (this.inputs.hostel_div) {
           this.inputs.hostel_div.innerHTML = ''; // Clear previous list
           this.hostels.forEach(hostel => {
-              const hostelItem = document.createElement('li');
-              hostelItem.textContent = hostel.hostel_name;
-              this.inputs.hostel_div.appendChild(hostelItem);
+            const card = HostelCard({ hostel });
+              this.inputs.hostel_div.appendChild(card);
           });
       }
   

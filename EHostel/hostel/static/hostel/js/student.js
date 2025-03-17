@@ -106,6 +106,25 @@ function searchButtonFind() {
     });
 }
 ;
+function HostelCard(props) {
+    const card = document.createElement("div");
+    card.classList.add('hostel-card'); // Add a CSS class for styling
+    const image = document.createElement('img');
+    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
+    image.alt = props.hostel.hostel_name;
+    card.appendChild(image);
+    const name = document.createElement('h3');
+    name.textContent = props.hostel.hostel_name;
+    card.appendChild(name);
+    const price = document.createElement('p');
+    price.textContent = `Price: $${props.hostel.price_per_month}/month`;
+    card.appendChild(price);
+    const locality = document.createElement('p');
+    locality.textContent = `Locality: ${props.hostel.locality}`;
+    card.appendChild(locality);
+    return card;
+}
+;
 class HostelList {
     fetchHostels() {
         return __awaiter(this, arguments, void 0, function* (page = 1) {
@@ -131,9 +150,8 @@ class HostelList {
         if (this.inputs.hostel_div) {
             this.inputs.hostel_div.innerHTML = ''; // Clear previous list
             this.hostels.forEach(hostel => {
-                const hostelItem = document.createElement('li');
-                hostelItem.textContent = hostel.hostel_name;
-                this.inputs.hostel_div.appendChild(hostelItem);
+                const card = HostelCard({ hostel });
+                this.inputs.hostel_div.appendChild(card);
             });
         }
         if (this.inputs.prev) {

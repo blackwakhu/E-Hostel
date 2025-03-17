@@ -1,0 +1,12 @@
+.hostel-card {
+  border: 1px solid #dddddd;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  display: inline-block;
+  text-align: center;
+}
+.hostel-card img {
+  height: auto;
+  max-width: 100%;
+}

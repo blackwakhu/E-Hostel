@@ -1,1 +1,15 @@
+$gainsboro_ddd: #dddddd;
 
+.hostel-card {
+  border: 1px solid $gainsboro_ddd;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  display: inline-block;
+  text-align: center;
+
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+}
