@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
 from .forms import *
@@ -406,6 +407,45 @@ def get_reviews(request, hostel_id):
         reviews_data.append(review_data)
 
     return JsonResponse(reviews_data, safe=False)
+
+def get_hostel_list(request):
+    page_number = request.GET.get('page', 1)
+    hostels = Hostel.objects.all().order_by('id')  # Order by ID for consistent pagination
+
+    paginator = Paginator(hostels, 25)  # 25 hostels per page
+
+    try:
+        page = paginator.page(page_number)
+    except PageNotAnInteger:
+        page = paginator.page(1)  # Default to first page
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)  # Last page if out of range
+
+    hostel_data = [{
+        'id': hostel.id,
+        'hostel_name': hostel.hostel_name,
+        'price_per_month': hostel.price_per_month,
+        'location': hostel.location,
+        'number_rooms': hostel.number_rooms,
+        'room_type': hostel.room_type,
+        'available_rooms': hostel.available_rooms,
+        'county': hostel.county,
+        'town': hostel.town,
+        'locality': hostel.locality,
+        # Add other relevant fields
+    } for hostel in page.object_list]
+
+    response_data = {
+        'hostels': hostel_data,
+        'page': page.number,
+        'num_pages': paginator.num_pages,
+        'has_previous': page.has_previous(),
+        'has_next': page.has_next(),
+        'previous_page_number': page.previous_page_number() if page.has_previous() else None,
+        'next_page_number': page.next_page_number() if page.has_next() else None,
+    }
+
+    return JsonResponse(response_data)
 
 def get_hostel_search(request):
     search_term = request.GET.get('search', '')

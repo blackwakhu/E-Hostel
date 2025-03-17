@@ -26,15 +26,7 @@
                     <h1>Home</h1>
                 </div>
                 <div id="hostels-html" class="hostels-html item hide-elem">
-                    <div class="card-container">
-                        {% for hostel in hostels %}
-                            <div class="card">
-                                <img src="image.jpg" width="100%" height="200px" alt="{{ hostel.hostel_name }} image">
-                                <div class="card-content">
-                                    <a href="{% url 'student_hostel' hostel.id %}">{{ hostel.hostel_name }}</a>
-                                </div>
-                            </div>
-                        {% endfor %}
+                    <div class="hostel_page">
                     </div>
                 </div>
                 <div id="search-html" class="search-html item hide-elem">
