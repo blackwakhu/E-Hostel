@@ -95,6 +95,7 @@ def student_main_page(request):
         "booked_hostels": booked_hostels
         })
 
+@user_required
 def student_hostel(request, hostel_id):
     hostel = Hostel.objects.get(pk=hostel_id)
     comments = Review.objects.filter(hostel=hostel)
