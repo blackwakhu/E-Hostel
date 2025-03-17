@@ -8,7 +8,7 @@ export interface UpdatedElementsint {
     column: string
 }
 
-export const url: string = "http://127.0.0.1:8001"
+export const url: string = "http://127.0.0.1:8000"
 
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const url = "http://127.0.0.1:8001";
+export const url = "http://127.0.0.1:8000";
 export function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
