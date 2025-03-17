@@ -118,7 +118,12 @@ interface hostelCardProps {
     hostel: Hostel
 }
 
-function HostelCard(props: hostelCardProps): HTMLDivElement {
+function HostelCard(props: hostelCardProps): HTMLAnchorElement {
+    const cardLink: HTMLAnchorElement = document.createElement("a")
+    cardLink.href = `${url}/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
+    cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
+    cardLink.style.textDecoration = 'none'
+
     const card: HTMLDivElement = document.createElement("div")
     card.classList.add('hostel-card'); // Add a CSS class for styling
 
@@ -138,7 +143,10 @@ function HostelCard(props: hostelCardProps): HTMLDivElement {
     const locality = document.createElement('p');
     locality.textContent = `Locality: ${props.hostel.locality}`;
     card.appendChild(locality);
-    return card
+
+    cardLink.appendChild(card)
+
+    return cardLink
 }
 
 interface Hostel {

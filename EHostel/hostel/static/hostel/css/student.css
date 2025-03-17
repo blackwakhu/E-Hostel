@@ -1,9 +1,14 @@
-.hostel-card {
+.hostel-card-link { /* Style the link, not just the card */
+    display: inline-block; /* Makes the link behave like a block element */
+    width: 250px; /* Match the card width */
+    margin: 10px; /* Match the card margin */
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color from parent */
+  }
+  
+  .hostel-card {
     border: 1px solid #ddd;
     padding: 10px;
-    margin: 10px;
-    width: 250px;
-    display: inline-block;
     text-align: center;
   }
   
@@ -11,3 +16,4 @@
     max-width: 100%;
     height: auto;
   }
+  

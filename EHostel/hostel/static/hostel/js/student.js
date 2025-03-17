@@ -107,6 +107,10 @@ function searchButtonFind() {
 }
 ;
 function HostelCard(props) {
+    const cardLink = document.createElement("a");
+    cardLink.href = `${url}/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
+    cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
+    cardLink.style.textDecoration = 'none';
     const card = document.createElement("div");
     card.classList.add('hostel-card'); // Add a CSS class for styling
     const image = document.createElement('img');
@@ -122,7 +126,8 @@ function HostelCard(props) {
     const locality = document.createElement('p');
     locality.textContent = `Locality: ${props.hostel.locality}`;
     card.appendChild(locality);
-    return card;
+    cardLink.appendChild(card);
+    return cardLink;
 }
 ;
 class HostelList {
