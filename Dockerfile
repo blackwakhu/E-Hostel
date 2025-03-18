@@ -13,8 +13,10 @@
     
     WORKDIR /app
     
-    COPY package*.json ./
+    # Install TypeScript and other dependencies explicitly
     RUN npm install typescript tsc unidici
+    
+    # Copy all Node.js files (TypeScript, JavaScript, etc.)
     COPY . ./
     
     # --- Runtime Stage ---
@@ -25,8 +27,8 @@
     # Copy built Python artifacts
     COPY --from=python-builder /app/ .
     
-    # Copy node modules
-    COPY --from=node-builder /app/node_modules ./node_modules/
+    # Copy Node.js files and node_modules
+    COPY --from=node-builder /app/ .
     
     EXPOSE 8080
     
