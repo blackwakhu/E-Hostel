@@ -50,6 +50,9 @@
                     <p>No images available.</p>
                 {% endfor %}
             </div>
+            <input type="text" id="review-comment" placeholder="Your comment">
+            <input type="number" id="review-rating" placeholder="Your rating">
+            <button id="add-review-button">Add Review</button>
             <div id='reviews-container'></div>
             <div id="hostel-id" data-hostel-id="{{ hostel.id }}" data-admission-number="{{ admission_number }}"></div>
         </div>

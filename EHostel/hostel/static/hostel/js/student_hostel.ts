@@ -73,16 +73,19 @@ interface Review {
 
 class HostelReview {
     private hostelId: number 
+    private studentId: number
     private reviews: Review[]
     
-    constructor(hostelId: number) {
+    constructor(hostelId: number, studentId:number) {
         this.hostelId = hostelId
+        this.studentId = studentId
         this.loadReviews()
+        this.setEventListeners()
     }
 
     async loadReviews(): Promise<void>{
         try {
-            const response = await fetch(`${url}/student/hostel/${this.hostelId}/`, {
+            const response = await fetch(`/student/hostel/${this.hostelId}/`, {
               headers: { 'X-Requested-With': 'XMLHttpRequest' },
             });
             if (!response.ok) {
@@ -127,10 +130,28 @@ class HostelReview {
     
         return reviewElement;
       }
+    async addReview(comment: string, rating: number, parentReviewId: number | null = null): Promise<void>{
+        const response = await fetch(`/api/student/hostel/review/add/${this.hostelId}/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `student_id=${this.studentId}&comment=${comment}&rating=${rating}&parent_review_id=${parentReviewId || ''}`
+        })
+        const data = await response.json()
+        if (data.success) {
+            this.loadReviews();
+        }
+    }
+    setEventListeners() {
+        document.getElementById('add-review-button')?.addEventListener('click', () => {
+            const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
+            const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)
+            this.addReview(comment, rating)
+        })
+    }
 
 }
 
-new HostelReview(hostel_id)
+new HostelReview(hostel_id, admin_number)
 
 // async function displayReviews(hostelId: number) {
 //     const reviews = ""

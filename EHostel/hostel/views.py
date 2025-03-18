@@ -483,6 +483,7 @@ def get_hostel_search(request):
     else:
         return JsonResponse([], safe=False)
 
+@csrf_exempt
 def add_review(request, hostel_id):
     if request.method == 'POST':
         student_id = request.POST.get('student_id') # Get student id from the request, make sure to send it from ts
