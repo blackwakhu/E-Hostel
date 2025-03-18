@@ -124,7 +124,7 @@ def student_hostel(request, hostel_id):
                 'rating': reply.rating,
                 'created_at': reply.created_at.isoformat(),
             } for reply in review.replies.all().order_by('created_at')]
-        } for review in reviews]
+        } for review in comments]
         return JsonResponse({'reviews': review_data})
 
     return render(request, 'student/hostel.html', context)
