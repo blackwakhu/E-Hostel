@@ -69,10 +69,16 @@ class HostelReview {
     }
     addReview(comment_1, rating_1) {
         return __awaiter(this, arguments, void 0, function* (comment, rating, parentReviewId = null) {
-            const response = yield fetch(`/api/student/hostel/review/add/${this.hostelId}/`, {
+            const response = yield fetch(`/api/student/hostel/comment/create/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `student_id=${this.studentId}&comment=${comment}&rating=${rating}&parent_review_id=${parentReviewId || ''}`
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    hostel_id: this.hostelId,
+                    student_id: this.studentId,
+                    comment: comment,
+                    rating: rating,
+                    parent_review_id: parentReviewId
+                })
             });
             const data = yield response.json();
             if (data.success) {

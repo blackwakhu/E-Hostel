@@ -388,7 +388,7 @@ def create_review(request):
             review = Review(student=student, hostel=hostel, comment=comment, rating=rating, parent_review=parent_review)
             review.save()
 
-            return JsonResponse({'message': 'Review created successfully', 'review_id': review.id}, status=201)
+            return JsonResponse({'message': 'Review created successfully', 'review_id': review.id, "success":True}, status=201)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
@@ -486,10 +486,17 @@ def get_hostel_search(request):
 @csrf_exempt
 def add_review(request, hostel_id):
     if request.method == 'POST':
-        student_id = request.POST.get('student_id') # Get student id from the request, make sure to send it from ts
-        comment = request.POST.get('comment')
-        rating = request.POST.get('rating')
-        parent_review_id = request.POST.get('parent_review_id')
+        # student_id = request.POST.get('student_id') # Get student id from the request, make sure to send it from ts
+        # comment = request.POST.get('comment')
+        # rating = request.POST.get('rating')
+        # parent_review_id = request.POST.get('parent_review_id')
+        data = json.loads(request.body)
+        student_id = data.get('student_id')
+        comment = data.get('comment')
+        rating = data.get('rating')
+        parent_review_id = data.get('parent_review_id')
+        student = get_object_or_404(Student, pk=student_id)
+        hostel = get_object_or_404(Hostel, pk=hostel_id)
 
         hostel = get_object_or_404(Hostel, pk=hostel_id)
         student = get_object_or_404(Student, pk=student_id) # Replace Student with your actual student model

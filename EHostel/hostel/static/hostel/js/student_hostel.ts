@@ -131,10 +131,16 @@ class HostelReview {
         return reviewElement;
       }
     async addReview(comment: string, rating: number, parentReviewId: number | null = null): Promise<void>{
-        const response = await fetch(`/api/student/hostel/review/add/${this.hostelId}/`, {
+        const response = await fetch(`/api/student/hostel/comment/create/`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `student_id=${this.studentId}&comment=${comment}&rating=${rating}&parent_review_id=${parentReviewId || ''}`
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                hostel_id: this.hostelId,
+                student_id: this.studentId,
+                comment: comment,
+                rating: rating,
+                parent_review_id: parentReviewId
+            })
         })
         const data = await response.json()
         if (data.success) {
