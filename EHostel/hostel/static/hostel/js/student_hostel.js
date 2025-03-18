@@ -7,11 +7,60 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b;
+var _a, _b, _c;
+import { url } from "./mymodules.js";
 // const admin_number: string = document.querySelector<HTMLSpanElement>("#stud_admin").textContent
 // const hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 const hostel_id = parseInt(((_a = document.getElementById('hostel-id')) === null || _a === void 0 ? void 0 : _a.dataset.hostelId) || '');
 const admin_number = parseInt(((_b = document.getElementById('hostel-id')) === null || _b === void 0 ? void 0 : _b.dataset.admissionNumber) || '');
+function createComment(comment, rating, parent_review_id = null) {
+    const reviewData = {
+        student_id: admin_number, // Replace with your input IDs
+        hostel_id: hostel_id,
+        comment: comment,
+        rating: rating,
+        parent_review_id: parent_review_id,
+    };
+    let myurl = `${url}/api/student/hostel/comment/create/`;
+    console.log(myurl);
+    fetch(myurl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewData),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+        .then(data => {
+        console.log('Review created:', data);
+        // updateReviews(hostel_id); // Trigger the review update
+        new HostelReview(hostel_id, admin_number);
+    })
+        .catch(error => {
+        console.error('Error:', error);
+    });
+}
+// const hostelId = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
+// document.addEventListener("DOMContentLoaded", () => {
+//     updateReviews(hostel_id)
+// })
+// document.querySelector<HTMLButtonElement>("#comment-sub-0").addEventListener("click", () => {
+//     const comment: string = document.querySelector<HTMLInputElement>("#comment-inp-0").value
+//     const rating: number = 3
+//     createComment(comment, rating, null)
+// })
+// setInterval(() => {
+//     updateReviews(hostel_id)
+// }, 10000)
+(_c = document.getElementById('add-review-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
+    const comment = document.querySelector('#review-comment').value;
+    const rating = parseInt(document.querySelector('#review-rating').value);
+    createComment(comment, rating);
+});
 class HostelReview {
     constructor(hostelId, studentId) {
         this.hostelId = hostelId;
@@ -67,6 +116,36 @@ class HostelReview {
         });
         return reviewElement;
     }
+    createComment(comment, rating, parent_review_id = null) {
+        const reviewData = {
+            student_id: admin_number, // Replace with your input IDs
+            hostel_id: hostel_id,
+            comment: comment,
+            rating: rating,
+            parent_review_id: parent_review_id,
+        };
+        let myurl = `${url}/api/student/hostel/comment/create/`;
+        console.log(myurl);
+        fetch(myurl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reviewData),
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+            .then(data => {
+            console.log('Review created:', data);
+            this.loadReviews(); // Trigger the review update
+        })
+            .catch(error => {
+            console.error('Error:', error);
+        });
+    }
     addReview(comment_1, rating_1) {
         return __awaiter(this, arguments, void 0, function* (comment, rating, parentReviewId = null) {
             const response = yield fetch(`/api/student/hostel/comment/create/`, {
@@ -87,16 +166,14 @@ class HostelReview {
         });
     }
     setEventListeners() {
-        var _a;
-        (_a = document.getElementById('add-review-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
-            const comment = document.querySelector('#review-comment').value;
-            const rating = parseInt(document.querySelector('#review-rating').value);
-            this.addReview(comment, rating);
-        });
+        // document.getElementById('add-review-button')?.addEventListener('click', () => {
+        //     const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
+        //     const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)
+        //     this.createComment(comment, rating)
+        // })
     }
 }
 new HostelReview(hostel_id, admin_number);
-export {};
 // async function displayReviews(hostelId: number) {
 //     const reviews = ""
 // }
