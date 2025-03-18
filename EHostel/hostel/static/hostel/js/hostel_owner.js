@@ -7,14 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { url } from "./mymodules.js";
+// import {  } from "./mymodules.js"
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
 function fetchBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(`${url}/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
+            const response = yield fetch(`/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -74,3 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
 setInterval(() => {
     displayBookings(hostel_id);
 }, 5000);
+export {};

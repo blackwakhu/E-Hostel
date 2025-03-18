@@ -1,4 +1,4 @@
-import { url, updateReviews } from "./mymodules.js";
+import { updateReviews } from "./mymodules.js";
 
 // const admin_number: string = document.querySelector<HTMLSpanElement>("#stud_admin").textContent
 // const hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
@@ -12,7 +12,7 @@ function createComment(comment: string, rating: number | 0, parent_review_id: st
         rating: rating,
         parent_review_id: parent_review_id,
     }
-    let myurl = `${url}/api/student/hostel/comment/create/`
+    let myurl = `/api/student/hostel/comment/create/`
     console.log(myurl)
     fetch(myurl, {
         method: 'POST',
@@ -145,7 +145,7 @@ class HostelReview {
             rating: rating,
             parent_review_id: parent_review_id,
         }
-        let myurl = `${url}/api/student/hostel/comment/create/`
+        let myurl = `/api/student/hostel/comment/create/`
         console.log(myurl)
         fetch(myurl, {
             method: 'POST',

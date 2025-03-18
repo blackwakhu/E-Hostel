@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const url = "http://127.0.0.1:8000";
 export function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
@@ -89,7 +88,7 @@ export function validateNumber(num) {
     return regex.test(num);
 }
 export function updateReviews(hostel_id) {
-    fetch(`${url}/api/student/hostel/comment/${hostel_id}`)
+    fetch(`/api/student/hostel/comment/${hostel_id}`)
         .then(response => response.json())
         .then(reviews => {
         const commentDiv = document.querySelector(".comments-div");

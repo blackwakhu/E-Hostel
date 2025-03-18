@@ -1,4 +1,4 @@
-import { url, UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js" 
+import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js" 
 
 
 // this will reference the menu buttons
@@ -84,7 +84,7 @@ async function searchButtonFind() {
     let search_results_div_stud: HTMLDivElement = document.querySelector<HTMLDivElement>(".search_results_div")
     let query_item_: string = document.querySelector<HTMLInputElement>("#name_query_input").value
     try {
-        const response = await fetch(`${url}/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`)
+        const response = await fetch(`/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`)
         if (!response.ok) {
             throw new Error(`HTTP error status: ${response.status}`)
         }
@@ -120,7 +120,7 @@ interface hostelCardProps {
 
 function HostelCard(props: hostelCardProps): HTMLAnchorElement {
     const cardLink: HTMLAnchorElement = document.createElement("a")
-    cardLink.href = `${url}/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
+    cardLink.href = `/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
     cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
     cardLink.style.textDecoration = 'none'
 
@@ -174,7 +174,7 @@ interface Hostel {
       private inputs: hostelInputs
   
     async fetchHostels(page: number = 1): Promise<void> {
-      const response = await fetch(`${url}/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
+      const response = await fetch(`/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
       const data: HostelResponse = await response.json();
   
       this.hostels = data.hostels;
@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
                 alert("The phone number is not valid")
             } else {
-                const elemurl: string = `${url}/api/student/update/${admin}/${elem.column}/`
+                const elemurl: string = `/api/student/update/${admin}/${elem.column}/`
                 handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
                 hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
             }

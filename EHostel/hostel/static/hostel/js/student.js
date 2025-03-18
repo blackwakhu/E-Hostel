@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { url, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
 // this will reference the menu buttons
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
@@ -80,7 +80,7 @@ function searchButtonFind() {
         let search_results_div_stud = document.querySelector(".search_results_div");
         let query_item_ = document.querySelector("#name_query_input").value;
         try {
-            const response = yield fetch(`${url}/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`);
+            const response = yield fetch(`/api/student/hostel/search?search=${encodeURIComponent(query_item_)}`);
             if (!response.ok) {
                 throw new Error(`HTTP error status: ${response.status}`);
             }
@@ -108,7 +108,7 @@ function searchButtonFind() {
 ;
 function HostelCard(props) {
     const cardLink = document.createElement("a");
-    cardLink.href = `${url}/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
+    cardLink.href = `/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
     cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
     cardLink.style.textDecoration = 'none';
     const card = document.createElement("div");
@@ -133,7 +133,7 @@ function HostelCard(props) {
 class HostelList {
     fetchHostels() {
         return __awaiter(this, arguments, void 0, function* (page = 1) {
-            const response = yield fetch(`${url}/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
+            const response = yield fetch(`/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
             const data = yield response.json();
             this.hostels = data.hostels;
             this.currentPage = data.page;
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("The phone number is not valid");
             }
             else {
-                const elemurl = `${url}/api/student/update/${admin}/${elem.column}/`;
+                const elemurl = `/api/student/update/${admin}/${elem.column}/`;
                 handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass);
                 hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
             }

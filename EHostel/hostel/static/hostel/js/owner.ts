@@ -1,4 +1,4 @@
-import { hideDivElements, hideUrlDivElements, UpdatedElementsint, hideEditElements, url, validateNumber, handleUpdateClick } from "./mymodules.js"
+import { hideDivElements, hideUrlDivElements, UpdatedElementsint, hideEditElements, validateNumber, handleUpdateClick } from "./mymodules.js"
 
 let home_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".home")
 let hostels_btn: HTMLAnchorElement = document.querySelector<HTMLAnchorElement>(".hostels")
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
                     alert("The phone number is not valid")
                 } else {
-                    const elemurl: string = `${url}/api/owner/update/${uname}/${elem.column}/`
+                    const elemurl: string = `/api/owner/update/${uname}/${elem.column}/`
                     handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
                     hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
                 }

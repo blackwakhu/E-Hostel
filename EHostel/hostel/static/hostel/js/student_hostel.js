@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a, _b, _c;
-import { url } from "./mymodules.js";
 // const admin_number: string = document.querySelector<HTMLSpanElement>("#stud_admin").textContent
 // const hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 const hostel_id = parseInt(((_a = document.getElementById('hostel-id')) === null || _a === void 0 ? void 0 : _a.dataset.hostelId) || '');
@@ -21,7 +20,7 @@ function createComment(comment, rating, parent_review_id = null) {
         rating: rating,
         parent_review_id: parent_review_id,
     };
-    let myurl = `${url}/api/student/hostel/comment/create/`;
+    let myurl = `/api/student/hostel/comment/create/`;
     console.log(myurl);
     fetch(myurl, {
         method: 'POST',
@@ -124,7 +123,7 @@ class HostelReview {
             rating: rating,
             parent_review_id: parent_review_id,
         };
-        let myurl = `${url}/api/student/hostel/comment/create/`;
+        let myurl = `/api/student/hostel/comment/create/`;
         console.log(myurl);
         fetch(myurl, {
             method: 'POST',
@@ -174,6 +173,7 @@ class HostelReview {
     }
 }
 new HostelReview(hostel_id, admin_number);
+export {};
 // async function displayReviews(hostelId: number) {
 //     const reviews = ""
 // }

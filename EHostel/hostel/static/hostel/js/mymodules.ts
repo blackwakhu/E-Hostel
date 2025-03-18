@@ -8,8 +8,6 @@ export interface UpdatedElementsint {
     column: string
 }
 
-export const url: string = "http://127.0.0.1:8000"
-
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
@@ -94,7 +92,7 @@ export function validateNumber(num: string): boolean {
 }
 
 export function updateReviews(hostel_id: number) {
-    fetch(`${url}/api/student/hostel/comment/${hostel_id}`)
+    fetch(`/api/student/hostel/comment/${hostel_id}`)
         .then(response => response.json())
         .then(reviews => {
             const commentDiv: HTMLDivElement = document.querySelector(".comments-div")

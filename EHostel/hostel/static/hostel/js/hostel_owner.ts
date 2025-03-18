@@ -1,5 +1,5 @@
 import { table } from "console";
-import { url } from "./mymodules.js"
+// import {  } from "./mymodules.js"
 
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")
@@ -7,7 +7,7 @@ let availRoomsTd: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#av
 
 async function fetchBookings(hostelId) {
     try {
-      const response = await fetch(`${url}/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
+      const response = await fetch(`/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
   
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
