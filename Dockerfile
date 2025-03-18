@@ -13,8 +13,9 @@
     
     WORKDIR /app
     
-    # Install TypeScript and other dependencies explicitly
-    RUN npm install typescript tsc unidici
+    # Update npm and install TypeScript and tsc
+    RUN npm install -g npm@latest
+    RUN npm install typescript tsc
     
     # Copy all Node.js files (TypeScript, JavaScript, etc.)
     COPY . ./
