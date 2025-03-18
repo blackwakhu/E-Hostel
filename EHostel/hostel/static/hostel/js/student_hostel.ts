@@ -5,11 +5,6 @@ import { updateReviews } from "./mymodules.js";
 const hostel_id = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
 const admin_number = parseInt(document.getElementById('hostel-id')?.dataset.admissionNumber || '');
 
-document.getElementById('add-review-button')?.addEventListener("click", () => {
-    const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-    const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
-})
-
 interface Review {
     id: number;
     student: string;
@@ -81,9 +76,47 @@ class HostelReviews {
 
 new HostelReviews()
 
+async function addReview(comment: string, rating: number, parent_id: number | null = null): Promise<void> {
+    const loadData = {
+        "student_id": admin_number,
+        "hostel_id": hostel_id,
+        "rating": rating,
+        "comment": comment,
+        "parent_id": parent_id,
+    }
+    try {
+        const response = await fetch("/student/hostel/comment/create/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loadData)
+        })
+        if (!response.ok) {
+            const errorMsg = await response.json()
+            throw new Error(errorMsg.message || 'Network response was not ok')
+        }
+        const data = await response.json()
+        if (data.success) {
+            new HostelReviews()
+        }
+    } catch (error) {
+        console.error("There was an error when creating a review:", error)
+        throw error
+    }
+}
+
+document.getElementById('add-review-button')?.addEventListener("click", () => {
+    const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
+    const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
+    addReview(comment, rating)
+})
+
 setInterval(() => {
     new HostelReviews()
 }, 5000)
+
+
 
 // function displayReviews() { }
 

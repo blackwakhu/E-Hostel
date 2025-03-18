@@ -376,7 +376,7 @@ def create_review(request):
             hostel_id = data.get('hostel_id')
             comment = data.get('comment')
             rating = data.get('rating')
-            parent_review_id = data.get('parent_review_id')
+            parent_review_id = data.get('parent_id')
             student = get_object_or_404(Student, pk=student_id)
             hostel = get_object_or_404(Hostel, pk=hostel_id)
 

@@ -12,10 +12,6 @@ var _a, _b, _c;
 // const hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 const hostel_id = parseInt(((_a = document.getElementById('hostel-id')) === null || _a === void 0 ? void 0 : _a.dataset.hostelId) || '');
 const admin_number = parseInt(((_b = document.getElementById('hostel-id')) === null || _b === void 0 ? void 0 : _b.dataset.admissionNumber) || '');
-(_c = document.getElementById('add-review-button')) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
-    const comment = document.querySelector('#review-comment').value;
-    const rating = parseInt(document.querySelector('#review-rating').value);
-});
 class HostelReviews {
     constructor() {
         this.hostelId = hostel_id;
@@ -71,6 +67,43 @@ class HostelReviews {
     }
 }
 new HostelReviews();
+function addReview(comment_1, rating_1) {
+    return __awaiter(this, arguments, void 0, function* (comment, rating, parent_id = null) {
+        const loadData = {
+            "student_id": admin_number,
+            "hostel_id": hostel_id,
+            "rating": rating,
+            "comment": comment,
+            "parent_id": parent_id,
+        };
+        try {
+            const response = yield fetch("/student/hostel/comment/create/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loadData)
+            });
+            if (!response.ok) {
+                const errorMsg = yield response.json();
+                throw new Error(errorMsg.message || 'Network response was not ok');
+            }
+            const data = yield response.json();
+            if (data.success) {
+                new HostelReviews();
+            }
+        }
+        catch (error) {
+            console.error("There was an error when creating a review:", error);
+            throw error;
+        }
+    });
+}
+(_c = document.getElementById('add-review-button')) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
+    const comment = document.querySelector('#review-comment').value;
+    const rating = parseInt(document.querySelector('#review-rating').value);
+    addReview(comment, rating);
+});
 setInterval(() => {
     new HostelReviews();
 }, 5000);
@@ -132,67 +165,6 @@ export {};
 //     rating: number;
 //     created_at: string;
 // }
-// interface Review {
-//     id: number;
-//     student: string;
-//     comment: string;
-//     rating: number;
-//     created_at: string;
-//     replies: Review[];
-//   }
-// class HostelReview {
-//     private hostelId: number 
-//     private studentId: number
-//     private reviews: Review[]
-//     constructor(hostelId: number, studentId:number) {
-//         this.hostelId = hostelId
-//         this.studentId = studentId
-//         this.loadReviews()
-//         this.setEventListeners()
-//     }
-//     async loadReviews(): Promise<void>{
-//         try {
-//             const response = await fetch(`/student/hostel/${this.hostelId}/`, {
-//               headers: { 'X-Requested-With': 'XMLHttpRequest' },
-//             });
-//             if (!response.ok) {
-//               throw new Error(`HTTP error! status: ${response.status}`);
-//             }
-//             const data = await response.json();
-//             this.reviews = data.reviews;
-//             this.renderReviews();
-//           } catch (error) {
-//             console.error('Error loading reviews:', error);
-//           }
-//     }
-//     renderReviews(): void {
-//         const reviewsContainer = document.getElementById('reviews-container');
-//         if (!reviewsContainer) return;
-//         reviewsContainer.innerHTML = '';
-//         this.reviews.forEach((review) => {
-//           const reviewElement = this.createReviewElement(review);
-//           reviewsContainer.appendChild(reviewElement);
-//         });
-//       }
-//       createReviewElement(review: Review): HTMLDivElement {
-//         const reviewElement = document.createElement('div');
-//         reviewElement.innerHTML = `
-//             <p><strong>${review.student}</strong> (${review.rating} stars) - ${review.comment}</p>
-//             <button class="reply-button" data-review-id="${review.id}">Reply</button>
-//             <div id="reply-form-${review.id}" style="display: none;">
-//                 <input type="text" id="reply-comment-${review.id}" placeholder="Reply comment">
-//                 <input type="number" id="reply-rating-${review.id}" placeholder="Reply rating">
-//                 <button class="submit-reply" data-review-id="${review.id}">Submit Reply</button>
-//             </div>
-//             <div id="replies-${review.id}"></div>
-//         `;
-//         review.replies.forEach((reply) => {
-//             const replyElement = document.createElement('div');
-//             replyElement.innerHTML = `<p><strong>${reply.student}</strong> (${reply.rating} stars) - ${reply.comment}</p>`;
-//             document.getElementById(`replies-${review.id}`)?.appendChild(replyElement);
-//         });
-//         return reviewElement;
-//       }
 //       createComment(comment: string, rating: number | 0, parent_review_id: string | null = null) {
 //         const reviewData = {
 //             student_id: admin_number, // Replace with your input IDs
