@@ -110,6 +110,23 @@ def student_hostel(request, hostel_id):
         'admission_number': request.session["admission_number"]
     }
 
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest': #Return json for ajax request.
+        review_data = [{
+            'id': review.id,
+            'student': review.student.first_name,
+            'comment': review.comment,
+            'rating': review.rating,
+            'created_at': review.created_at.isoformat(),
+            'replies': [{
+                'id': reply.id,
+                'student': reply.student.first_name,
+                'comment': reply.comment,
+                'rating': reply.rating,
+                'created_at': reply.created_at.isoformat(),
+            } for reply in review.replies.all().order_by('created_at')]
+        } for review in reviews]
+        return JsonResponse({'reviews': review_data})
+
     return render(request, 'student/hostel.html', context)
 
 def student_comment_hostel(request, hostel_id):
@@ -465,3 +482,27 @@ def get_hostel_search(request):
         return JsonResponse(list(hostels), safe=False) #safe=False allows non-dict objects to be serialized.
     else:
         return JsonResponse([], safe=False)
+
+def add_review(request, hostel_id):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id') # Get student id from the request, make sure to send it from ts
+        comment = request.POST.get('comment')
+        rating = request.POST.get('rating')
+        parent_review_id = request.POST.get('parent_review_id')
+
+        hostel = get_object_or_404(Hostel, pk=hostel_id)
+        student = get_object_or_404(Student, pk=student_id) # Replace Student with your actual student model
+
+        parent_review = None
+        if parent_review_id:
+            parent_review = get_object_or_404(Review, pk=parent_review_id)
+
+        review = Review.objects.create(
+            student=student,
+            hostel=hostel,
+            comment=comment,
+            rating=rating,
+            parent_review=parent_review
+        )
+        return JsonResponse({'success': True, 'review_id': review.id})
+    return JsonResponse({'success': False})

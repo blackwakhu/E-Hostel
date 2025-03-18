@@ -32,6 +32,7 @@ urlpatterns = [
     path('api/student/hostel/comment/<hostel_id>', get_reviews, name="get_reviews"),
     path('api/student/hostel/search', get_hostel_search, name="get_hostel_search"),
     path('api/student/hostel/hostel/list', get_hostel_list, name="get_hostel_list"),
+    path('api/student/hostel/review/<hostel_id>/', add_review, name="add_review"),
 
 # for the owner
     path('api/owner/update/<str:uname>/<str:column>/', owner_update, name="owner_update"),

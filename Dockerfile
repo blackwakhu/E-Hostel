@@ -1,7 +1,10 @@
 # --- Build Stage (Python) ---
-    FROM python:3.11-alpine AS python-builder
+    FROM python:3.11-slim AS python-builder
 
     WORKDIR /app
+    
+    # Install PostgreSQL client libraries
+    RUN apt-get update && apt-get install -y libpq-dev gcc
     
     COPY requirements.txt /app/
     RUN pip install --no-cache-dir -r requirements.txt
@@ -21,9 +24,12 @@
     COPY . ./
     
     # --- Runtime Stage ---
-    FROM python:3.11-alpine
+    FROM python:3.11-slim
     
     WORKDIR /app
+    
+    # Install PostgreSQL client libraries in runtime
+    RUN apt-get update && apt-get install -y libpq-dev
     
     # Copy built Python artifacts
     COPY --from=python-builder /app/ .
