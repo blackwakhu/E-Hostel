@@ -97,14 +97,20 @@ def student_main_page(request):
 
 @user_required
 def student_hostel(request, hostel_id):
-    hostel = Hostel.objects.get(pk=hostel_id)
+    hostel = get_object_or_404(Hostel, pk=hostel_id)
+    amenities = HostelAmenities.objects.filter(hostel=hostel)
+    images = HostelImages.objects.filter(hostel=hostel)
     comments = Review.objects.filter(hostel=hostel)
-    return render(request, 'student/hostel.html', {
-        "hostel": hostel,
-        "comments": comments,
-        "reviews": comments,
-        "admission_number": request.session["admission_number"]
-    })
+
+    context = {
+        'hostel': hostel,
+        'amenities': amenities,
+        'images': images,
+        'comments': comments,
+        'admission_number': request.session["admission_number"]
+    }
+
+    return render(request, 'student/hostel.html', context)
 
 def student_comment_hostel(request, hostel_id):
     student = Student.objects.get(admission_number=request.session["admission_number"])
