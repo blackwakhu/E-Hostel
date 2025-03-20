@@ -360,7 +360,7 @@ def stud_update(request, admin, column):
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
 @csrf_exempt
-def owner_update(request, uname, column): 
+def owner_update(request, uname, column):  
     owner = Owner.objects.get(username=uname)
     if request.method == "POST":
         try:
