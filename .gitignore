@@ -1,5 +1,6 @@
 .vscode
 venv
 docker_build.cat
-EHostel/hostel/__pycache__
-EHostel/EHostel/__pycache__
+EHostel/hostel/__pycache__/*
+EHostel/EHostel/__pycache__/*
+EHostel/hostel/__pycache__/views.cpython-311.pyc
