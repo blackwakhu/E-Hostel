@@ -47,12 +47,19 @@ class Hostel(models.Model):
     class Meta:
         unique_together = ('owner', 'hostel_name')
 
-class HostelAmenities(models.Model):
-    hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
-    amenity = models.CharField(max_length=45, null=True, blank=True)
+class Amenities(models.Model):
+    amenity = models.CharField(max_length=45, null=False, primary_key=True)
 
     def __str__(self):
-        return f"{self.hostel} => {self.amenity}"
+        return self.amenity        
+
+class HostelAmenities(models.Model):
+    hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
+    amenity = models.ForeignKey(Amenities, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.hostel} => {self.amenity.amenity}"
+    
 
 class HostelImages(models.Model):
     hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE)
