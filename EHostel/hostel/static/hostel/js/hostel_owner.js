@@ -83,6 +83,7 @@ document.querySelector("#submit-amenity-btn").addEventListener("click", function
     let amenity = document.querySelector("#amenity-input").value;
     if (amenity) {
         console.log(amenity);
+        hideSingleElements(new_amenity_div, new_amenity_btn);
     }
     else {
         console.log("no amenity");

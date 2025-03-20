@@ -83,6 +83,7 @@ document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListene
   let amenity: string = document.querySelector<HTMLInputElement>("#amenity-input").value
   if (amenity) {
     console.log(amenity)
+    hideSingleElements(new_amenity_div, new_amenity_btn)
   } else {
     console.log("no amenity")
   }
