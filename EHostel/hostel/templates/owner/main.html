@@ -68,19 +68,22 @@
                 </div>
 
                 <div id="hostels-html" class="hostels-html item hide-elem">
-                    <div class="card-container">
-                        {% for hostel in hostels %}
-                            <div class='card'>
-                                <img src="image.jpg" height="200px" width="100%" alt="{{ hostel.hostel_name }} image">
-                                <div class="card-content">
-                                    <a href="{% url 'owner_hostel' hostel.id %}">
-                                        {{ hostel.hostel_name }}
-                                    </a>
+                    <div>
+                        {% for hostel in hostels  %}
+                            <div class="card-container">
+                                <div class="card">
+                                    <img src="{{hostel.image}}" alt="{{hostel.hostel.hostel_name}}"/>
+                                    <div class="card-content">
+                                        <h3>{{hostel.hostel.hostel_name}}</h3>
+                                        <p>Price: ksh. {{hostel.hostel.price_per_month}}</p>
+                                        <p>Locality: {{hostel.hostel.locality}}</p>
+                                        <a href="{% url 'owner_hostel' hostel.hostel.id %}" class="btn-link">See More</a>
+                                    </div>
                                 </div>
-                            </div>
+                            </div> 
                         {% empty %}
-                            <p>There are no hostels</p>
-                        {% endfor %} 
+                            <p>You currently have no hostels booked</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div id="my-account-html" class="my-account-html item hide-elem">

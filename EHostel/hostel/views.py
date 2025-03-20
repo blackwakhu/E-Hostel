@@ -230,7 +230,13 @@ def owner_main_page(request):
         username = request.session["username"]
         owner = Owner.objects.get(username=username)
         hostels = Hostel.objects.filter(owner=owner)
-        return render(request, "owner/main.html", {"username": request.session["username"], "hostels":hostels, "owner": owner})
+        myHostels = []
+        for hostel in hostels:
+            first_image = HostelImages.objects.filter(hostel=hostel.id).first()
+            image_url = first_image.image.url if first_image else None
+            myHostels.append({"hostel": hostel, "image":image_url })
+        print(myHostels)
+        return render(request, "owner/main.html", {"username": request.session["username"], "hostels":myHostels, "owner": owner})
     else:
         return redirect('owner_login')
 

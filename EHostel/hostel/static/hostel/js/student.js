@@ -92,11 +92,6 @@ function searchButtonFind() {
                 return;
             }
             data.forEach(hostel => {
-                // const hostelDiv = document.createElement('div')
-                // hostelDiv.innerHTML = `
-                //     <h3>${hostel.hostel_name}</h3>
-                //     <p>status: ${hostel.status}</p>
-                //     <hr>`
                 const myHostel = {
                     hostel: {
                         id: hostel.id,
