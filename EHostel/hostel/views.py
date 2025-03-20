@@ -235,7 +235,6 @@ def owner_main_page(request):
             first_image = HostelImages.objects.filter(hostel=hostel.id).first()
             image_url = first_image.image.url if first_image else None
             myHostels.append({"hostel": hostel, "image":image_url })
-        print(myHostels)
         return render(request, "owner/main.html", {"username": request.session["username"], "hostels":myHostels, "owner": owner})
     else:
         return redirect('owner_login')
