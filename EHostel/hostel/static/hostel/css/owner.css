@@ -45,6 +45,6 @@
     margin-left: 25%;
 }
 
-#add-amenities-div {
+#add-amenities-div, #add-amenities-div #new-amenities-div {
     display: none;
   }

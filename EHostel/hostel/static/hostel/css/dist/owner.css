@@ -48,3 +48,6 @@
 #add-amenities-div {
   display: none;
 }
+#add-amenities-div #new-amenities-div {
+  display: none;
+}

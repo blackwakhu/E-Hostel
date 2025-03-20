@@ -7,10 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// import {  } from "./mymodules.js"
+import { hideSingleElements } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
+let add_amenities_btn = document.querySelector("#add-amenities-btn");
+let add_amenities_div = document.querySelector("#add-amenities-div");
+let new_amenity_btn = document.querySelector("#new-amenity-btn");
+let new_amenity_div = document.querySelector("#new-amenity-div");
 function fetchBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -68,10 +72,25 @@ function displayBookings(hostelId) {
         }
     });
 }
+add_amenities_btn.addEventListener("click", () => {
+    hideSingleElements(add_amenities_btn, add_amenities_div);
+    hideSingleElements(new_amenity_div, new_amenity_btn);
+});
+new_amenity_btn.addEventListener("click", () => {
+    hideSingleElements(new_amenity_btn, new_amenity_div);
+});
+document.querySelector("#submit-amenity-btn").addEventListener("click", function () {
+    let amenity = document.querySelector("#amenity-input").value;
+    if (amenity) {
+        console.log(amenity);
+    }
+    else {
+        console.log("no amenity");
+    }
+});
 document.addEventListener("DOMContentLoaded", () => {
     displayBookings(hostel_id);
 });
 setInterval(() => {
     displayBookings(hostel_id);
 }, 5000);
-export {};

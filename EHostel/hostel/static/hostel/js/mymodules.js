@@ -169,3 +169,7 @@ export function HostelCard(props) {
     cardContainer.appendChild(card);
     return cardContainer;
 }
+export function hideSingleElements(toHide, toSee) {
+    toHide.style.display = "none";
+    toSee.style.display = "inline-flex";
+}

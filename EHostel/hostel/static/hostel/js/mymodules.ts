@@ -231,3 +231,8 @@ export function HostelCard(props: hostelCardProps): HTMLDivElement {
     cardContainer.appendChild(card)
     return cardContainer
 }
+
+export function hideSingleElements(toHide: HTMLElement, toSee: HTMLElement) {
+    toHide.style.display = "none"
+    toSee.style.display = "inline-flex"
+}

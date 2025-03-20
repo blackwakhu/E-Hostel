@@ -1,9 +1,14 @@
 import { table } from "console";
-// import {  } from "./mymodules.js"
+import { hideSingleElements } from "./mymodules.js"
 
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")
 let availRoomsTd: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#avail_rooms")
+
+let add_amenities_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#add-amenities-btn")
+let add_amenities_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#add-amenities-div")
+let new_amenity_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#new-amenity-btn")
+let new_amenity_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#new-amenity-div")
 
 async function fetchBookings(hostelId) {
     try {
@@ -64,6 +69,24 @@ async function fetchBookings(hostelId) {
   
     }
   }
+
+add_amenities_btn.addEventListener("click", () => {
+  hideSingleElements(add_amenities_btn, add_amenities_div)
+  hideSingleElements(new_amenity_div, new_amenity_btn)
+})
+
+new_amenity_btn.addEventListener("click", () => {
+  hideSingleElements(new_amenity_btn, new_amenity_div)
+})
+
+document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListener("click", function () {
+  let amenity: string = document.querySelector<HTMLInputElement>("#amenity-input").value
+  if (amenity) {
+    console.log(amenity)
+  } else {
+    console.log("no amenity")
+  }
+})
   
   document.addEventListener("DOMContentLoaded", () => {
       displayBookings(hostel_id);
