@@ -24,6 +24,7 @@ let hostels_div_student = document.querySelector(".hostels-html");
 let my_hostel_div_student = document.querySelector(".my-hostel-html");
 let my_account_div_student = document.querySelector(".my-account-html");
 let search_div_student = document.querySelector(".search-html");
+;
 // this gets the student admission number fromt the html file
 const admin = document.querySelector("#stud-admin").textContent;
 // this array includes all the major iv elements that divide the student.html file
@@ -91,12 +92,21 @@ function searchButtonFind() {
                 return;
             }
             data.forEach(hostel => {
-                const hostelDiv = document.createElement('div');
-                hostelDiv.innerHTML = `
-                <h3>${hostel.hostel_name}</h3>
-                <p>status: ${hostel.status}</p>
-                <hr>`;
-                search_results_div_stud.appendChild(hostelDiv);
+                // const hostelDiv = document.createElement('div')
+                // hostelDiv.innerHTML = `
+                //     <h3>${hostel.hostel_name}</h3>
+                //     <p>status: ${hostel.status}</p>
+                //     <hr>`
+                const myHostel = {
+                    hostel: {
+                        id: hostel.id,
+                        hostel_name: hostel.hostel_name,
+                        price_per_month: hostel.price_per_month,
+                        locality: hostel.locality,
+                        image: hostel.image
+                    }
+                };
+                search_results_div_stud.appendChild(HostelCard(myHostel));
             });
         }
         catch (error) {
@@ -135,7 +145,6 @@ function HostelCard(props) {
     cardContainer.appendChild(card);
     return cardContainer;
 }
-;
 class HostelList {
     fetchHostels() {
         return __awaiter(this, arguments, void 0, function* (page = 1) {

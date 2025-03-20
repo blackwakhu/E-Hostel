@@ -20,6 +20,24 @@ let my_hostel_div_student: HTMLDivElement = document.querySelector<HTMLDivElemen
 let my_account_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".my-account-html")
 let search_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".search-html")
 
+interface Hostel {
+    id: number;
+    hostel_name: string;
+    price_per_month: number;
+    locality: string;
+    image: string | null;
+  };
+  
+  interface HostelResponse {
+    hostels: Hostel[];
+    page: number;
+    num_pages: number;
+    has_previous: boolean;
+    has_next: boolean;
+    previous_page_number: number | null;
+    next_page_number: number | null;
+  }
+
 // this gets the student admission number fromt the html file
 const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
 
@@ -72,8 +90,6 @@ let updateElements: UpdatedElementsint[] = [
     }
 ]
 
-
-
 for (let i = 0; i < divElements_student.length; i++) {
     btnObj_student.push({"button": buttonElements_student[i], "div": divElements_student[i]})
 }
@@ -95,12 +111,21 @@ async function searchButtonFind() {
             return
         }
         data.forEach(hostel => {
-            const hostelDiv = document.createElement('div')
-            hostelDiv.innerHTML = `
-                <h3>${hostel.hostel_name}</h3>
-                <p>status: ${hostel.status}</p>
-                <hr>`
-            search_results_div_stud.appendChild(hostelDiv)
+            // const hostelDiv = document.createElement('div')
+            // hostelDiv.innerHTML = `
+            //     <h3>${hostel.hostel_name}</h3>
+            //     <p>status: ${hostel.status}</p>
+            //     <hr>`
+            const myHostel: hostelCardProps = {
+                hostel: {
+                    id: hostel.id,
+                    hostel_name: hostel.hostel_name,
+                    price_per_month: hostel.price_per_month,
+                    locality: hostel.locality,
+                    image: hostel.image
+                }
+            }
+            search_results_div_stud.appendChild(HostelCard(myHostel))
         })
     } catch (error) {
         console.error('Error getching hostels:', error)
@@ -155,24 +180,6 @@ function HostelCard(props: hostelCardProps): HTMLDivElement {
     cardContainer.appendChild(card)
     return cardContainer
 }
-
-interface Hostel {
-    id: number;
-    hostel_name: string;
-    price_per_month: number;
-    locality: string;
-    image: string | null;
-  };
-  
-  interface HostelResponse {
-    hostels: Hostel[];
-    page: number;
-    num_pages: number;
-    has_previous: boolean;
-    has_next: boolean;
-    previous_page_number: number | null;
-    next_page_number: number | null;
-  }
   
   class HostelList {
     private currentPage: number = 1;

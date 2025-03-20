@@ -456,9 +456,12 @@ def get_hostel_search(request):
                 Q(town__icontains=search_term) |
                 Q(locality__icontains=search_term)
             ).values() #values() converts the queryset to a list of dictionaries.
+        for hostel in hostels:
+            first_image = HostelImages.objects.filter(hostel=hostel["id"]).first()
+            image_url = first_image.image.url if first_image else None
+            hostel["image"] = image_url
         return JsonResponse(list(hostels), safe=False) #safe=False allows non-dict objects to be serialized.
-    else:
-        return JsonResponse([], safe=False)
+    return JsonResponse([], safe=False)
 
 @csrf_exempt
 def add_review(request):
