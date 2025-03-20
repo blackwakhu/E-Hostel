@@ -36,12 +36,12 @@
             <h2>Amenities:</h2>
             <ul>
                 {% for amenity in amenities %}
-                    <li>{{ amenity.amenity }}</li>
+                    <li>{{ amenity.amenity.amenity }}</li>
                 {% empty %}
                     <li>No amenities available.</li>
                 {% endfor %}
             </ul>
-
+            
             <div></div>
 
             <h2>Images:</h2>

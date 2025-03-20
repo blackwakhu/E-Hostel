@@ -36,11 +36,13 @@
         <td>
             <ol>
                 {% for amenity in amenities %}
-                    <li>{{ amenity }}</li>
+                    <li>{{ amenity.amenity }}</li>
                 {% empty %}
                     <p>No amenity Available</p>
                 {% endfor %}
             </ol>
+            <button id="add-amenities-btn">Add amenities</button>
+            <div id="add-amenities-div"></div>
         </td>
     </tr>
     <tr>

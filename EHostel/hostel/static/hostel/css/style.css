@@ -139,3 +139,7 @@ body {
   background-color: rgb(79, 224, 34, .5);
   color: blue;
 }
+
+#add-amenities-div {
+  display: hidden;
+}
