@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b;
+var _a, _b, _c;
 const hostel_id = parseInt(((_a = document.getElementById('hostel-id')) === null || _a === void 0 ? void 0 : _a.dataset.hostelId) || '');
 const admin_number = ((_b = document.getElementById('hostel-id')) === null || _b === void 0 ? void 0 : _b.dataset.admissionNumber) || '';
 class HostelReviews {
@@ -65,44 +65,43 @@ class HostelReviews {
         });
         return reviewElement;
     }
-    createReview(comment_1, rating_1) {
-        return __awaiter(this, arguments, void 0, function* (comment, rating, parent_id = null) {
-            const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
-            const reviewData = {
-                student_id: this.admin_number,
-                hostel_id: this.admin_number,
-                comment: comment,
-                rating: rating,
-                parent_id: parent_id
-            };
-            try {
-                const response = yield fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(reviewData)
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const result = yield response.json();
-                console.log("Review added successfully:", result);
-            }
-            catch (error) {
-                console.error("Error adding review:", error);
-            }
-        });
-    }
     setEventListeners() {
-        var _a;
-        (_a = document.getElementById('add-review-button')) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
-            const comment = document.querySelector('#review-comment').value;
-            const rating = parseInt(document.querySelector('#review-rating').value);
-            this.createReview(comment, rating);
-        });
     }
 }
+function createReview(comment_1, rating_1) {
+    return __awaiter(this, arguments, void 0, function* (comment, rating, parent_id = null) {
+        const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
+        const reviewData = {
+            student_id: admin_number,
+            hostel_id: hostel_id,
+            comment: comment,
+            rating: rating,
+            parent_id: parent_id
+        };
+        try {
+            const response = yield fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reviewData)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const result = yield response.json();
+            console.log("Review added successfully:", result);
+        }
+        catch (error) {
+            console.error("Error adding review:", error);
+        }
+    });
+}
+(_c = document.getElementById('add-review-button')) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
+    const comment = document.querySelector('#review-comment').value;
+    const rating = parseInt(document.querySelector('#review-rating').value);
+    createReview(comment, rating);
+});
 new HostelReviews();
 setInterval(() => {
     new HostelReviews();

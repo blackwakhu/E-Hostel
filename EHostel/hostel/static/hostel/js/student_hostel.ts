@@ -65,45 +65,48 @@ class HostelReviews {
             
         return reviewElement;
     }
-    async createReview(comment: string, rating: number, parent_id: number | null = null): Promise<void> { 
-        const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
-
-        const reviewData = {
-            student_id: this.admin_number,
-            hostel_id: this.admin_number,
-            comment: comment,
-            rating: rating,
-            parent_id: parent_id
-        };
-
-        try {
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(reviewData)
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }   
-
-            const result = await response.json();
-            console.log("Review added successfully:", result);
-
-        } catch (error) {
-            console.error("Error adding review:", error);
-        }
-    }
+    
     setEventListeners(): void {
-        document.getElementById('add-review-button')?.addEventListener("click", () => {
-            const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-            const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
-            this.createReview(comment, rating)
-        })
     }
 }
+
+async function createReview(comment: string, rating: number, parent_id: number | null = null): Promise<void> { 
+    const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
+
+    const reviewData = {
+        student_id: admin_number,
+        hostel_id: hostel_id,
+        comment: comment,
+        rating: rating,
+        parent_id: parent_id
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(reviewData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }   
+
+        const result = await response.json();
+        console.log("Review added successfully:", result);
+
+    } catch (error) {
+        console.error("Error adding review:", error);
+    }
+}
+
+document.getElementById('add-review-button')?.addEventListener("click", () => {
+    const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
+    const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
+    createReview(comment, rating)
+})
 
 new HostelReviews()
 
