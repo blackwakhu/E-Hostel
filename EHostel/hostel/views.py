@@ -472,7 +472,6 @@ def get_hostel_search(request):
 def add_review(request):
     if request.method == "POST":
         try:
-            print("entered try blok")
             data = json.loads(request.body)
             student_id = data.get("student_id")
             hostel_id = data.get("hostel_id")
@@ -495,7 +494,6 @@ def add_review(request):
                 rating=rating,
                 parent_review=parent_review
             )
-            print("created review")
 
             return JsonResponse({"message": "Review added Successfully", "review_id": review.id}, status=201)
         except Student.DoesNotExist:
