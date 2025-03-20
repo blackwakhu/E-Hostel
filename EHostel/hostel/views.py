@@ -403,35 +403,6 @@ def create_review(request):
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-def get_reviews(request, hostel_id):
-    hostel = get_object_or_404(Hostel, pk=hostel_id)
-    reviews = Review.objects.filter(hostel=hostel).order_by('-created_at')
-
-    reviews_data = []
-    for review in reviews:
-        review_data = {
-            'id': review.id,
-            'student': review.student.first_name, #or other student data.
-            'hostel': review.hostel.hostel_name, #or other hostel data.
-            'comment': review.comment,
-            'rating': review.rating,
-            'created_at': review.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-            'parent_review_id': review.parent_review.id if review.parent_review else None,
-            'replies': []
-        }
-        replies = review.replies.all().order_by('created_at') #get replies, in order.
-        for reply in replies:
-            reply_data = {
-                'id': reply.id,
-                'student': reply.student.first_name, #or other student data.
-                'comment': reply.comment,
-                'created_at': reply.created_at.strftime('%Y-%m-%d %H:%M:%S')
-            }
-            review_data['replies'].append(reply_data)
-        reviews_data.append(review_data)
-
-    return JsonResponse(reviews_data, safe=False)
-
 def get_hostel_list(request):
     page_number = request.GET.get('page', 1)
     hostels = Hostel.objects.all().order_by('id')
@@ -484,33 +455,41 @@ def get_hostel_search(request):
         return JsonResponse([], safe=False)
 
 @csrf_exempt
-def add_review(request, hostel_id):
-    if request.method == 'POST':
-        # student_id = request.POST.get('student_id') # Get student id from the request, make sure to send it from ts
-        # comment = request.POST.get('comment')
-        # rating = request.POST.get('rating')
-        # parent_review_id = request.POST.get('parent_review_id')
-        data = json.loads(request.body)
-        student_id = data.get('student_id')
-        comment = data.get('comment')
-        rating = data.get('rating')
-        parent_review_id = data.get('parent_review_id')
-        student = get_object_or_404(Student, pk=student_id)
-        hostel = get_object_or_404(Hostel, pk=hostel_id)
+def add_review(request):
+    if request.method == "POST":
+        try:
+            print("entered try blok")
+            data = json.loads(request.body)
+            student_id = data.get("student_id")
+            hostel_id = data.get("hostel_id")
+            comment = data.get("comment","")
+            rating = data.get("rating", 0)
+            parent_id = data.get("parent_id")
+            
+            student = Student.objects.get(admission_number=student_id)
+            hostel = Hostel.objects.get(pk=hostel_id)
 
-        hostel = get_object_or_404(Hostel, pk=hostel_id)
-        student = get_object_or_404(Student, pk=student_id) # Replace Student with your actual student model
+            parent_review = None
 
-        parent_review = None
-        if parent_review_id:
-            parent_review = get_object_or_404(Review, pk=parent_review_id)
+            if parent_id:
+                parent_review = get_object_or_404(Review, pk=parent_id)
 
-        review = Review.objects.create(
-            student=student,
-            hostel=hostel,
-            comment=comment,
-            rating=rating,
-            parent_review=parent_review
-        )
-        return JsonResponse({'success': True, 'review_id': review.id})
-    return JsonResponse({'success': False})
+            review = Review.objects.create(
+                student=student,
+                hostel=hostel,
+                comment=comment,
+                rating=rating,
+                parent_review=parent_review
+            )
+            print("created review")
+
+            return JsonResponse({"message": "Review added Successfully", "review_id": review.id}, status=201)
+        except Student.DoesNotExist:
+            return JsonResponse({"error": "Student not found"}, status=400)
+        except Hostel.DoesNotExist:
+            return JsonResponse({"error": "Hostel not found"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+    

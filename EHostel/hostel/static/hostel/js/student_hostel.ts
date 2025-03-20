@@ -1,9 +1,7 @@
 import { updateReviews } from "./mymodules.js";
 
-// const admin_number: string = document.querySelector<HTMLSpanElement>("#stud_admin").textContent
-// const hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 const hostel_id = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
-const admin_number = parseInt(document.getElementById('hostel-id')?.dataset.admissionNumber || '');
+const admin_number = document.getElementById('hostel-id')?.dataset.admissionNumber || '';
 
 interface Review {
     id: number;
@@ -15,15 +13,17 @@ interface Review {
   }
 
 class HostelReviews {
-    private hostelId: number = hostel_id
+    private hostel_id: number = hostel_id
+    private admin_number: string = admin_number
     private reviews:Review[]
     constructor() {
         this.loadReviews()
+        this.setEventListeners()
     }
 
     async loadReviews(): Promise<void>{
         try {
-            const response = await fetch(`/student/hostel/${this.hostelId}/`, {
+            const response = await fetch(`/student/hostel/${this.hostel_id}/`, {
                 headers: { 'X-Requested-With': 'XMLHttpRequest' },
             });
             if (!response.ok) {
@@ -72,205 +72,48 @@ class HostelReviews {
             
         return reviewElement;
     }
+    async createReview(comment: string, rating: number, parent_id: number | null = null): Promise<void> { 
+        const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
+
+        const reviewData = {
+            student_id: this.admin_number,
+            hostel_id: this.admin_number,
+            comment: comment,
+            rating: rating,
+            parent_id: parent_id
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reviewData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }   
+
+            const result = await response.json();
+            console.log("Review added successfully:", result);
+
+        } catch (error) {
+            console.error("Error adding review:", error);
+        }
+    }
+    setEventListeners(): void {
+        document.getElementById('add-review-button')?.addEventListener("click", () => {
+            const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
+            const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
+            this.createReview(comment, rating)
+        })
+    }
 }
 
 new HostelReviews()
 
-async function addReview(comment: string, rating: number, parent_id: number | null = null): Promise<void> {
-    const loadData = {
-        "student_id": admin_number,
-        "hostel_id": hostel_id,
-        "rating": rating,
-        "comment": comment,
-        "parent_id": parent_id,
-    }
-    try {
-        const response = await fetch("/student/hostel/comment/create/", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loadData)
-        })
-        if (!response.ok) {
-            const errorMsg = await response.json()
-            throw new Error(errorMsg.message || 'Network response was not ok')
-        }
-        const data = await response.json()
-        if (data.success) {
-            new HostelReviews()
-        }
-    } catch (error) {
-        console.error("There was an error when creating a review:", error)
-        throw error
-    }
-}
-
-document.getElementById('add-review-button')?.addEventListener("click", () => {
-    const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-    const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
-    addReview(comment, rating)
-})
-
 setInterval(() => {
     new HostelReviews()
 }, 5000)
-
-
-
-// function displayReviews() { }
-
-// function fetchComments () {}
-
-// function createComment(comment: string, rating: number | 0, parent_review_id: string | null = null) {
-//     const reviewData = {
-//         student_id: admin_number, // Replace with your input IDs
-//         hostel_id: hostel_id,
-//         comment: comment,
-//         rating: rating,
-//         parent_review_id: parent_review_id,
-//     }
-//     let myurl = `/api/student/hostel/comment/create/`
-//     console.log(myurl)
-//     fetch(myurl, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(reviewData),
-//     }).then(response => {
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log('Review created:', data);
-//       // updateReviews(hostel_id); // Trigger the review update
-//       new HostelReview(hostel_id, admin_number)
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//     });
-// }
-
-// // const hostelId = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
-
-
-// // document.addEventListener("DOMContentLoaded", () => {
-// //     updateReviews(hostel_id)
-    
-// // })
-
-// // document.querySelector<HTMLButtonElement>("#comment-sub-0").addEventListener("click", () => {
-// //     const comment: string = document.querySelector<HTMLInputElement>("#comment-inp-0").value
-// //     const rating: number = 3
-// //     createComment(comment, rating, null)
-// // })
-
-// // setInterval(() => {
-// //     updateReviews(hostel_id)
-// // }, 10000)
-
-// document.getElementById('add-review-button')?.addEventListener('click', () => {
-//   const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-//   const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)
-//   createComment(comment, rating)
-// })
-
-// interface ReviewReply {
-//     id: number;
-//     student: string;
-//     comment: string;
-//     rating: number;
-//     created_at: string;
-// }
-//       createComment(comment: string, rating: number | 0, parent_review_id: string | null = null) {
-//         const reviewData = {
-//             student_id: admin_number, // Replace with your input IDs
-//             hostel_id: hostel_id,
-//             comment: comment,
-//             rating: rating,
-//             parent_review_id: parent_review_id,
-//         }
-//         let myurl = `/api/student/hostel/comment/create/`
-//         console.log(myurl)
-//         fetch(myurl, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(reviewData),
-//         }).then(response => {
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! status: ${response.status}`);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log('Review created:', data);
-//             this.loadReviews() // Trigger the review update
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-//     }
-//     async addReview(comment: string, rating: number, parentReviewId: number | null = null): Promise<void>{
-//         const response = await fetch(`/api/student/hostel/comment/create/`, {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({
-//                 hostel_id: this.hostelId,
-//                 student_id: this.studentId,
-//                 comment: comment,
-//                 rating: rating,
-//                 parent_review_id: parentReviewId
-//             })
-//         })
-//         const data = await response.json()
-//         if (data.success) {
-//             this.loadReviews();
-//         }
-//     }
-//     setEventListeners() {
-//         // document.getElementById('add-review-button')?.addEventListener('click', () => {
-//         //     const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-//         //     const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)
-//         //     this.createComment(comment, rating)
-//         // })
-//     }
-
-// }
-
-// new HostelReview(hostel_id, admin_number)
-
-// // async function displayReviews(hostelId: number) {
-// //     const reviews = ""
-// // }
-
-// // async function fetchReviews(hostelId: number): Promise<Review[]>{
-// //     try {
-// //         const response = await fetch(`${url}/student/hostel/${hostelId}/`, {
-// //             headers: {
-// //                 'X-Requested-With': 'XMLHttpRequest',
-// //             },
-// //         })
-// //         if (!response.ok) {
-// //             throw new Error(`Http error status: ${response.status}`)
-// //         }
-// //         const data = await response.json()
-// //         if (data && data.reviews && Array.isArray(data.reviews)) {
-// //             return data.reviews 
-// //         } else {
-// //             console.error('Invalid review data format:', data)
-// //         }
-// //     } catch (error) {
-// //         console.error('Error fetching hostel reviews:', error)
-// //     }
-// // }
-
-//   // Example usage:
-
-
-
-  
