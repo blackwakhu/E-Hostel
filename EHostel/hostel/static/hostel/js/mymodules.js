@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+;
+;
 export function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
@@ -137,4 +139,33 @@ export function updateReviews(hostel_id) {
         });
     })
         .catch(error => console.error('Error fetching reviews:', error));
+}
+export function HostelCard(props) {
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("card-container");
+    const card = document.createElement("div");
+    card.classList.add("card");
+    const image = document.createElement("img");
+    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
+    image.alt = props.hostel.hostel_name;
+    card.appendChild(image);
+    const cardContent = document.createElement("div");
+    cardContent.classList.add("card-content");
+    const h3 = document.createElement("h3");
+    h3.innerText = props.hostel.hostel_name;
+    cardContent.appendChild(h3);
+    const price = document.createElement('p');
+    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
+    cardContent.appendChild(price);
+    const locality = document.createElement('p');
+    locality.textContent = `Locality: ${props.hostel.locality}`;
+    cardContent.appendChild(locality);
+    const link = document.createElement("a");
+    link.href = `/student/hostel/${props.hostel.id}/`;
+    link.classList.add("btn-link");
+    link.innerHTML = "See More";
+    cardContent.appendChild(link);
+    card.appendChild(cardContent);
+    cardContainer.appendChild(card);
+    return cardContainer;
 }

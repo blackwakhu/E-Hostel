@@ -1,4 +1,7 @@
-import { UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js" 
+import {
+    UpdatedElementsint, hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber, HostelCard,
+    hostelCardProps, hostelInputs, Hostel, HostelResponse
+ } from "./mymodules.js" 
 
 
 // this will reference the menu buttons
@@ -20,23 +23,7 @@ let my_hostel_div_student: HTMLDivElement = document.querySelector<HTMLDivElemen
 let my_account_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".my-account-html")
 let search_div_student: HTMLDivElement = document.querySelector<HTMLDivElement>(".search-html")
 
-interface Hostel {
-    id: number;
-    hostel_name: string;
-    price_per_month: number;
-    locality: string;
-    image: string | null;
-  };
-  
-  interface HostelResponse {
-    hostels: Hostel[];
-    page: number;
-    num_pages: number;
-    has_previous: boolean;
-    has_next: boolean;
-    previous_page_number: number | null;
-    next_page_number: number | null;
-  }
+
 
 // this gets the student admission number fromt the html file
 const admin:string =  document.querySelector<HTMLSpanElement>("#stud-admin").textContent
@@ -128,54 +115,6 @@ async function searchButtonFind() {
     }
 }
 
-interface hostelInputs {
-    hostel_div: HTMLDivElement,
-    prev: HTMLButtonElement,
-    next: HTMLButtonElement
-};
-
-interface hostelCardProps {
-    hostel: Hostel
-}
-
-function HostelCard(props: hostelCardProps): HTMLDivElement {
-    const cardContainer: HTMLDivElement = document.createElement("div")
-    cardContainer.classList.add("card-container")
-
-    const card: HTMLDivElement = document.createElement("div")
-    card.classList.add("card")
-
-    const image: HTMLImageElement = document.createElement("img")
-    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
-    image.alt = props.hostel.hostel_name;
-    card.appendChild(image)
-
-    const cardContent: HTMLDivElement = document.createElement("div")
-    cardContent.classList.add("card-content")
-
-    const h3: HTMLHeadElement = document.createElement("h3")
-    h3.innerText = props.hostel.hostel_name
-    cardContent.appendChild(h3)
-
-    const price = document.createElement('p');
-    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
-    cardContent.appendChild(price);
-
-    const locality = document.createElement('p');
-    locality.textContent = `Locality: ${props.hostel.locality}`;
-    cardContent.appendChild(locality);
-
-    const link: HTMLAnchorElement = document.createElement("a")
-    link.href = `/student/hostel/${props.hostel.id}/`
-    link.classList.add("btn-link")
-    link.innerHTML = "See More"
-    cardContent.appendChild(link)
-
-    card.appendChild(cardContent)
-    cardContainer.appendChild(card)
-    return cardContainer
-}
-  
   class HostelList {
     private currentPage: number = 1;
     private hostels: Hostel[] = [];

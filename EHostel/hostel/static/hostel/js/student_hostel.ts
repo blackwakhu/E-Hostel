@@ -1,16 +1,9 @@
-import { updateReviews } from "./mymodules.js";
+import { Review } from "./mymodules.js";
 
 const hostel_id = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
 const admin_number = document.getElementById('hostel-id')?.dataset.admissionNumber || '';
 
-interface Review {
-    id: number;
-    student: string;
-    comment: string;
-    rating: number;
-    created_at: string;
-    replies: Review[];
-  }
+
 
 class HostelReviews {
     private hostel_id: number = hostel_id

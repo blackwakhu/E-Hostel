@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber } from "./mymodules.js";
+import { hideDivElements, hideUrlDivElements, hideEditElements, handleUpdateClick, validateNumber, HostelCard } from "./mymodules.js";
 // this will reference the menu buttons
 let home_btn_student = document.querySelector(".home");
 let hostels_btn_student = document.querySelector(".hostels");
@@ -24,7 +24,6 @@ let hostels_div_student = document.querySelector(".hostels-html");
 let my_hostel_div_student = document.querySelector(".my-hostel-html");
 let my_account_div_student = document.querySelector(".my-account-html");
 let search_div_student = document.querySelector(".search-html");
-;
 // this gets the student admission number fromt the html file
 const admin = document.querySelector("#stud-admin").textContent;
 // this array includes all the major iv elements that divide the student.html file
@@ -109,36 +108,6 @@ function searchButtonFind() {
             search_results_div_stud.innerHTML = '<p>An error occured while searching</p>';
         }
     });
-}
-;
-function HostelCard(props) {
-    const cardContainer = document.createElement("div");
-    cardContainer.classList.add("card-container");
-    const card = document.createElement("div");
-    card.classList.add("card");
-    const image = document.createElement("img");
-    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
-    image.alt = props.hostel.hostel_name;
-    card.appendChild(image);
-    const cardContent = document.createElement("div");
-    cardContent.classList.add("card-content");
-    const h3 = document.createElement("h3");
-    h3.innerText = props.hostel.hostel_name;
-    cardContent.appendChild(h3);
-    const price = document.createElement('p');
-    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
-    cardContent.appendChild(price);
-    const locality = document.createElement('p');
-    locality.textContent = `Locality: ${props.hostel.locality}`;
-    cardContent.appendChild(locality);
-    const link = document.createElement("a");
-    link.href = `/student/hostel/${props.hostel.id}/`;
-    link.classList.add("btn-link");
-    link.innerHTML = "See More";
-    cardContent.appendChild(link);
-    card.appendChild(cardContent);
-    cardContainer.appendChild(card);
-    return cardContainer;
 }
 class HostelList {
     fetchHostels() {

@@ -8,6 +8,43 @@ export interface UpdatedElementsint {
     column: string
 }
 
+export interface Hostel {
+    id: number;
+    hostel_name: string;
+    price_per_month: number;
+    locality: string;
+    image: string | null;
+  };
+  
+export  interface HostelResponse {
+    hostels: Hostel[];
+    page: number;
+    num_pages: number;
+    has_previous: boolean;
+    has_next: boolean;
+    previous_page_number: number | null;
+    next_page_number: number | null;
+}
+  
+export interface hostelInputs {
+    hostel_div: HTMLDivElement,
+    prev: HTMLButtonElement,
+    next: HTMLButtonElement
+};
+
+export interface hostelCardProps {
+    hostel: Hostel
+}
+
+export interface Review {
+    id: number;
+    student: string;
+    comment: string;
+    rating: number;
+    created_at: string;
+    replies: Review[];
+  }
+
 export function hideDivElements(btn: HTMLAnchorElement, buttons: HTMLAnchorElement[], seeDiv: HTMLDivElement, elems: HTMLDivElement[]) {
     elems.forEach((elem) => {
         if (!(elem.classList.contains("hide-elem"))) {
@@ -156,3 +193,41 @@ export function updateReviews(hostel_id: number) {
         })
         .catch(error => console.error('Error fetching reviews:',error))
 }   
+
+export function HostelCard(props: hostelCardProps): HTMLDivElement {
+    const cardContainer: HTMLDivElement = document.createElement("div")
+    cardContainer.classList.add("card-container")
+
+    const card: HTMLDivElement = document.createElement("div")
+    card.classList.add("card")
+
+    const image: HTMLImageElement = document.createElement("img")
+    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
+    image.alt = props.hostel.hostel_name;
+    card.appendChild(image)
+
+    const cardContent: HTMLDivElement = document.createElement("div")
+    cardContent.classList.add("card-content")
+
+    const h3: HTMLHeadElement = document.createElement("h3")
+    h3.innerText = props.hostel.hostel_name
+    cardContent.appendChild(h3)
+
+    const price = document.createElement('p');
+    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
+    cardContent.appendChild(price);
+
+    const locality = document.createElement('p');
+    locality.textContent = `Locality: ${props.hostel.locality}`;
+    cardContent.appendChild(locality);
+
+    const link: HTMLAnchorElement = document.createElement("a")
+    link.href = `/student/hostel/${props.hostel.id}/`
+    link.classList.add("btn-link")
+    link.innerHTML = "See More"
+    cardContent.appendChild(link)
+
+    card.appendChild(cardContent)
+    cardContainer.appendChild(card)
+    return cardContainer
+}
