@@ -88,7 +88,13 @@ def student_main_page(request):
     booked_hostels = []
     bookings = Booking.objects.filter(student=student)
     for booking in bookings:
-        booked_hostels.append({'hostel': booking.hostel, 'status': booking.status})
+        first_image = HostelImages.objects.filter(hostel=booking.hostel).first()
+        image_url = first_image.image.url if first_image else None
+        booked_hostels.append({
+            'hostel': booking.hostel, 
+            'status': booking.status, 
+            'image': image_url
+        })
     return render(request, 'student/main.html', {
         "hostels": hostels,
         "student": student,

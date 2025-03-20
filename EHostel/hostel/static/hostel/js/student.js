@@ -121,7 +121,7 @@ function HostelCard(props) {
     h3.innerText = props.hostel.hostel_name;
     cardContent.appendChild(h3);
     const price = document.createElement('p');
-    price.textContent = `Price: $${props.hostel.price_per_month}/month`;
+    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
     cardContent.appendChild(price);
     const locality = document.createElement('p');
     locality.textContent = `Locality: ${props.hostel.locality}`;

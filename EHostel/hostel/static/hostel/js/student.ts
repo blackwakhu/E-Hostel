@@ -138,7 +138,7 @@ function HostelCard(props: hostelCardProps): HTMLDivElement {
     cardContent.appendChild(h3)
 
     const price = document.createElement('p');
-    price.textContent = `Price: $${props.hostel.price_per_month}/month`;
+    price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
     cardContent.appendChild(price);
 
     const locality = document.createElement('p');
