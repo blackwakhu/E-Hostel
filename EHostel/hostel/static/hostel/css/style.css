@@ -1,8 +1,8 @@
 * {
-  margin: 0px;
-  padding: 0px;
   box-sizing: border-box;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -134,12 +134,7 @@ body {
   padding: 8px 16px;
   text-decoration: none;
 }
-
 .card-container .card .card-content .btn-link:hover {
-  background-color: rgb(79, 224, 34, .5);
+  background-color: rgba(79, 224, 34, 0.5);
   color: blue;
-}
-
-#add-amenities-div {
-  display: hidden;
 }

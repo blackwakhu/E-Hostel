@@ -44,3 +44,7 @@
 .main-content .new-hostel-html .group {
   margin-bottom: 10px;
 }
+
+#add-amenities-div {
+  display: none;
+}

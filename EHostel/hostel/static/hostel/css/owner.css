@@ -44,3 +44,7 @@
     width: 50%;
     margin-left: 25%;
 }
+
+#add-amenities-div {
+    display: none;
+  }
