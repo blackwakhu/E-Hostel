@@ -107,27 +107,33 @@ function searchButtonFind() {
 }
 ;
 function HostelCard(props) {
-    const cardLink = document.createElement("a");
-    cardLink.href = `/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
-    cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
-    cardLink.style.textDecoration = 'none';
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("card-container");
     const card = document.createElement("div");
-    card.classList.add('hostel-card'); // Add a CSS class for styling
-    const image = document.createElement('img');
+    card.classList.add("card");
+    const image = document.createElement("img");
     image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
     image.alt = props.hostel.hostel_name;
     card.appendChild(image);
-    const name = document.createElement('h3');
-    name.textContent = props.hostel.hostel_name;
-    card.appendChild(name);
+    const cardContent = document.createElement("div");
+    cardContent.classList.add("card-content");
+    const h3 = document.createElement("h3");
+    h3.innerText = props.hostel.hostel_name;
+    cardContent.appendChild(h3);
     const price = document.createElement('p');
     price.textContent = `Price: $${props.hostel.price_per_month}/month`;
-    card.appendChild(price);
+    cardContent.appendChild(price);
     const locality = document.createElement('p');
     locality.textContent = `Locality: ${props.hostel.locality}`;
-    card.appendChild(locality);
-    cardLink.appendChild(card);
-    return cardLink;
+    cardContent.appendChild(locality);
+    const link = document.createElement("a");
+    link.href = `/student/hostel/${props.hostel.id}/`;
+    link.classList.add("btn-link");
+    link.innerHTML = "See More";
+    cardContent.appendChild(link);
+    card.appendChild(cardContent);
+    cardContainer.appendChild(card);
+    return cardContainer;
 }
 ;
 class HostelList {

@@ -1,6 +1,9 @@
 $darkslategray_333: #333333;
+$darkslategray_333333: #333333;
 $dimgray_575757: #575757;
-$dimgray_666: #666666;
+$dimgray_667: #666677;
+$white_fff: #ffffff;
+$whitesmoke_f0f0f0: #f0f0f0;
 
 * {
   margin: 0;
@@ -11,64 +14,11 @@ body {
   margin: 0;
 }
 
-.card {
-  width: 300px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
-  overflow: hidden;
-  text-align: center;
-  background-color: white;
-  margin: 20px;
-
-  img {
-    height: 200px;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  h3 {
-    font-size: 1.5em;
-    margin: 10px 0;
-  }
-
-  p {
-    color: $dimgray_666;
-    font-size: 1em;
-  }
-
-  button {
-    background-color: $darkslategray_333;
-    color: white;
-    border: none;
-    padding: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-
-    &:hover {
-      background-color: $dimgray_575757;
-    }
-  }
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin: auto;
-  max-width: 1000px;
-  padding: 20px;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $darkslategray_333;
+  background-color: $darkslategray_333333;
   padding: 15px 20px;
   position: fixed;
   top: 0;
@@ -120,7 +70,7 @@ body {
     display: none;
     flex-direction: column;
     width: 100%;
-    background-color: $darkslategray_333;
+    background-color: $darkslategray_333333;
     position: absolute;
     top: 60px;
     left: 0;
@@ -155,5 +105,53 @@ body {
 .account-div {
   .hide-div {
     display: none;
+  }
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 100px;
+
+  .card {
+    width: 325px;
+    background-color: $whitesmoke_f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    margin: 20px;
+
+    img {
+      height: auto;
+      width: 100%;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-container {
+      h3 {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        color: $dimgray_667;
+        font-size: 15px;
+        line-height: 1.3;
+      }
+
+      .link-btn {
+        background-color: $darkslategray_333;
+        border-radius: 4px;
+        color: $white_fff;
+        display: inline-block;
+        margin-top: 16px;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+    }
   }
 }

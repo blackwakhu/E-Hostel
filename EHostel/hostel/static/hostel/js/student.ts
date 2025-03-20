@@ -118,35 +118,42 @@ interface hostelCardProps {
     hostel: Hostel
 }
 
-function HostelCard(props: hostelCardProps): HTMLAnchorElement {
-    const cardLink: HTMLAnchorElement = document.createElement("a")
-    cardLink.href = `/student/hostel/${props.hostel.id}/`; // Set the link URL (adjust as needed)
-    cardLink.classList.add('hostel-card-link'); // Add a class for styling the link
-    cardLink.style.textDecoration = 'none'
+function HostelCard(props: hostelCardProps): HTMLDivElement {
+    const cardContainer: HTMLDivElement = document.createElement("div")
+    cardContainer.classList.add("card-container")
 
     const card: HTMLDivElement = document.createElement("div")
-    card.classList.add('hostel-card'); // Add a CSS class for styling
+    card.classList.add("card")
 
-    const image = document.createElement('img');
+    const image: HTMLImageElement = document.createElement("img")
     image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
     image.alt = props.hostel.hostel_name;
-    card.appendChild(image);
+    card.appendChild(image)
 
-    const name = document.createElement('h3');
-    name.textContent = props.hostel.hostel_name;
-    card.appendChild(name);
+    const cardContent: HTMLDivElement = document.createElement("div")
+    cardContent.classList.add("card-content")
+
+    const h3: HTMLHeadElement = document.createElement("h3")
+    h3.innerText = props.hostel.hostel_name
+    cardContent.appendChild(h3)
 
     const price = document.createElement('p');
     price.textContent = `Price: $${props.hostel.price_per_month}/month`;
-    card.appendChild(price);
+    cardContent.appendChild(price);
 
     const locality = document.createElement('p');
     locality.textContent = `Locality: ${props.hostel.locality}`;
-    card.appendChild(locality);
+    cardContent.appendChild(locality);
 
-    cardLink.appendChild(card)
+    const link: HTMLAnchorElement = document.createElement("a")
+    link.href = `/student/hostel/${props.hostel.id}/`
+    link.classList.add("btn-link")
+    link.innerHTML = "See More"
+    cardContent.appendChild(link)
 
-    return cardLink
+    card.appendChild(cardContent)
+    cardContainer.appendChild(card)
+    return cardContainer
 }
 
 interface Hostel {

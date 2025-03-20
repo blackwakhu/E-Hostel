@@ -1,10 +1,10 @@
-.hostel-card-link { /* Style the link, not just the card */
-    display: inline-block; /* Makes the link behave like a block element */
-    width: 250px; /* Match the card width */
-    margin: 10px; /* Match the card margin */
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit text color from parent */
-  }
+/*.hostel-card-link { /* Style the link, not just the card */
+  /*  display: inline-block; /* Makes the link behave like a block element */
+    /* width: 250px; /*Match the card width */
+    /*margin: 10px; /* Match the card margin */
+    /*text-decoration: none; /* Remove underline */
+    /*color: inherit; /* Inherit text color from parent */
+  /*}
   
   .hostel-card {
     border: 1px solid #ddd;
@@ -15,5 +15,5 @@
   .hostel-card img {
     max-width: 100%;
     height: auto;
-  }
+  }*/
   
