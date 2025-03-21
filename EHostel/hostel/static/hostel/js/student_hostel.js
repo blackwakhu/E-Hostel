@@ -13,9 +13,7 @@ const admin_number = ((_b = document.getElementById('hostel-id')) === null || _b
 class HostelReviews {
     constructor() {
         this.hostel_id = hostel_id;
-        this.admin_number = admin_number;
         this.loadReviews();
-        this.setEventListeners();
     }
     loadReviews() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -64,8 +62,6 @@ class HostelReviews {
             (_a = document.getElementById(`replies-${review.id}`)) === null || _a === void 0 ? void 0 : _a.appendChild(replyElement);
         });
         return reviewElement;
-    }
-    setEventListeners() {
     }
 }
 function createReview(comment_1, rating_1) {

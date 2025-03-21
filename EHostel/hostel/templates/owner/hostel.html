@@ -34,13 +34,7 @@
     <tr>
         <th>Amenities</th>
         <td>
-            <ol>
-                {% for amenity in amenities %}
-                    <li>{{ amenity.amenity }}</li>
-                {% empty %}
-                    <p>No amenity Available</p>
-                {% endfor %}
-            </ol>
+            <div class="amenities-display"></div>
             <button id="add-amenities-btn">Add amenities</button>
             <div id="add-amenities-div">
                 <button id="new-amenity-btn">Create New Amenity</button>
@@ -48,6 +42,7 @@
                     <input type="text" id="amenity-input">
                     <button id="submit-amenity-btn">Submit</button>
                 </div>
+                <button id="close-amenity-btn">Close</button>
             </div>
         </td>
     </tr>

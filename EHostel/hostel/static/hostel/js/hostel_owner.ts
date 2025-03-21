@@ -9,6 +9,8 @@ let add_amenities_btn: HTMLButtonElement = document.querySelector<HTMLButtonElem
 let add_amenities_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#add-amenities-div")
 let new_amenity_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#new-amenity-btn")
 let new_amenity_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#new-amenity-div")
+let close_amenity_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#close-amenity-btn")
+let amenity_display_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".amenities-display")
 
 async function fetchBookings(hostelId) {
     try {
@@ -79,6 +81,11 @@ new_amenity_btn.addEventListener("click", () => {
   hideSingleElements(new_amenity_btn, new_amenity_div)
 })
 
+close_amenity_btn.addEventListener("click", function () {
+  hideSingleElements(new_amenity_div, new_amenity_btn)
+  hideSingleElements(add_amenities_div, add_amenities_btn)
+})
+
 document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListener("click", function () {
   let amenity: string = document.querySelector<HTMLInputElement>("#amenity-input").value
   if (amenity) {
@@ -88,10 +95,48 @@ document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListene
     console.log("no amenity")
   }
 })
+
+interface myAmenity {
+  amenity: string
+}
+
+class Amenities {
+  private hostel_id: number = hostel_id
+  private amenities: myAmenity[]
+  constructor() {
+    this.loadAmenity()
+  }
+  async loadAmenity(): Promise<void> {
+    try {
+      const response = await fetch(`/owner/hostel/${this.hostel_id}/`, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const data = await response.json()
+      this.amenities = data.amenities
+      this.renderAmenities()
+    } catch (error) {
+      console.error("Error loading amenities: ", error)
+    }
+  } 
+  renderAmenities() {
+    amenity_display_div.innerHTML = ""
+    if (this.amenities.length > 0) {
+
+    } else {
+      amenity_display_div.innerHTML = "<p>There are no amenities attached to this hostel</p>"
+    }
+  }
+}
   
   document.addEventListener("DOMContentLoaded", () => {
-      displayBookings(hostel_id);
+    displayBookings(hostel_id);
+    new Amenities()
   });
+
+new Amenities()
 
 setInterval(() => {
       displayBookings(hostel_id)

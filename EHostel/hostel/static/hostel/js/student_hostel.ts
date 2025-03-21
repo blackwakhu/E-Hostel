@@ -7,11 +7,9 @@ const admin_number = document.getElementById('hostel-id')?.dataset.admissionNumb
 
 class HostelReviews {
     private hostel_id: number = hostel_id
-    private admin_number: string = admin_number
     private reviews:Review[]
     constructor() {
         this.loadReviews()
-        this.setEventListeners()
     }
 
     async loadReviews(): Promise<void>{
@@ -64,9 +62,6 @@ class HostelReviews {
         });
             
         return reviewElement;
-    }
-    
-    setEventListeners(): void {
     }
 }
 

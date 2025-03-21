@@ -287,23 +287,15 @@ def owner_hostel(request, hostel_id):
             return redirect('owner_hostel', hostel_id)
     else:
         form = HostelImageForm()
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest': 
+        amenity_data = [{"amenity": amenity} for amenity in amenities]
+        return JsonResponse({'amenities': amenity_data})
     return render(request, 'owner/hostel.html', {
         "hostel": hostel, 
         "amenities": amenities,
         "hostelImageForm": form,
         "bookings": booked_people
         })
-
-def add_amenity(request, hostel_id):
-    hostel = Hostel.objects.get(pk=hostel_id)
-    if request.method == "POST":
-        amenity = request.POST.get("hamenity")
-        hamenity = HostelAmenities(
-            hostel = hostel,
-            amenity = amenity
-        )
-        hamenity.save()
-    return redirect("owner_hostel", hostel_id)
 
 def verify_booking(request, hostel_id, book_id, choice):
     hostel = Hostel.objects.get(pk=hostel_id)
@@ -504,4 +496,20 @@ def add_review(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+def add_amenity(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    if request.method == "POST":
+        amenity = request.POST.get("hamenity")
+        hamenity = HostelAmenities(
+            hostel = hostel,
+            amenity = amenity
+        )
+        hamenity.save()
+    return redirect("owner_hostel", hostel_id)
     
+
+def create_amenity(request, hostel_id):
+    if request.method == "POST":
+        pass 
+    pass
