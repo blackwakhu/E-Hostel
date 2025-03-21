@@ -173,3 +173,16 @@ export function hideSingleElements(toHide, toSee) {
     toHide.style.display = "none";
     toSee.style.display = "block";
 }
+export function alterAmenity(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        }
+        catch (error) {
+            console.error("Error adding a new amenity", error);
+        }
+    });
+}

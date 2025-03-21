@@ -236,3 +236,14 @@ export function hideSingleElements(toHide: HTMLElement, toSee: HTMLElement) {
     toHide.style.display = "none"
     toSee.style.display = "block"
 }
+
+export async function alterAmenity(url:string): Promise<void> {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+    }catch (error) {
+      console.error("Error adding a new amenity", error)
+    }
+  }

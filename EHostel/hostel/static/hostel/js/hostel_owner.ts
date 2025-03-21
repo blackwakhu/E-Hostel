@@ -1,5 +1,4 @@
-import { table } from "console";
-import { hideSingleElements } from "./mymodules.js"
+import { hideSingleElements, alterAmenity } from "./mymodules.js"
 
 let hostel_id: number = Number(document.querySelector<HTMLSpanElement>("#hostel_id").textContent)
 let bookingDiv: HTMLDivElement = document.querySelector<HTMLDivElement>("#hostelBookings")
@@ -122,7 +121,14 @@ class Amenities {
       let p: HTMLParagraphElement = document.createElement("p")
       this.amenities.forEach(amenity => {
         let span: HTMLSpanElement = document.createElement("span")
-        span.innerHTML = `${amenity.amenity}<a>X</a>`
+        span.innerHTML = `${amenity.amenity}`
+        let del_btn: HTMLButtonElement = document.createElement("button")
+        del_btn.innerText = "X"
+        del_btn.addEventListener("click", function () {
+          let myurl1 = `/owner/hostel/${hostel_id}/remove_amenity/${amenity.amenity}/`
+          alterAmenity(myurl1)
+        })
+        span.appendChild(del_btn)
         p.appendChild(span)
       })
       amenity_display_div.appendChild(p)
@@ -137,7 +143,8 @@ class Amenities {
         btn.innerText = amenity.amenity
         btn.classList.add('amenity-item-btn')
         btn.addEventListener("click", function () {
-          Amenities.addAmenity(amenity.amenity, hostel_id)
+          let myurl:string = `/owner/hostel/${hostel_id}/add_amenity/${amenity.amenity}/`
+          alterAmenity(myurl)
         })
         p1.appendChild(btn)
       })
@@ -145,6 +152,7 @@ class Amenities {
     } else {
       amenity_global_div.innerHTML = "<p>No Amenities available. Please add more</p>"
     }
+    this.loadAmenity()
   }
   async createAmenity(amenity: string): Promise<void> {
     try {
@@ -167,22 +175,7 @@ class Amenities {
       console.error("Error adding a new amenity", error)
     }
   }
-  static async addAmenity(amenity: string, hostel_id: number): Promise<void> {
-    try {
-      const response = await fetch(`/owner/hostel/${hostel_id}/add_amenity/${amenity}/`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-      const data = await response.json()
-
-      if (data.success) {
-        // loadAmenity()
-        new Amenities()
-      }
-    }catch (error) {
-      console.error("Error adding a new amenity", error)
-    }
-  }
+  
 }
 
 const myAmenity = new Amenities()

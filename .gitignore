@@ -3,3 +3,5 @@ venv
 docker_build.cat
 EHostel/hostel/__pycache__/urls.cpython-311.pyc
 EHostel/hostel/__pycache__/views.cpython-311.pyc
+EHostel/hostel/__pycache__/urls.cpython-311.pyc
+EHostel/hostel/__pycache__/views.cpython-311.pyc

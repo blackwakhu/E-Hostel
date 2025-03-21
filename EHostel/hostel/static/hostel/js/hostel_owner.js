@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideSingleElements } from "./mymodules.js";
+import { hideSingleElements, alterAmenity } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
@@ -116,7 +116,14 @@ class Amenities {
             let p = document.createElement("p");
             this.amenities.forEach(amenity => {
                 let span = document.createElement("span");
-                span.innerHTML = `${amenity.amenity}<a>X</a>`;
+                span.innerHTML = `${amenity.amenity}`;
+                let del_btn = document.createElement("button");
+                del_btn.innerText = "X";
+                del_btn.addEventListener("click", function () {
+                    let myurl1 = `/owner/hostel/${hostel_id}/remove_amenity/${amenity.amenity}/`;
+                    alterAmenity(myurl1);
+                });
+                span.appendChild(del_btn);
                 p.appendChild(span);
             });
             amenity_display_div.appendChild(p);
@@ -132,7 +139,8 @@ class Amenities {
                 btn.innerText = amenity.amenity;
                 btn.classList.add('amenity-item-btn');
                 btn.addEventListener("click", function () {
-                    Amenities.addAmenity(amenity.amenity, hostel_id);
+                    let myurl = `/owner/hostel/${hostel_id}/add_amenity/${amenity.amenity}/`;
+                    alterAmenity(myurl);
                 });
                 p1.appendChild(btn);
             });
@@ -141,6 +149,7 @@ class Amenities {
         else {
             amenity_global_div.innerHTML = "<p>No Amenities available. Please add more</p>";
         }
+        this.loadAmenity();
     }
     createAmenity(amenity) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -158,24 +167,6 @@ class Amenities {
                 const data = yield response.json();
                 if (data.success) {
                     this.loadAmenity();
-                }
-            }
-            catch (error) {
-                console.error("Error adding a new amenity", error);
-            }
-        });
-    }
-    static addAmenity(amenity, hostel_id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const response = yield fetch(`/owner/hostel/${hostel_id}/add_amenity/${amenity}/`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = yield response.json();
-                if (data.success) {
-                    // loadAmenity()
-                    new Amenities();
                 }
             }
             catch (error) {

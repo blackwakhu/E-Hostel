@@ -506,6 +506,12 @@ def add_amenity(request, hostel_id, amenity):
     HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
     return JsonResponse({"success": True})
 
+def delete_amenity(request, hostel_id, amenity):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    myamenity = Amenities.objects.get(amenity=amenity)
+    HostelAmenities.objects.get(hostel=hostel, amenity=myamenity).delete()
+    return JsonResponse({"success": True})
+
 @csrf_exempt    
 def create_amenity(request, hostel_id):
     hostel = Hostel.objects.get(pk=hostel_id)
