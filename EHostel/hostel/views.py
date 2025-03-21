@@ -278,6 +278,8 @@ def owner_hostel(request, hostel_id):
     for booking in bookings:
         booked_people.append({"id": booking.id,"status": booking.status, "student": booking.student})
     amenities = HostelAmenities.objects.filter(hostel=hostel)
+    amenities_list = [i.amenity for i in amenities]
+    gAmenities = Amenities.objects.all()
     if request.method == "POST":
         form = HostelImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -288,8 +290,9 @@ def owner_hostel(request, hostel_id):
     else:
         form = HostelImageForm()
     if request.headers.get('x-requested-with') == 'XMLHttpRequest': 
-        amenity_data = [{"amenity": amenity} for amenity in amenities]
-        return JsonResponse({'amenities': amenity_data})
+        amenity_data = [{"amenity": amenity.amenity.amenity} for amenity in amenities]
+        globalAmenities = [{"amenity": amenity.amenity} for amenity in gAmenities if amenity not in amenities_list]
+        return JsonResponse({'amenities': amenity_data, 'gamenities': globalAmenities})
     return render(request, 'owner/hostel.html', {
         "hostel": hostel, 
         "amenities": amenities,
@@ -507,9 +510,23 @@ def add_amenity(request, hostel_id):
         )
         hamenity.save()
     return redirect("owner_hostel", hostel_id)
-    
 
+@csrf_exempt    
 def create_amenity(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
     if request.method == "POST":
-        pass 
-    pass
+        try:
+            data = json.loads(request.body) 
+            amenity = data.get("amenity")
+            if (Amenities.objects.get(amenity=amenity)):
+                myamenity = Amenities.objects.get(amenity=amenity)
+            else:
+                myamenity = Amenities(amenity=amenity)
+                myamenity.save()
+            HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
+            return JsonResponse({"success": True})
+        except Hostel.DoesNotExist:
+            return JsonResponse({"error": "Hostel not found"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid request method"}, status=405)

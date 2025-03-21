@@ -11,6 +11,7 @@ let new_amenity_btn: HTMLButtonElement = document.querySelector<HTMLButtonElemen
 let new_amenity_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#new-amenity-div")
 let close_amenity_btn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#close-amenity-btn")
 let amenity_display_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".amenities-display")
+let amenity_global_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".amenities-global")
 
 async function fetchBookings(hostelId) {
     try {
@@ -86,15 +87,7 @@ close_amenity_btn.addEventListener("click", function () {
   hideSingleElements(add_amenities_div, add_amenities_btn)
 })
 
-document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListener("click", function () {
-  let amenity: string = document.querySelector<HTMLInputElement>("#amenity-input").value
-  if (amenity) {
-    console.log(amenity)
-    hideSingleElements(new_amenity_div, new_amenity_btn)
-  } else {
-    console.log("no amenity")
-  }
-})
+
 
 interface myAmenity {
   amenity: string
@@ -103,8 +96,10 @@ interface myAmenity {
 class Amenities {
   private hostel_id: number = hostel_id
   private amenities: myAmenity[]
+  private gamenities: myAmenity[]
   constructor() {
     this.loadAmenity()
+    this.setEventListeners()
   }
   async loadAmenity(): Promise<void> {
     try {
@@ -116,6 +111,7 @@ class Amenities {
       }
       const data = await response.json()
       this.amenities = data.amenities
+      this.gamenities = data.gamenities
       this.renderAmenities()
     } catch (error) {
       console.error("Error loading amenities: ", error)
@@ -124,19 +120,72 @@ class Amenities {
   renderAmenities() {
     amenity_display_div.innerHTML = ""
     if (this.amenities.length > 0) {
-
+      let p: HTMLParagraphElement = document.createElement("p")
+      this.amenities.forEach(amenity => {
+        let span: HTMLSpanElement = document.createElement("span")
+        span.innerHTML = `${amenity.amenity}<a>X</a>`
+        p.appendChild(span)
+      })
+      amenity_display_div.appendChild(p)
     } else {
       amenity_display_div.innerHTML = "<p>There are no amenities attached to this hostel</p>"
     }
+    amenity_global_div.innerHTML = ""
+    if (this.gamenities.length > 0) {
+      let p1: HTMLParagraphElement = document.createElement("p")
+      this.gamenities.forEach(amenity => {
+        let span1: HTMLSpanElement = document.createElement("span")
+        span1.innerHTML = `<a>${amenity.amenity}</a>`
+        p1.appendChild(span1)
+      })
+      amenity_global_div.appendChild(p1)
+    } else {
+      amenity_global_div.innerHTML = "<p>No Amenities available. Please add more</p>"
+    }
   }
-}
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    displayBookings(hostel_id);
-    new Amenities()
-  });
+  async createAmenity(amenity: string): Promise<void> {
+    try {
+      const response = await fetch(`/api/owner/hostel/amenities/${this.hostel_id}/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"amenity": amenity})
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      const data = await response.json()
 
-new Amenities()
+      if (data.success) {
+        this.loadAmenity()
+      }
+    } catch (error) {
+      console.error("Error adding a new amenity", error)
+    }
+  }
+  setEventListeners() {
+    
+  }
+
+}
+
+const myAmenity = new Amenities()
+
+document.querySelector<HTMLButtonElement>("#submit-amenity-btn").addEventListener("click", function () {
+  let amenity: string = document.querySelector<HTMLInputElement>("#amenity-input").value
+  if (amenity) {
+    console.log(amenity)
+    myAmenity.createAmenity(amenity)
+    hideSingleElements(new_amenity_div, new_amenity_btn)
+  } else {
+    console.log("no amenity")
+  }
+})
+  
+document.addEventListener("DOMContentLoaded", () => {
+  displayBookings(hostel_id);
+});
 
 setInterval(() => {
       displayBookings(hostel_id)

@@ -234,5 +234,5 @@ export function HostelCard(props: hostelCardProps): HTMLDivElement {
 
 export function hideSingleElements(toHide: HTMLElement, toSee: HTMLElement) {
     toHide.style.display = "none"
-    toSee.style.display = "inline-flex"
+    toSee.style.display = "block"
 }

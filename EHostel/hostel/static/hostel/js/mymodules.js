@@ -171,5 +171,5 @@ export function HostelCard(props) {
 }
 export function hideSingleElements(toHide, toSee) {
     toHide.style.display = "none";
-    toSee.style.display = "inline-flex";
+    toSee.style.display = "block";
 }

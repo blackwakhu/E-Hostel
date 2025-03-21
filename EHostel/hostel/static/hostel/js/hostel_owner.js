@@ -17,6 +17,7 @@ let new_amenity_btn = document.querySelector("#new-amenity-btn");
 let new_amenity_div = document.querySelector("#new-amenity-div");
 let close_amenity_btn = document.querySelector("#close-amenity-btn");
 let amenity_display_div = document.querySelector(".amenities-display");
+let amenity_global_div = document.querySelector(".amenities-global");
 function fetchBookings(hostelId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -85,20 +86,11 @@ close_amenity_btn.addEventListener("click", function () {
     hideSingleElements(new_amenity_div, new_amenity_btn);
     hideSingleElements(add_amenities_div, add_amenities_btn);
 });
-document.querySelector("#submit-amenity-btn").addEventListener("click", function () {
-    let amenity = document.querySelector("#amenity-input").value;
-    if (amenity) {
-        console.log(amenity);
-        hideSingleElements(new_amenity_div, new_amenity_btn);
-    }
-    else {
-        console.log("no amenity");
-    }
-});
 class Amenities {
     constructor() {
         this.hostel_id = hostel_id;
         this.loadAmenity();
+        this.setEventListeners();
     }
     loadAmenity() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -111,6 +103,7 @@ class Amenities {
                 }
                 const data = yield response.json();
                 this.amenities = data.amenities;
+                this.gamenities = data.gamenities;
                 this.renderAmenities();
             }
             catch (error) {
@@ -121,17 +114,72 @@ class Amenities {
     renderAmenities() {
         amenity_display_div.innerHTML = "";
         if (this.amenities.length > 0) {
+            let p = document.createElement("p");
+            this.amenities.forEach(amenity => {
+                let span = document.createElement("span");
+                span.innerHTML = `${amenity.amenity}<a>X</a>`;
+                p.appendChild(span);
+            });
+            amenity_display_div.appendChild(p);
         }
         else {
             amenity_display_div.innerHTML = "<p>There are no amenities attached to this hostel</p>";
         }
+        amenity_global_div.innerHTML = "";
+        if (this.gamenities.length > 0) {
+            let p1 = document.createElement("p");
+            this.gamenities.forEach(amenity => {
+                let span1 = document.createElement("span");
+                span1.innerHTML = `<a>${amenity.amenity}</a>`;
+                p1.appendChild(span1);
+            });
+            amenity_global_div.appendChild(p1);
+        }
+        else {
+            amenity_global_div.innerHTML = "<p>No Amenities available. Please add more</p>";
+        }
+    }
+    createAmenity(amenity) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch(`/api/owner/hostel/amenities/${this.hostel_id}/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "amenity": amenity })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = yield response.json();
+                if (data.success) {
+                    this.loadAmenity();
+                }
+            }
+            catch (error) {
+                console.error("Error adding a new amenity", error);
+            }
+        });
+    }
+    setEventListeners() {
     }
 }
+const myAmenity = new Amenities();
+document.querySelector("#submit-amenity-btn").addEventListener("click", function () {
+    let amenity = document.querySelector("#amenity-input").value;
+    if (amenity) {
+        console.log(amenity);
+        myAmenity.createAmenity(amenity);
+        hideSingleElements(new_amenity_div, new_amenity_btn);
+    }
+    else {
+        console.log("no amenity");
+    }
+});
 document.addEventListener("DOMContentLoaded", () => {
     displayBookings(hostel_id);
-    new Amenities();
 });
-new Amenities();
 setInterval(() => {
     displayBookings(hostel_id);
 }, 5000);
