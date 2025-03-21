@@ -500,16 +500,11 @@ def add_review(request):
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
-def add_amenity(request, hostel_id):
+def add_amenity(request, hostel_id, amenity):
     hostel = Hostel.objects.get(pk=hostel_id)
-    if request.method == "POST":
-        amenity = request.POST.get("hamenity")
-        hamenity = HostelAmenities(
-            hostel = hostel,
-            amenity = amenity
-        )
-        hamenity.save()
-    return redirect("owner_hostel", hostel_id)
+    myamenity = Amenities.objects.get(amenity=amenity)
+    HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
+    return JsonResponse({"success": True})
 
 @csrf_exempt    
 def create_amenity(request, hostel_id):

@@ -99,7 +99,6 @@ class Amenities {
   private gamenities: myAmenity[]
   constructor() {
     this.loadAmenity()
-    this.setEventListeners()
   }
   async loadAmenity(): Promise<void> {
     try {
@@ -134,9 +133,13 @@ class Amenities {
     if (this.gamenities.length > 0) {
       let p1: HTMLParagraphElement = document.createElement("p")
       this.gamenities.forEach(amenity => {
-        let span1: HTMLSpanElement = document.createElement("span")
-        span1.innerHTML = `<a>${amenity.amenity}</a>`
-        p1.appendChild(span1)
+        let btn: HTMLButtonElement = document.createElement("button")
+        btn.innerText = amenity.amenity
+        btn.classList.add('amenity-item-btn')
+        btn.addEventListener("click", function () {
+          Amenities.addAmenity(amenity.amenity, hostel_id)
+        })
+        p1.appendChild(btn)
       })
       amenity_global_div.appendChild(p1)
     } else {
@@ -164,10 +167,22 @@ class Amenities {
       console.error("Error adding a new amenity", error)
     }
   }
-  setEventListeners() {
-    
-  }
+  static async addAmenity(amenity: string, hostel_id: number): Promise<void> {
+    try {
+      const response = await fetch(`/owner/hostel/${hostel_id}/add_amenity/${amenity}/`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      const data = await response.json()
 
+      if (data.success) {
+        // loadAmenity()
+        new Amenities()
+      }
+    }catch (error) {
+      console.error("Error adding a new amenity", error)
+    }
+  }
 }
 
 const myAmenity = new Amenities()

@@ -90,7 +90,6 @@ class Amenities {
     constructor() {
         this.hostel_id = hostel_id;
         this.loadAmenity();
-        this.setEventListeners();
     }
     loadAmenity() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -129,9 +128,13 @@ class Amenities {
         if (this.gamenities.length > 0) {
             let p1 = document.createElement("p");
             this.gamenities.forEach(amenity => {
-                let span1 = document.createElement("span");
-                span1.innerHTML = `<a>${amenity.amenity}</a>`;
-                p1.appendChild(span1);
+                let btn = document.createElement("button");
+                btn.innerText = amenity.amenity;
+                btn.classList.add('amenity-item-btn');
+                btn.addEventListener("click", function () {
+                    Amenities.addAmenity(amenity.amenity, hostel_id);
+                });
+                p1.appendChild(btn);
             });
             amenity_global_div.appendChild(p1);
         }
@@ -162,7 +165,23 @@ class Amenities {
             }
         });
     }
-    setEventListeners() {
+    static addAmenity(amenity, hostel_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield fetch(`/owner/hostel/${hostel_id}/add_amenity/${amenity}/`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = yield response.json();
+                if (data.success) {
+                    // loadAmenity()
+                    new Amenities();
+                }
+            }
+            catch (error) {
+                console.error("Error adding a new amenity", error);
+            }
+        });
     }
 }
 const myAmenity = new Amenities();

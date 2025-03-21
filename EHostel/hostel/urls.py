@@ -22,7 +22,7 @@ urlpatterns = [
     path('owner/mainpage/', owner_main_page, name='owner_main_page'),
     path('owner/hostel/add/', add_hostel, name="add_hostel"),
     path('owner/hostel/<int:hostel_id>/', owner_hostel, name="owner_hostel"),
-    path('owner/hostel/<int:hostel_id>/add_amenity/', add_amenity, name="add_amenity"),
+    path('owner/hostel/<int:hostel_id>/add_amenity/<str:amenity>/', add_amenity, name="add_amenity"),
     path('owner/hostel/<int:hostel_id>/book/<int:book_id>/<str:choice>/', verify_booking, name='verify_booking'),
 
 # some api routes
