@@ -135,6 +135,7 @@ def student_hostel(request, hostel_id):
 
     return render(request, 'student/hostel.html', context)
 
+@user_required
 def student_comment_hostel(request, hostel_id):
     student = Student.objects.get(admission_number=request.session["admission_number"])
     hostel = Hostel.objects.get(pk=hostel_id)
@@ -148,20 +149,6 @@ def student_comment_hostel(request, hostel_id):
         review.save()
     return redirect('student_hostel', hostel_id)
 
-def student_comment(request, hostel_id, comment_id):
-    student = Student.objects.get(admission_number=request.session["admission_number"])
-    hostel = Hostel.objects.get(pk=hostel_id)
-    prev_review = Review.objects.get(pk=comment_id)
-    if request.method == "POST":
-        comment = request.POST.get("comment")
-        review = Review(
-            hostel=hostel,
-            comment=comment,
-            student=student,
-            parent_review=prev_review
-        )
-        review.save()
-    return redirect('student_hostel', hostel_id)
 
 def book_hostel(request, hostel_id):
     hostel = Hostel.objects.get(pk=hostel_id)

@@ -13,7 +13,6 @@ urlpatterns = [
     path('student/profile/', student_profile, name='student_profile' ),
     path('student/hostel/<int:hostel_id>/', student_hostel, name="student_hostel"),
     path('student/hostel/<int:hostel_id>/comment/', student_comment_hostel, name="student_comment_hostel"),
-    path('student/hostel/<int:hostel_id>/comment/<comment_id>/', student_comment, name="student_comment"),
     path('student/hostel/<int:hostel_id>/book/', book_hostel, name='book_hostel'),
 
 # deals with the owner views

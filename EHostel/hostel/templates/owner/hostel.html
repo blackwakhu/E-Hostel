@@ -3,81 +3,101 @@
 {% load static %}
 
 {% block body %}
-
-<span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
-
-<table>
-    <tr>
-        <th>Hostel Name</th>
-        <td>{{ hostel.hostel_name }}</td>
-    </tr>
-    <tr>
-        <th>Owner</th>
-        <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
-    </tr>
-    <tr>
-        <th>Price of rent</th>
-        <td>ksh. {{ hostel.price_per_month }}</td>
-    </tr>
-    <tr>
-        <th>Number of rooms</th>
-        <td>{{ hostel.number_rooms }}</td>
-    </tr>
-    <tr>
-        <th>Room type</th>
-        <td>{{ hostel.room_type }}</td>
-    </tr>
-    <tr>
-        <th>Available rooms</th>
-        <td><span id="avail_rooms">{{ hostel.available_rooms }}</span></td>
-    </tr>
-    <tr>
-        <th>Amenities</th>
-        <td>
-            <div class="amenities-display"></div>
-            <button id="add-amenities-btn">Add amenities</button>
-            <div id="add-amenities-div">
-                <hr>
-                <div class="amenities-global"></div>
-                <button id="new-amenity-btn">Create New Amenity</button>
-                <div id="new-amenity-div">
-                    <input type="text" id="amenity-input">
-                    <button id="submit-amenity-btn">Submit</button><br>
-                </div>
-                <button id="close-amenity-btn">Close</button>
+<div class="owner-main-wrap">
+    <div class="owner-html">
+        <nav class="navbar">
+            <div class="logo">MyBrand</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <th>Location</th>
-        <td>
-            {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
-            <br>{{ hostel.location }}
-        </td>
-    </tr>
-</table>
+            <div class="nav-links" id="topNav">
+                <a href="{% url 'owner_main_page' %}#home-html" class="home">Home</a>
+                <a href="{% url 'owner_main_page' %}#hostels-html" class="hostels">My Hostels</a>
+                <a href="{% url 'owner_main_page' %}#new-hostel-html" class="new-hostel">New Hostel</a>
+                <a href="{% url 'owner_main_page' %}#my-account-html" class="my-account">Account</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </nav>
+        <div class="main-content">
+            <span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ hostelImageForm.as_p }}
-    <button type="submit">Upload</button>
-</form>
+            <table>
+                <tr>
+                    <th>Hostel Name</th>
+                    <td>{{ hostel.hostel_name }}</td>
+                </tr>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
+                </tr>
+                <tr>
+                    <th>Price of rent</th>
+                    <td>ksh. {{ hostel.price_per_month }}</td>
+                </tr>
+                <tr>
+                    <th>Number of rooms</th>
+                    <td>{{ hostel.number_rooms }}</td>
+                </tr>
+                <tr>
+                    <th>Room type</th>
+                    <td>{{ hostel.room_type }}</td>
+                </tr>
+                <tr>
+                    <th>Available rooms</th>
+                    <td><span id="avail_rooms">{{ hostel.available_rooms }}</span></td>
+                </tr>
+                <tr>
+                    <th>Amenities</th>
+                    <td>
+                        <div class="amenities-display"></div>
+                        <button id="add-amenities-btn">Add amenities</button>
+                        <div id="add-amenities-div">
+                            <hr>
+                            <div class="amenities-global"></div>
+                            <button id="new-amenity-btn">Create New Amenity</button>
+                            <div id="new-amenity-div">
+                                <input type="text" id="amenity-input">
+                                <button id="submit-amenity-btn">Submit</button><br>
+                            </div>
+                            <button id="close-amenity-btn">Close</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>
+                        {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
+                        <br>{{ hostel.location }}
+                    </td>
+                </tr>
+            </table>
 
-<table>
-    {% for book in bookings %}
-        <tr>
-            <td>{{ book.student.first_name }} {{ book.student.last_name }} </td>
-            <td>{{ book.status }}</td>
-            <td><button><a href="{% url 'verify_booking' hostel.id book.id 'accept' %}">Accept</a></button></td>
-            <td><button><a href="{% url 'verify_booking' hostel.id book.id 'reject' %}">Reject</a></button></td>
-        </tr>
-    {% empty %}
-    <p>There were no students booking the hostels</p>
-    {% endfor %}
-</table>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ hostelImageForm.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+
+            <table>
+                {% for book in bookings %}
+                    <tr>
+                        <td>{{ book.student.first_name }} {{ book.student.last_name }} </td>
+                        <td>{{ book.status }}</td>
+                        <td><button><a href="{% url 'verify_booking' hostel.id book.id 'accept' %}">Accept</a></button></td>
+                        <td><button><a href="{% url 'verify_booking' hostel.id book.id 'reject' %}">Reject</a></button></td>
+                    </tr>
+                {% empty %}
+                <p>There were no students booking the hostels</p>
+                {% endfor %}
+            </table>
 
 
-<div id="hostelBookings"></div>
+            <div id="hostelBookings"></div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 
