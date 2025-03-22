@@ -490,7 +490,11 @@ def add_review(request):
 def add_amenity(request, hostel_id, amenity):
     hostel = Hostel.objects.get(pk=hostel_id)
     myamenity = Amenities.objects.get(amenity=amenity)
-    HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
+    try:
+        if HostelAmenities.objects.get(amenity=myamenity, hostel=hostel):
+            pass
+    except HostelAmenities.DoesNotExist:
+        HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
     return JsonResponse({"success": True})
 
 def delete_amenity(request, hostel_id, amenity):
@@ -506,12 +510,17 @@ def create_amenity(request, hostel_id):
         try:
             data = json.loads(request.body) 
             amenity = data.get("amenity")
-            if (Amenities.objects.get(amenity=amenity)):
+            if Amenities.objects.get(amenity=amenity):
                 myamenity = Amenities.objects.get(amenity=amenity)
+                try:
+                    if HostelAmenities.objects.get(amenity=myamenity, hostel=hostel):
+                        pass
+                except HostelAmenities.DoesNotExists:
+                    HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
             else:
                 myamenity = Amenities(amenity=amenity)
                 myamenity.save()
-            HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
+                HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
             return JsonResponse({"success": True})
         except Hostel.DoesNotExist:
             return JsonResponse({"error": "Hostel not found"}, status=400)
