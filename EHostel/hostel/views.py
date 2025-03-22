@@ -527,3 +527,32 @@ def create_amenity(request, hostel_id):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+def get_booking_status(request, hostel_id, admin_number):
+    """this will return the state of the hostel in terms of booking"""
+    hostel = Hostel.objects.get(pk=hostel_id)
+    student = Student.objects.get(pk=admin_number)
+    book = Booking.objects.filter(hostel=hostel, student=student)
+    print(book.last().status)
+    return JsonResponse({"status": book.last().status})
+
+def student_book_hostel(request, hostel_id, admin_number, book_status):
+    """this will save the new book status of the student"""
+    hostel = Hostel.objects.get(pk=hostel_id)
+    student = Student.objects.get(pk=admin_number)
+    book = Booking.objects.filter(hostel=hostel, student=student).last()
+    if book == None or book_status == "Pending":
+        mybook = Booking.objects.create(
+            hostel=hostel, 
+            student=student,
+            status="Pending" 
+        )
+        mybook.save()
+        print(mybook.status)
+    elif book_status == "Cancel":
+        book.status = "Cancel"
+        book.save()
+    print(book.status)
+    return JsonResponse({"successfully": True})
+    
+

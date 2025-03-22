@@ -33,6 +33,12 @@ export function hideUrlDivElements(defaultDiv, divList) {
         defaultDiv.classList.remove("hide-elem");
     }
 }
+export function hideButtonElements(btn, hide_btns) {
+    hide_btns.forEach(hide_btn => {
+        hide_btn.style.display = "none";
+    });
+    btn.style.display = "block";
+}
 export function hideEditElements(btn, visibleClass, hideClass, extBtn, classStr) {
     if (hideClass.classList.contains(classStr)) {
         hideClass.classList.remove(classStr);
@@ -88,57 +94,6 @@ export function validatePassword(password) {
 export function validateNumber(num) {
     const regex = /^(?:\+?254)?(?:0|7|1)(?:[1-9][0-9]{8})$/;
     return regex.test(num);
-}
-export function updateReviews(hostel_id) {
-    fetch(`/api/student/hostel/comment/${hostel_id}`)
-        .then(response => response.json())
-        .then(reviews => {
-        const commentDiv = document.querySelector(".comments-div");
-        commentDiv.innerHTML = "";
-        reviews.forEach(review => {
-            if (!review.parent_review_id) { // Only top-level reviews
-                const reviewDiv = document.createElement('div');
-                reviewDiv.classList.add('review');
-                const h3 = document.createElement('h3');
-                h3.textContent = `${review.student}'s Review for ${review.hostel}`; // Assuming student and hostel are strings from json.
-                const ratingP = document.createElement('p');
-                ratingP.textContent = `Rating: ${review.rating} / 5`;
-                const commentP = document.createElement('p');
-                commentP.textContent = review.comment;
-                const createdAtP = document.createElement('p');
-                const small = document.createElement('small');
-                small.textContent = `Posted on ${review.created_at}`;
-                createdAtP.appendChild(small);
-                reviewDiv.appendChild(h3);
-                reviewDiv.appendChild(ratingP);
-                reviewDiv.appendChild(commentP);
-                reviewDiv.appendChild(createdAtP);
-                if (review.replies && review.replies.length > 0) {
-                    const repliesDiv = document.createElement('div');
-                    repliesDiv.classList.add('replies');
-                    review.replies.forEach(reply => {
-                        const replyDiv = document.createElement('div');
-                        replyDiv.classList.add('reply');
-                        const h4 = document.createElement('h4');
-                        h4.textContent = `${reply.student} replied:`;
-                        const replyCommentP = document.createElement('p');
-                        replyCommentP.textContent = reply.comment;
-                        const replyCreatedAtP = document.createElement('p');
-                        const replySmall = document.createElement('small');
-                        replySmall.textContent = `Posted on ${reply.created_at}`;
-                        replyCreatedAtP.appendChild(replySmall);
-                        replyDiv.appendChild(h4);
-                        replyDiv.appendChild(replyCommentP);
-                        replyDiv.appendChild(replyCreatedAtP);
-                        repliesDiv.appendChild(replyDiv);
-                    });
-                    reviewDiv.appendChild(repliesDiv);
-                }
-                commentDiv.appendChild(reviewDiv);
-            }
-        });
-    })
-        .catch(error => console.error('Error fetching reviews:', error));
 }
 export function HostelCard(props) {
     const cardContainer = document.createElement("div");

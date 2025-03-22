@@ -1,9 +1,12 @@
-import { Review } from "./mymodules.js";
+import { Review, hideButtonElements } from "./mymodules.js";
 
 const hostel_id = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
 const admin_number = document.getElementById('hostel-id')?.dataset.admissionNumber || '';
+let booking_status_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".booking-status-div")
+let booking_btn_pending: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#booking-pending-btn")
+let booking_btn_cancel: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#booking-cancel-btn")
 
-
+let booking_btn_list: HTMLButtonElement[] = [booking_btn_pending, booking_btn_cancel]
 
 class HostelReviews {
     private hostel_id: number = hostel_id
@@ -105,6 +108,59 @@ document.getElementById('add-review-button')?.addEventListener("click", () => {
 
 new HostelReviews()
 
+async function booking_status(admin: string, hostel: number): Promise<void>{
+    try {
+        const url: string = `/api/student/book/status/${admin}/${hostel}/`
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }  
+        const result = await response.json()
+        if (result.status === null || result.status === "Cancel") {
+            console.log("pending")
+            hideButtonElements(booking_btn_pending, booking_btn_list)
+        } else if (result.status == "Pending") {
+            console.log("cancel")
+            hideButtonElements(booking_btn_cancel, booking_btn_list)
+        }
+    } catch (error) {
+        console.error("Error adding review:", error);
+    }
+}
+
+async function booking_status_change(admin: string, hostel: number, status: string): Promise<void>{
+    try {
+        const url: string = `/api/student/book/status/${admin}/${hostel}/${status}/`
+        const response = await fetch(url)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }  
+        const result = await response.json()
+        if (result.successfully) {
+            booking_status(admin, hostel)
+        }
+
+    }catch (error) {
+        console.error("Error adding review:", error);
+    }
+}
+
+let booking_btn_list_map: { btn: HTMLButtonElement, status: string }[] = [
+    { btn: booking_btn_pending, status: "Pending" },
+    { btn: booking_btn_cancel, status: "Cancel" },
+    
+]
+
+booking_btn_list_map.forEach(bbtm => {
+    bbtm.btn.addEventListener("click", function () {
+        console.log("clicked")
+        booking_status_change(admin_number, hostel_id, bbtm.status)
+    })
+})
+
+booking_status(admin_number, hostel_id)
+
 setInterval(() => {
-    new HostelReviews()
+    // new HostelReviews()
+    // booking_status(admin_number, hostel_id)
 }, 5000)
