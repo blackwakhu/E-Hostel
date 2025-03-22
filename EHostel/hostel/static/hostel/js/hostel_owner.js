@@ -45,7 +45,8 @@ function displayBookings(hostelId) {
                 if (bookings && bookings.length > 0) {
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
-                    titleBook.innerHTML += "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>";
+                    titleBook.innerHTML +=
+                        "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>";
                     tableBook.appendChild(titleBook);
                     let bodyBook = document.createElement("tbody");
                     bookings.forEach((booking) => {
@@ -70,7 +71,8 @@ function displayBookings(hostelId) {
         catch (error) {
             console.error("Error displaying bookings:", error);
             if (document.getElementById("bookings-list")) {
-                document.getElementById("bookings-list").innerHTML = "<p>Error loading bookings.</p>";
+                document.getElementById("bookings-list").innerHTML =
+                    "<p>Error loading bookings.</p>";
             }
         }
     });
@@ -95,7 +97,7 @@ class Amenities {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield fetch(`/owner/hostel/${this.hostel_id}/`, {
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
                 });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -114,7 +116,7 @@ class Amenities {
         amenity_display_div.innerHTML = "";
         if (this.amenities.length > 0) {
             let p = document.createElement("p");
-            this.amenities.forEach(amenity => {
+            this.amenities.forEach((amenity) => {
                 let span = document.createElement("span");
                 span.innerHTML = `${amenity.amenity}`;
                 let del_btn = document.createElement("button");
@@ -129,15 +131,16 @@ class Amenities {
             amenity_display_div.appendChild(p);
         }
         else {
-            amenity_display_div.innerHTML = "<p>There are no amenities attached to this hostel</p>";
+            amenity_display_div.innerHTML =
+                "<p>There are no amenities attached to this hostel</p>";
         }
         amenity_global_div.innerHTML = "";
         if (this.gamenities.length > 0) {
             let p1 = document.createElement("p");
-            this.gamenities.forEach(amenity => {
+            this.gamenities.forEach((amenity) => {
                 let btn = document.createElement("button");
                 btn.innerText = amenity.amenity;
-                btn.classList.add('amenity-item-btn');
+                btn.classList.add("amenity-item-btn");
                 btn.addEventListener("click", function () {
                     let myurl = `/owner/hostel/${hostel_id}/add_amenity/${amenity.amenity}/`;
                     alterAmenity(myurl);
@@ -147,7 +150,8 @@ class Amenities {
             amenity_global_div.appendChild(p1);
         }
         else {
-            amenity_global_div.innerHTML = "<p>No Amenities available. Please add more</p>";
+            amenity_global_div.innerHTML =
+                "<p>No Amenities available. Please add more</p>";
         }
         this.loadAmenity();
     }
@@ -157,9 +161,9 @@ class Amenities {
                 const response = yield fetch(`/api/owner/hostel/amenities/${this.hostel_id}/`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ "amenity": amenity })
+                    body: JSON.stringify({ amenity: amenity }),
                 });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -176,7 +180,9 @@ class Amenities {
     }
 }
 const myAmenity = new Amenities();
-document.querySelector("#submit-amenity-btn").addEventListener("click", function () {
+document
+    .querySelector("#submit-amenity-btn")
+    .addEventListener("click", function () {
     let amenity = document.querySelector("#amenity-input").value;
     if (amenity) {
         console.log(amenity);
@@ -191,5 +197,5 @@ document.addEventListener("DOMContentLoaded", () => {
     displayBookings(hostel_id);
 });
 setInterval(() => {
-    displayBookings(hostel_id);
+    // displayBookings(hostel_id)
 }, 5000);
