@@ -149,31 +149,6 @@ def student_comment_hostel(request, hostel_id):
         review.save()
     return redirect('student_hostel', hostel_id)
 
-
-def book_hostel(request, hostel_id):
-    hostel = Hostel.objects.get(pk=hostel_id)
-    student = Student.objects.get(admission_number=request.session["admission_number"])
-    book = Booking(
-        hostel=hostel,
-        student=student,
-        status="Pending"
-    )
-    book.save()
-    return redirect('student_hostel', hostel_id)
-
-def student_profile(request):
-    student = Student.objects.get(admission_number=request.session["admission_number"])
-    booked_hostels = []
-    bookings = Booking.objects.filter(student=student)
-    for booking in bookings:
-        booked_hostels.append({'hostel': booking.hostel, 'status': booking.status})
-
-    return render(request, "student/student.html",{
-        "student":student, 
-        'hostels': booked_hostels
-    })
-
-
 # owner routes
 def owner_login(request):
     return render(request, "owner/login.html")
@@ -260,10 +235,6 @@ def add_hostel(request):
 
 def owner_hostel(request, hostel_id):
     hostel = Hostel.objects.get(pk=hostel_id)
-    booked_people = []
-    bookings = Booking.objects.filter(hostel=hostel)
-    for booking in bookings:
-        booked_people.append({"id": booking.id,"status": booking.status, "student": booking.student})
     amenities = HostelAmenities.objects.filter(hostel=hostel)
     amenities_list = [i.amenity for i in amenities]
     gAmenities = Amenities.objects.all()
@@ -284,21 +255,19 @@ def owner_hostel(request, hostel_id):
         "hostel": hostel, 
         "amenities": amenities,
         "hostelImageForm": form,
-        "bookings": booked_people
         })
 
-def verify_booking(request, hostel_id, book_id, choice):
-    hostel = Hostel.objects.get(pk=hostel_id)
+def verify_booking(request, book_id, choice):
+    div_status.appendChild(btn)
     book = Booking.objects.get(pk=book_id)
-    if book.status != 'Accepted' or book.status != "Rejected" and hostel.available_rooms > 0:
-        if choice == 'accept':
-            book.status = "Accepted"
-            hostel.available_rooms -= 1
-            hostel.save()
-        elif choice == 'reject':
-            book.status = "Rejected"
-        book.save()
-    return redirect("owner_hostel", hostel_id)
+    if book.hostel.available_rooms > 0 and choice == "Accept":
+        book.status = "Accept"
+        book.hostel.available_rooms -= 1
+    elif choice == "Reject":
+        book.status = "Reject"
+    book.save()
+    return JsonResponse({"success": True})
+    
 
 
 # API routes

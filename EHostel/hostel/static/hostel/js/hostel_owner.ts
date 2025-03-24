@@ -59,10 +59,24 @@ async function displayBookings(hostelId) {
             let btn: HTMLButtonElement = document.createElement("button")
             btn.classList.add("dropbtn")
             btn.innerText = "Admit?"
+            div_status.appendChild(btn)
+
             let div_content: HTMLDivElement = document.createElement("div")
             div_content.classList.add("dropdown-content")
-            let accept_a: HTMLAnchorElement
-            div_status.appendChild(btn)
+            let accept_btn: HTMLButtonElement = document.createElement("button")
+            accept_btn.innerText = "Accept"
+            accept_btn.dataset.id = booking.id
+            accept_btn.classList.add("dropdown-item")
+            accept_btn.classList.add("accept-book-btn")
+            let reject_btn: HTMLButtonElement = document.createElement("button")
+            reject_btn.innerText = "Reject"
+            reject_btn.dataset.id = booking.id
+            reject_btn.classList.add("dropdown-item")
+            reject_btn.classList.add("reject-book-btn")
+            div_content.appendChild(accept_btn)
+            div_content.appendChild(reject_btn)
+            div_status.appendChild(div_content)
+
             div_status.classList.add("booking_list_dropdown")
           }
           let tempTr = document.createElement("tr");
@@ -105,6 +119,8 @@ async function displayBookings(hostelId) {
     }
   }
 }
+
+
 
 add_amenities_btn.addEventListener("click", () => {
   hideSingleElements(add_amenities_btn, add_amenities_div);
@@ -232,8 +248,19 @@ document
 
 document.addEventListener("DOMContentLoaded", () => {
   displayBookings(hostel_id);
+  let accept_btns = document.querySelectorAll(".accept-book-btn")
+
+  bookingDiv.addEventListener("click", function (event) {
+    if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
+      alert("clicked");
+      // Access the button's data-id if needed:
+      console.log(event.target.dataset.id);
+    }
+  })
 });
 
 setInterval(() => {
-  // displayBookings(hostel_id)
+  displayBookings(hostel_id)
 }, 5000);
+
+
