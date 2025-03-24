@@ -1,4 +1,9 @@
-import { hideSingleElements, alterAmenity, verifyBooking } from "./mymodules.js";
+import {
+  hideSingleElements,
+  alterAmenity,
+  verifyBooking,
+  hideBookDiv,
+} from "./mymodules.js";
 
 let hostel_id: number = Number(
   document.querySelector<HTMLSpanElement>("#hostel_id").textContent
@@ -22,7 +27,9 @@ let amenity_display_div: HTMLDivElement =
   document.querySelector<HTMLDivElement>(".amenities-display");
 let amenity_global_div: HTMLDivElement =
   document.querySelector<HTMLDivElement>(".amenities-global");
-let active_booking_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#activeHostelBookings")
+let active_booking_div: HTMLDivElement = document.querySelector<HTMLDivElement>(
+  "#activeHostelBookings"
+);
 
 async function fetchBookings(url: string) {
   try {
@@ -55,60 +62,62 @@ async function displayBookings(url: string, book_div: HTMLDivElement) {
         tableBook.appendChild(titleBook);
         let bodyBook = document.createElement("tbody");
         bookings.forEach((booking) => {
-          let div_status: HTMLDivElement = document.createElement("div")
+          let div_status: HTMLDivElement = document.createElement("div");
           if (booking.status === "Pending") {
-            let btn: HTMLButtonElement = document.createElement("button")
-            btn.classList.add("dropbtn")
-            btn.innerText = "Admit?"
-            div_status.appendChild(btn)
+            let btn: HTMLButtonElement = document.createElement("button");
+            btn.classList.add("dropbtn");
+            btn.innerText = "Admit?";
+            div_status.appendChild(btn);
 
-            let div_content: HTMLDivElement = document.createElement("div")
-            div_content.classList.add("dropdown-content")
-            let accept_btn: HTMLButtonElement = document.createElement("button")
-            accept_btn.innerText = "Accept"
-            accept_btn.dataset.id = booking.id
-            accept_btn.classList.add("dropdown-item")
-            accept_btn.classList.add("accept-book-btn")
-            let reject_btn: HTMLButtonElement = document.createElement("button")
-            reject_btn.innerText = "Reject"
-            reject_btn.dataset.id = booking.id
-            reject_btn.classList.add("dropdown-item")
-            reject_btn.classList.add("reject-book-btn")
-            div_content.appendChild(accept_btn)
-            div_content.appendChild(reject_btn)
-            div_status.appendChild(div_content)
+            let div_content: HTMLDivElement = document.createElement("div");
+            div_content.classList.add("dropdown-content");
+            let accept_btn: HTMLButtonElement =
+              document.createElement("button");
+            accept_btn.innerText = "Accept";
+            accept_btn.dataset.id = booking.id;
+            accept_btn.classList.add("dropdown-item");
+            accept_btn.classList.add("accept-book-btn");
+            let reject_btn: HTMLButtonElement =
+              document.createElement("button");
+            reject_btn.innerText = "Reject";
+            reject_btn.dataset.id = booking.id;
+            reject_btn.classList.add("dropdown-item");
+            reject_btn.classList.add("reject-book-btn");
+            div_content.appendChild(accept_btn);
+            div_content.appendChild(reject_btn);
+            div_status.appendChild(div_content);
 
-            div_status.classList.add("booking_list_dropdown")
+            div_status.classList.add("booking_list_dropdown");
           } else if (booking.status === "Accept") {
-            let btn: HTMLButtonElement = document.createElement("button")
-            btn.classList.add("end-lease-book-btn")
-            btn.innerText = "End Lease?"
-            btn.dataset.id = booking.id
-            div_status.appendChild(btn)
+            let btn: HTMLButtonElement = document.createElement("button");
+            btn.classList.add("end-lease-book-btn");
+            btn.innerText = "End Lease?";
+            btn.dataset.id = booking.id;
+            div_status.appendChild(btn);
           }
           let tempTr = document.createElement("tr");
-          const adminTd = document.createElement('td');
+          const adminTd = document.createElement("td");
           adminTd.textContent = booking.student.admin;
           tempTr.appendChild(adminTd);
 
-          const nameTd = document.createElement('td');
+          const nameTd = document.createElement("td");
           nameTd.textContent = `${booking.student.first_name} ${booking.student.last_name}`;
           tempTr.appendChild(nameTd);
 
-          const emailTd = document.createElement('td');
+          const emailTd = document.createElement("td");
           emailTd.textContent = booking.student.email;
           tempTr.appendChild(emailTd);
 
-          const contactTd = document.createElement('td');
+          const contactTd = document.createElement("td");
           contactTd.textContent = booking.student.contact;
           tempTr.appendChild(contactTd);
 
-          const statusTd = document.createElement('td');
+          const statusTd = document.createElement("td");
           statusTd.textContent = booking.status;
           tempTr.appendChild(statusTd);
 
-          const btnTd = document.createElement('td');
-          btnTd.appendChild(div_status)
+          const btnTd = document.createElement("td");
+          btnTd.appendChild(div_status);
           tempTr.appendChild(btnTd);
           bodyBook.appendChild(tempTr);
         });
@@ -251,35 +260,75 @@ document
     }
   });
 
-let booking_urls: {url:string, div:HTMLDivElement}[]= [{ url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv}, {url:`/api/owner/student_bookings/${hostel_id}/active/`, div: active_booking_div}]
+let booking_hide_elems: { li: HTMLAnchorElement; div: HTMLDivElement }[] = [
+  {
+    li: document.querySelector<HTMLAnchorElement>("#booking-detail-btn"),
+    div: document.querySelector<HTMLDivElement>(".bookings-table-list"),
+  },
+  {
+    li: document.querySelector<HTMLAnchorElement>("#booking-active-btn"),
+    div: document.querySelector<HTMLDivElement>(".booking-active-div"),
+  },
+  {
+    li: document.querySelector<HTMLAnchorElement>("#booking-history-btn"),
+    div: document.querySelector<HTMLDivElement>(".booking-history-div"),
+  },
+];
+
+let booking_div_elems: HTMLDivElement[] = [
+  document.querySelector<HTMLDivElement>(".bookings-table-list"),
+  document.querySelector<HTMLDivElement>(".booking-active-div"),
+  document.querySelector<HTMLDivElement>(".booking-history-div"),
+];
+
+booking_hide_elems.forEach((book_hide_elem) => {
+  book_hide_elem.li.addEventListener("click", function () {
+    hideBookDiv(book_hide_elem.div, booking_div_elems);
+  });
+});
+
+let booking_urls: { url: string; div: HTMLDivElement }[] = [
+  { url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv },
+  {
+    url: `/api/owner/student_bookings/${hostel_id}/active/`,
+    div: active_booking_div,
+  },
+];
 
 document.addEventListener("DOMContentLoaded", () => {
   // displayBookings(hostel_id);
-  booking_urls.forEach(book_url => {
-    displayBookings(book_url.url, book_url.div)
+  booking_urls.forEach((book_url) => {
+    displayBookings(book_url.url, book_url.div);
     book_url.div.addEventListener("click", function (event) {
-      if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
-        verifyBooking(parseInt(event.target.dataset.id), "Accept")
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.classList.contains("accept-book-btn")
+      ) {
+        verifyBooking(parseInt(event.target.dataset.id), "Accept");
         alert("The student was accepted");
-        displayBookings(book_url.url, book_url.div)
-      } else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
-        verifyBooking(parseInt(event.target.dataset.id), "Reject")
+        displayBookings(book_url.url, book_url.div);
+      } else if (
+        event.target instanceof HTMLElement &&
+        event.target.classList.contains("reject-book-btn")
+      ) {
+        verifyBooking(parseInt(event.target.dataset.id), "Reject");
         alert("The student was rejected");
-        displayBookings(book_url.url, book_url.div)
-      } else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
-        verifyBooking(parseInt(event.target.dataset.id), "End Lease")
+        displayBookings(book_url.url, book_url.div);
+      } else if (
+        event.target instanceof HTMLElement &&
+        event.target.classList.contains("end-lease-book-btn")
+      ) {
+        verifyBooking(parseInt(event.target.dataset.id), "End Lease");
         alert("The student lease has ended");
-        displayBookings(book_url.url, book_url.div)
+        displayBookings(book_url.url, book_url.div);
       }
-    })
-  })
+    });
+  });
 });
 
 setInterval(() => {
   // displayBookings(hostel_id)
-  booking_urls.forEach(book_url => {
-    displayBookings(book_url.url, book_url.div)
-  })
+  booking_urls.forEach((book_url) => {
+    displayBookings(book_url.url, book_url.div);
+  });
 }, 5000);
-
-

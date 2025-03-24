@@ -7,22 +7,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-;
-;
 export function hideDivElements(btn, buttons, seeDiv, elems) {
     elems.forEach((elem) => {
-        if (!(elem.classList.contains("hide-elem"))) {
+        if (!elem.classList.contains("hide-elem")) {
             elem.classList.add("hide-elem");
         }
     });
     seeDiv.classList.remove("hide-elem");
+}
+export function hideBookDiv(div, elems) {
+    elems.forEach(elem => {
+        if (elem.classList.contains("hide-elem")) { }
+        else {
+            elem.classList.add("hide-elem");
+        }
+    });
+    div.classList.remove("hide-elem");
 }
 export function hideUrlDivElements(defaultDiv, divList) {
     const hash = window.location.hash.substring(1);
     if (hash) {
         const targetDiv = document.querySelector(`.${hash}`);
         if (hash && targetDiv) {
-            divList.forEach(elem => elem.classList.add("hide-elem"));
+            divList.forEach((elem) => elem.classList.add("hide-elem"));
             targetDiv.classList.remove("hide-elem");
         }
         else {
@@ -34,7 +41,7 @@ export function hideUrlDivElements(defaultDiv, divList) {
     }
 }
 export function hideButtonElements(btn, hide_btns) {
-    hide_btns.forEach(hide_btn => {
+    hide_btns.forEach((hide_btn) => {
         hide_btn.style.display = "none";
     });
     btn.style.display = "block";
@@ -55,22 +62,22 @@ function updateData(myurl, column, newValue) {
         const csrfToken = (_a = document.querySelector('input[name="csrfmiddlewaretoken"]')) === null || _a === void 0 ? void 0 : _a.value;
         try {
             const response = yield fetch(myurl, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken || '', // Include CSRF token
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken || "", // Include CSRF token
                 },
                 body: JSON.stringify({ [column]: newValue }), // Dynamically create JSON body
             });
             if (!response.ok) {
                 const errorData = yield response.json();
-                throw new Error(errorData.message || 'Network response was not ok');
+                throw new Error(errorData.message || "Network response was not ok");
             }
             const data = yield response.json();
             return data;
         }
         catch (error) {
-            console.error('Error updating student:', error);
+            console.error("Error updating student:", error);
             throw error;
         }
     });
@@ -82,7 +89,7 @@ export function handleUpdateClick(myurl, column, newValue, messageElement) {
             messageElement.textContent = result.output;
         }
         catch (error) {
-            let errmsg = error.message || 'An error occurred during update.';
+            let errmsg = error.message || "An error occurred during update.";
             alert(errmsg);
         }
     });
@@ -101,7 +108,7 @@ export function HostelCard(props) {
     const card = document.createElement("div");
     card.classList.add("card");
     const image = document.createElement("img");
-    image.src = props.hostel.image || 'placeholder-image.jpg'; // Use placeholder if no image
+    image.src = props.hostel.image || "placeholder-image.jpg"; // Use placeholder if no image
     image.alt = props.hostel.hostel_name;
     card.appendChild(image);
     const cardContent = document.createElement("div");
@@ -109,10 +116,10 @@ export function HostelCard(props) {
     const h3 = document.createElement("h3");
     h3.innerText = props.hostel.hostel_name;
     cardContent.appendChild(h3);
-    const price = document.createElement('p');
+    const price = document.createElement("p");
     price.textContent = `Price: ksh. ${props.hostel.price_per_month}/month`;
     cardContent.appendChild(price);
-    const locality = document.createElement('p');
+    const locality = document.createElement("p");
     locality.textContent = `Locality: ${props.hostel.locality}`;
     cardContent.appendChild(locality);
     const link = document.createElement("a");

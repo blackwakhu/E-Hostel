@@ -23,9 +23,14 @@
         <div class="main-content">
             <span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
             <div class="inner-menu">
-                <a href="">Hostel Detail</a>
+                {% comment %} <a href="">Hostel Detail</a>
                 <a href="">Active Students</a>
-                <a href="">History</a>
+                <a href="">History</a> {% endcomment %}
+                <ul>
+                    <li><a id="booking-detail-btn">Detail</a></li>
+                    <li><a id="booking-active-btn">Active Students</a></li>
+                    <li><a id="booking-history-btn">History</a></li>
+                </ul>
             </div>
             <div class="main-content-book">
                 <div class="bookings-table-list">
@@ -79,23 +84,23 @@
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div>
-                    {% for image in images %}
-                        <img src="{{ image.image.url }}" alt="{{ hostel.hostel_name }}" style="max-width: 200px; margin: 5px;">
-                    {% empty %}
-                        <p>No images available.</p>
-                    {% endfor %}
-                </div>
+                
+                    <div>
+                        {% for image in images %}
+                            <img src="{{ image.image.url }}" alt="{{ hostel.hostel_name }}" style="max-width: 200px; margin: 5px;">
+                        {% empty %}
+                            <p>No images available.</p>
+                        {% endfor %}
+                    </div>
 
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ hostelImageForm.as_p }}
-                    <button type="submit">Upload</button>
-                </form>
-            
-                <div><a href="{% url 'download_active_student' hostel.id %}">Print</a><div id="activeHostelBookings"></div></div>
-                <div id="hostelBookings"></div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ hostelImageForm.as_p }}
+                        <button type="submit">Upload</button>
+                    </form>
+                </div>
+                <div class="booking-active-div hide-elem"><a href="{% url 'download_active_student' hostel.id %}">Print</a><div id="activeHostelBookings"></div></div>
+                <div class="booking-history-div hide-elem"><div id="hostelBookings"></div></div>
             </div>
         </div>
     </div>

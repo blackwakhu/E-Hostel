@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideSingleElements, alterAmenity, verifyBooking } from "./mymodules.js";
+import { hideSingleElements, alterAmenity, verifyBooking, hideBookDiv, } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
@@ -82,22 +82,22 @@ function displayBookings(url, book_div) {
                             div_status.appendChild(btn);
                         }
                         let tempTr = document.createElement("tr");
-                        const adminTd = document.createElement('td');
+                        const adminTd = document.createElement("td");
                         adminTd.textContent = booking.student.admin;
                         tempTr.appendChild(adminTd);
-                        const nameTd = document.createElement('td');
+                        const nameTd = document.createElement("td");
                         nameTd.textContent = `${booking.student.first_name} ${booking.student.last_name}`;
                         tempTr.appendChild(nameTd);
-                        const emailTd = document.createElement('td');
+                        const emailTd = document.createElement("td");
                         emailTd.textContent = booking.student.email;
                         tempTr.appendChild(emailTd);
-                        const contactTd = document.createElement('td');
+                        const contactTd = document.createElement("td");
                         contactTd.textContent = booking.student.contact;
                         tempTr.appendChild(contactTd);
-                        const statusTd = document.createElement('td');
+                        const statusTd = document.createElement("td");
                         statusTd.textContent = booking.status;
                         tempTr.appendChild(statusTd);
-                        const btnTd = document.createElement('td');
+                        const btnTd = document.createElement("td");
                         btnTd.appendChild(div_status);
                         tempTr.appendChild(btnTd);
                         bodyBook.appendChild(tempTr);
@@ -235,23 +235,56 @@ document
         console.log("no amenity");
     }
 });
-let booking_urls = [{ url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv }, { url: `/api/owner/student_bookings/${hostel_id}/active/`, div: active_booking_div }];
+let booking_hide_elems = [
+    {
+        li: document.querySelector("#booking-detail-btn"),
+        div: document.querySelector(".bookings-table-list"),
+    },
+    {
+        li: document.querySelector("#booking-active-btn"),
+        div: document.querySelector(".booking-active-div"),
+    },
+    {
+        li: document.querySelector("#booking-history-btn"),
+        div: document.querySelector(".booking-history-div"),
+    },
+];
+let booking_div_elems = [
+    document.querySelector(".bookings-table-list"),
+    document.querySelector(".booking-active-div"),
+    document.querySelector(".booking-history-div"),
+];
+booking_hide_elems.forEach((book_hide_elem) => {
+    book_hide_elem.li.addEventListener("click", function () {
+        hideBookDiv(book_hide_elem.div, booking_div_elems);
+    });
+});
+let booking_urls = [
+    { url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv },
+    {
+        url: `/api/owner/student_bookings/${hostel_id}/active/`,
+        div: active_booking_div,
+    },
+];
 document.addEventListener("DOMContentLoaded", () => {
     // displayBookings(hostel_id);
-    booking_urls.forEach(book_url => {
+    booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
         book_url.div.addEventListener("click", function (event) {
-            if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
+            if (event.target instanceof HTMLElement &&
+                event.target.classList.contains("accept-book-btn")) {
                 verifyBooking(parseInt(event.target.dataset.id), "Accept");
                 alert("The student was accepted");
                 displayBookings(book_url.url, book_url.div);
             }
-            else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
+            else if (event.target instanceof HTMLElement &&
+                event.target.classList.contains("reject-book-btn")) {
                 verifyBooking(parseInt(event.target.dataset.id), "Reject");
                 alert("The student was rejected");
                 displayBookings(book_url.url, book_url.div);
             }
-            else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
+            else if (event.target instanceof HTMLElement &&
+                event.target.classList.contains("end-lease-book-btn")) {
                 verifyBooking(parseInt(event.target.dataset.id), "End Lease");
                 alert("The student lease has ended");
                 displayBookings(book_url.url, book_url.div);
@@ -261,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 setInterval(() => {
     // displayBookings(hostel_id)
-    booking_urls.forEach(book_url => {
+    booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
     });
 }, 5000);
