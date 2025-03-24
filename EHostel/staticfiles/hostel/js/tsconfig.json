@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "outDir": ".",  
+      "rootDir": ".",  
+      "allowJs": true,
+      "esModuleInterop": true
+    },
+    "include": ["./*.ts"],
+    "exclude": ["node_modules"]
+  }

@@ -7,6 +7,10 @@ from django.template.loader import get_template
 from weasyprint import HTML, CSS
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.staticfiles import finders
+from django.conf import settings
+
+import os
 
 from .models import *
 from .forms import *
@@ -571,6 +575,23 @@ def download_active_student(request, hostel_id):
             "status": booking.status, 
             "student": student,
         })
+    logo_path = finders.find("images/e-hostel-logo.png")
+    print(logo_path)
+    if logo_path:
+        logo_path = os.path.join(settings.BASE_DIR, logo_path)
+        letterhead_html = f"""
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="file://{logo_path}" alt="E-Hostel logo" style="max-width: 150px;"><br>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
+    else:
+      letterhead_html = """
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #007bff;">E-Hostel</h2>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
     context = {
         "bookings": booked_people,
         "hostel": hostel,
@@ -578,6 +599,7 @@ def download_active_student(request, hostel_id):
         "number_of_rooms": hostel.number_rooms,
         "landlord_name": hostel.owner.first_name+" "+hostel.owner.last_name,
         "landlord_email": hostel.owner.email,
+        "letterhead": letterhead_html,
     }
     template = get_template("booking_report.html")
     html_string = template.render(context)

@@ -1,0 +1,93 @@
+@media (max-width: 768px) {
+    .main-content .new-hostel-html .input,
+    .main-content .new-hostel-html .label {
+        width: 100% !important;
+        margin-left: 0;
+    }
+}
+
+.main-content .new-hostel-html {
+    margin-top: 90px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 20px;
+}
+
+.main-content .new-hostel-html .label {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content .new-hostel-html .input,
+.main-content .new-hostel-html .label {
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.main-content .new-hostel-html .input,
+.main-content .new-hostel-html .button {
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.main-content .new-hostel-html .group {
+    margin-bottom: 10px;
+}
+
+.main-content .new-hostel-html .button {
+    background: greenyellow;
+    width: 50%;
+    margin-left: 25%;
+}
+
+#add-amenities-div, #add-amenities-div #new-amenities-div {
+    display: none;
+  }
+
+  .booking_list_dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .booking_list_dropdown .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .booking_list_dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .booking_list_dropdown .dropdown-content .dropdown-item {
+    background-color: transparent; /* Makes the button background transparent */
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border: none; /* Removes the button border */
+    width: 100%; /* ensures the button takes the full width of the dropdown */
+    text-align: left; /* aligns the text left */
+    cursor: pointer;
+  }
+  
+  .booking_list_dropdown .dropdown-content .dropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .booking_list_dropdown:hover .dropdown-content {
+    display: block;
+  }  

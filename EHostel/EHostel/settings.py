@@ -139,6 +139,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'hostel/static'),
 )
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 MEDIA_URL = "/media/"
