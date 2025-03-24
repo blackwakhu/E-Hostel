@@ -72,17 +72,22 @@
     z-index: 1;
   }
   
-  .booking_list_dropdown .dropdown-content a {
+  .booking_list_dropdown .dropdown-content .dropdown-item {
+    background-color: transparent; /* Makes the button background transparent */
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    border: none; /* Removes the button border */
+    width: 100%; /* ensures the button takes the full width of the dropdown */
+    text-align: left; /* aligns the text left */
+    cursor: pointer;
   }
   
-  .booking_list_dropdown .dropdown-content a:hover {
+  .booking_list_dropdown .dropdown-content .dropdown-item:hover {
     background-color: #f1f1f1;
   }
   
-  .booking_list_dropdown .dropdown:hover .dropdown-content {
+  .booking_list_dropdown:hover .dropdown-content {
     display: block;
   }  

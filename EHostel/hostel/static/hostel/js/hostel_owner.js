@@ -53,6 +53,13 @@ function displayBookings(hostelId) {
                         let div_status = document.createElement("div");
                         if (booking.status === "Pending") {
                             let btn = document.createElement("button");
+                            btn.classList.add("dropbtn");
+                            btn.innerText = "Admit?";
+                            let div_content = document.createElement("div");
+                            div_content.classList.add("dropdown-content");
+                            let accept_a;
+                            div_status.appendChild(btn);
+                            div_status.classList.add("booking_list_dropdown");
                         }
                         let tempTr = document.createElement("tr");
                         const adminTd = document.createElement('td');
