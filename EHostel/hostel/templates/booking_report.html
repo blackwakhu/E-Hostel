@@ -11,17 +11,16 @@
     </head>
     <body>
         {{ letterhead|safe }}
-        <h1>Booking Report for {{ hostel.hostel_name }}</h1>
+        <h1>Booking Report for {{ hostel.hostel_name }} hostel</h1>
         <p><strong>Landlord:</strong> {{ landlord_name }}</p>
         <p><strong>Available Vacancies:</strong> {{ vacancies }}</p>
     
-        <h2>Booking Summary</h2>
+        <h2>Active Tenants</h2>
         <table>
             <thead>
                 <tr>
                     <th>Admission Number</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Contact</th>
                     <th>Status</th>
@@ -31,8 +30,7 @@
                 {% for booking in bookings %}
                 <tr>
                     <td>{{ booking.student.admin }}</td>
-                    <td>{{ booking.student.first_name }}</td>
-                    <td>{{ booking.student.last_name }}</td>
+                    <td>{{ booking.student.first_name }} {{ booking.student.last_name }}</td>
                     <td>{{ booking.student.email }}</td>
                     <td>{{ booking.student.contact }}</td>
                     <td>{{ booking.status }}</td>

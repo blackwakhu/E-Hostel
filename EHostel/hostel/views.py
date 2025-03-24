@@ -514,9 +514,11 @@ def get_booking_status(request, hostel_id, admin_number):
     """this will return the state of the hostel in terms of booking"""
     hostel = Hostel.objects.get(pk=hostel_id)
     student = Student.objects.get(pk=admin_number)
-    book = Booking.objects.filter(hostel=hostel, student=student)
-    print(book.last().status)
-    return JsonResponse({"status": book.last().status})
+    book = Booking.objects.filter(hostel=hostel, student=student).last()
+    if book:
+        return JsonResponse({"status": book.status})
+    else:
+        return JsonResponse({"status": None})
 
 def student_book_hostel(request, hostel_id, admin_number, book_status):
     """this will save the new book status of the student"""
@@ -530,11 +532,10 @@ def student_book_hostel(request, hostel_id, admin_number, book_status):
             status="Pending" 
         )
         mybook.save()
-        print(mybook.status)
+
     elif book_status == "Cancel":
         book.status = "Cancel"
         book.save()
-    print(book.status)
     return JsonResponse({"successfully": True})
 
 def active_booking(request, hostel_id):
@@ -576,7 +577,6 @@ def download_active_student(request, hostel_id):
             "student": student,
         })
     logo_path = finders.find("images/e-hostel-logo.png")
-    print(logo_path)
     if logo_path:
         logo_path = os.path.join(settings.BASE_DIR, logo_path)
         letterhead_html = f"""
@@ -612,7 +612,7 @@ def download_active_student(request, hostel_id):
     ''')
     pdf_file = html.write_pdf(stylesheets=[css])
     response = HttpResponse(pdf_file, content_type="application/pdf")
-    response["Content-Disposition"] = f'attachment; filename="booking_report_{hostel_id}.pdf"'
+    response["Content-Disposition"] = f'attachment; filename="booking_report_for_{hostel.hostel_name}.pdf"'
 
     return response
 
