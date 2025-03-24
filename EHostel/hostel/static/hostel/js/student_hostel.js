@@ -11,10 +11,10 @@ var _a, _b, _c;
 import { hideButtonElements } from "./mymodules.js";
 const hostel_id = parseInt(((_a = document.getElementById('hostel-id')) === null || _a === void 0 ? void 0 : _a.dataset.hostelId) || '');
 const admin_number = ((_b = document.getElementById('hostel-id')) === null || _b === void 0 ? void 0 : _b.dataset.admissionNumber) || '';
-let booking_status_div = document.querySelector(".booking-status-div");
 let booking_btn_pending = document.querySelector("#booking-pending-btn");
 let booking_btn_cancel = document.querySelector("#booking-cancel-btn");
-let booking_btn_list = [booking_btn_pending, booking_btn_cancel];
+let booking_p_else = document.querySelector("#booking-p-else");
+let booking_btn_list = [booking_btn_pending, booking_btn_cancel, booking_p_else];
 class HostelReviews {
     constructor() {
         this.hostel_id = hostel_id;
@@ -114,12 +114,13 @@ function booking_status(admin, hostel) {
             }
             const result = yield response.json();
             if (result.status === null || result.status === "Cancel") {
-                console.log("pending");
                 hideButtonElements(booking_btn_pending, booking_btn_list);
             }
             else if (result.status == "Pending") {
-                console.log("cancel");
                 hideButtonElements(booking_btn_cancel, booking_btn_list);
+            }
+            else {
+                hideButtonElements(booking_p_else, booking_btn_list);
             }
         }
         catch (error) {
@@ -157,6 +158,6 @@ booking_btn_list_map.forEach(bbtm => {
 });
 booking_status(admin_number, hostel_id);
 setInterval(() => {
-    // new HostelReviews()
-    // booking_status(admin_number, hostel_id)
+    new HostelReviews();
+    booking_status(admin_number, hostel_id);
 }, 5000);

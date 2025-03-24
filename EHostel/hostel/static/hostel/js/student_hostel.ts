@@ -2,11 +2,11 @@ import { Review, hideButtonElements } from "./mymodules.js";
 
 const hostel_id = parseInt(document.getElementById('hostel-id')?.dataset.hostelId || '');
 const admin_number = document.getElementById('hostel-id')?.dataset.admissionNumber || '';
-let booking_status_div: HTMLDivElement = document.querySelector<HTMLDivElement>(".booking-status-div")
 let booking_btn_pending: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#booking-pending-btn")
 let booking_btn_cancel: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#booking-cancel-btn")
+let booking_p_else: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#booking-p-else")
 
-let booking_btn_list: HTMLButtonElement[] = [booking_btn_pending, booking_btn_cancel]
+let booking_btn_list: HTMLElement[] = [booking_btn_pending, booking_btn_cancel, booking_p_else]
 
 class HostelReviews {
     private hostel_id: number = hostel_id
@@ -117,11 +117,11 @@ async function booking_status(admin: string, hostel: number): Promise<void>{
         }  
         const result = await response.json()
         if (result.status === null || result.status === "Cancel") {
-            console.log("pending")
             hideButtonElements(booking_btn_pending, booking_btn_list)
         } else if (result.status == "Pending") {
-            console.log("cancel")
             hideButtonElements(booking_btn_cancel, booking_btn_list)
+        } else {
+            hideButtonElements(booking_p_else, booking_btn_list)
         }
     } catch (error) {
         console.error("Error adding review:", error);
@@ -161,6 +161,6 @@ booking_btn_list_map.forEach(bbtm => {
 booking_status(admin_number, hostel_id)
 
 setInterval(() => {
-    // new HostelReviews()
-    // booking_status(admin_number, hostel_id)
+    new HostelReviews()
+    booking_status(admin_number, hostel_id)
 }, 5000)

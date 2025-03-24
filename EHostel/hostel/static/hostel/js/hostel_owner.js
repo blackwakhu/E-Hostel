@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
             verifyBooking(parseInt(event.target.dataset.id), "End Lease");
-            alert("The student was rejected");
+            alert("The student lease has ended");
             displayBookings(hostel_id);
         }
     });

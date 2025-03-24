@@ -71,7 +71,7 @@ export function hideUrlDivElements(defaultDiv: HTMLDivElement, divList: HTMLDivE
   }
 }
 
-export function hideButtonElements(btn: HTMLButtonElement, hide_btns: HTMLButtonElement[]) {
+export function hideButtonElements(btn: HTMLElement, hide_btns: HTMLElement[]) {
   hide_btns.forEach(hide_btn => {
     hide_btn.style.display = "none"
   })
