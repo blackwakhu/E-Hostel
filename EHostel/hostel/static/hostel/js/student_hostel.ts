@@ -116,7 +116,7 @@ async function booking_status(admin: string, hostel: number): Promise<void>{
             throw new Error(`HTTP error! Status: ${response.status}`);
         }  
         const result = await response.json()
-        if (result.status === null || result.status === "Cancel") {
+        if (result.status === null || result.status === "Cancel" || result.status === "End Lease") {
             hideButtonElements(booking_btn_pending, booking_btn_list)
         } else if (result.status == "Pending") {
             hideButtonElements(booking_btn_cancel, booking_btn_list)

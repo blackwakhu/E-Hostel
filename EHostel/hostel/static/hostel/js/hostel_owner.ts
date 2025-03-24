@@ -22,10 +22,11 @@ let amenity_display_div: HTMLDivElement =
   document.querySelector<HTMLDivElement>(".amenities-display");
 let amenity_global_div: HTMLDivElement =
   document.querySelector<HTMLDivElement>(".amenities-global");
+let active_booking_div: HTMLDivElement = document.querySelector<HTMLDivElement>("#activeHostelBookings")
 
-async function fetchBookings(hostelId) {
+async function fetchBookings(url: string) {
   try {
-    const response = await fetch(`/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
+    const response = await fetch(url); // Replace with your actual URL
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -39,13 +40,13 @@ async function fetchBookings(hostelId) {
   }
 }
 
-async function displayBookings(hostelId) {
+async function displayBookings(url: string, book_div: HTMLDivElement) {
   try {
-    const data = await fetchBookings(hostelId);
+    const data = await fetchBookings(url);
     const bookings = data.bookings;
     availRoomsTd.textContent = `${data.vacancies}`;
-    if (bookingDiv) {
-      bookingDiv.innerHTML = "";
+    if (book_div) {
+      book_div.innerHTML = "";
       if (bookings && bookings.length > 0) {
         let tableBook = document.createElement("table");
         let titleBook = document.createElement("thead");
@@ -112,7 +113,7 @@ async function displayBookings(hostelId) {
           bodyBook.appendChild(tempTr);
         });
         tableBook.appendChild(bodyBook);
-        bookingDiv.appendChild(tableBook);
+        book_div.appendChild(tableBook);
       } else {
         bookingDiv.innerHTML = "<p>No Students have booked the hostels</p>";
       }
@@ -250,29 +251,35 @@ document
     }
   });
 
-document.addEventListener("DOMContentLoaded", () => {
-  displayBookings(hostel_id);
-  let accept_btns = document.querySelectorAll(".accept-book-btn")
+let booking_urls: {url:string, div:HTMLDivElement}[]= [{ url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv}, {url:`/api/owner/student_bookings/${hostel_id}/active/`, div: active_booking_div}]
 
-  bookingDiv.addEventListener("click", function (event) {
-    if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
-      verifyBooking(parseInt(event.target.dataset.id), "Accept")
-      alert("The student was accepted");
-      displayBookings(hostel_id)
-    } else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
-      verifyBooking(parseInt(event.target.dataset.id), "Reject")
-      alert("The student was rejected");
-      displayBookings(hostel_id)
-    } else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
-      verifyBooking(parseInt(event.target.dataset.id), "End Lease")
-      alert("The student lease has ended");
-      displayBookings(hostel_id)
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  // displayBookings(hostel_id);
+  booking_urls.forEach(book_url => {
+    displayBookings(book_url.url, book_url.div)
+    book_url.div.addEventListener("click", function (event) {
+      if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
+        verifyBooking(parseInt(event.target.dataset.id), "Accept")
+        alert("The student was accepted");
+        displayBookings(book_url.url, book_url.div)
+      } else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
+        verifyBooking(parseInt(event.target.dataset.id), "Reject")
+        alert("The student was rejected");
+        displayBookings(book_url.url, book_url.div)
+      } else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
+        verifyBooking(parseInt(event.target.dataset.id), "End Lease")
+        alert("The student lease has ended");
+        displayBookings(book_url.url, book_url.div)
+      }
+    })
   })
 });
 
 setInterval(() => {
-  displayBookings(hostel_id)
+  // displayBookings(hostel_id)
+  booking_urls.forEach(book_url => {
+    displayBookings(book_url.url, book_url.div)
+  })
 }, 5000);
 
 

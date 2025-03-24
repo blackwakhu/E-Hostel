@@ -86,7 +86,7 @@ def student_main_page(request):
     hostels = Hostel.objects.all()
     student = Student.objects.get(admission_number=request.session["admission_number"])
     booked_hostels = []
-    bookings = Booking.objects.filter(student=student)
+    bookings = Booking.objects.filter(student=student).filter(Q(status="Pending") | Q (status="Accept") | Q(status="Reject"))
     for booking in bookings:
         first_image = HostelImages.objects.filter(hostel=booking.hostel).first()
         image_url = first_image.image.url if first_image else None
@@ -238,6 +238,7 @@ def owner_hostel(request, hostel_id):
     amenities = HostelAmenities.objects.filter(hostel=hostel)
     amenities_list = [i.amenity for i in amenities]
     gAmenities = Amenities.objects.all()
+    images = HostelImages.objects.filter(hostel=hostel)
     if request.method == "POST":
         form = HostelImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -255,6 +256,7 @@ def owner_hostel(request, hostel_id):
         "hostel": hostel, 
         "amenities": amenities,
         "hostelImageForm": form,
+        "images": images
         })
 
 def verify_booking(request, book_id, choice):
@@ -527,5 +529,25 @@ def student_book_hostel(request, hostel_id, admin_number, book_status):
         book.save()
     print(book.status)
     return JsonResponse({"successfully": True})
+
+def active_booking(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    booked_people = []
+    bookings = Booking.objects.filter(hostel=hostel).filter(Q(status="Pending") | Q (status="Accept"))
+    for booking in bookings:
+        student = {
+            "admin": booking.student.admission_number,
+            "email": booking.student.email,
+            "first_name": booking.student.first_name,
+            "last_name": booking.student.last_name,
+            "contact": booking.student.phone_number,
+            "gender": booking.student.gender
+        }
+        booked_people.append({
+            "id": booking.id,
+            "status": booking.status, 
+            "student": student
+        })
+    return JsonResponse({"bookings": booked_people, "vacancies": hostel.available_rooms}, safe=False)
     
 

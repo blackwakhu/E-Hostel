@@ -113,7 +113,7 @@ function booking_status(admin, hostel) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const result = yield response.json();
-            if (result.status === null || result.status === "Cancel") {
+            if (result.status === null || result.status === "Cancel" || result.status === "End Lease") {
                 hideButtonElements(booking_btn_pending, booking_btn_list);
             }
             else if (result.status == "Pending") {

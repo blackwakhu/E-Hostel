@@ -22,64 +22,79 @@
         </nav>
         <div class="main-content">
             <span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
+            <div class="inner-menu">
+                <a href="">Hostel Detail</a>
+                <a href="">Active Students</a>
+                <a href="">History</a>
+            </div>
+            <div class="main-content-book">
+                <div class="bookings-table-list">
+                    <table>
+                        <tr>
+                            <th>Hostel Name</th>
+                            <td>{{ hostel.hostel_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Owner</th>
+                            <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Price of rent</th>
+                            <td>ksh. {{ hostel.price_per_month }}</td>
+                        </tr>
+                        <tr>
+                            <th>Number of rooms</th>
+                            <td>{{ hostel.number_rooms }}</td>
+                        </tr>
+                        <tr>
+                            <th>Room type</th>
+                            <td>{{ hostel.room_type }}</td>
+                        </tr>
+                        <tr>
+                            <th>Available rooms</th>
+                            <td><span id="avail_rooms">{{ hostel.available_rooms }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Amenities</th>
+                            <td>
+                                <div class="amenities-display"></div>
+                                <button id="add-amenities-btn">Add amenities</button>
+                                <div id="add-amenities-div">
+                                    <hr>
+                                    <div class="amenities-global"></div>
+                                    <button id="new-amenity-btn">Create New Amenity</button>
+                                    <div id="new-amenity-div">
+                                        <input type="text" id="amenity-input">
+                                        <button id="submit-amenity-btn">Submit</button><br>
+                                    </div>
+                                    <button id="close-amenity-btn">Close</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>
+                                {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
+                                <br>{{ hostel.location }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    {% for image in images %}
+                        <img src="{{ image.image.url }}" alt="{{ hostel.hostel_name }}" style="max-width: 200px; margin: 5px;">
+                    {% empty %}
+                        <p>No images available.</p>
+                    {% endfor %}
+                </div>
 
-            <table>
-                <tr>
-                    <th>Hostel Name</th>
-                    <td>{{ hostel.hostel_name }}</td>
-                </tr>
-                <tr>
-                    <th>Owner</th>
-                    <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
-                </tr>
-                <tr>
-                    <th>Price of rent</th>
-                    <td>ksh. {{ hostel.price_per_month }}</td>
-                </tr>
-                <tr>
-                    <th>Number of rooms</th>
-                    <td>{{ hostel.number_rooms }}</td>
-                </tr>
-                <tr>
-                    <th>Room type</th>
-                    <td>{{ hostel.room_type }}</td>
-                </tr>
-                <tr>
-                    <th>Available rooms</th>
-                    <td><span id="avail_rooms">{{ hostel.available_rooms }}</span></td>
-                </tr>
-                <tr>
-                    <th>Amenities</th>
-                    <td>
-                        <div class="amenities-display"></div>
-                        <button id="add-amenities-btn">Add amenities</button>
-                        <div id="add-amenities-div">
-                            <hr>
-                            <div class="amenities-global"></div>
-                            <button id="new-amenity-btn">Create New Amenity</button>
-                            <div id="new-amenity-div">
-                                <input type="text" id="amenity-input">
-                                <button id="submit-amenity-btn">Submit</button><br>
-                            </div>
-                            <button id="close-amenity-btn">Close</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Location</th>
-                    <td>
-                        {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
-                        <br>{{ hostel.location }}
-                    </td>
-                </tr>
-            </table>
-
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ hostelImageForm.as_p }}
-                <button type="submit">Upload</button>
-            </form>
-
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ hostelImageForm.as_p }}
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+            <div id="activeHostelBookings"></div>
             <div id="hostelBookings"></div>
         </div>
     </div>

@@ -18,10 +18,11 @@ let new_amenity_div = document.querySelector("#new-amenity-div");
 let close_amenity_btn = document.querySelector("#close-amenity-btn");
 let amenity_display_div = document.querySelector(".amenities-display");
 let amenity_global_div = document.querySelector(".amenities-global");
-function fetchBookings(hostelId) {
+let active_booking_div = document.querySelector("#activeHostelBookings");
+function fetchBookings(url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(`/api/owner/student_bookings/${hostelId}`); // Replace with your actual URL
+            const response = yield fetch(url); // Replace with your actual URL
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -34,14 +35,14 @@ function fetchBookings(hostelId) {
         }
     });
 }
-function displayBookings(hostelId) {
+function displayBookings(url, book_div) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const data = yield fetchBookings(hostelId);
+            const data = yield fetchBookings(url);
             const bookings = data.bookings;
             availRoomsTd.textContent = `${data.vacancies}`;
-            if (bookingDiv) {
-                bookingDiv.innerHTML = "";
+            if (book_div) {
+                book_div.innerHTML = "";
                 if (bookings && bookings.length > 0) {
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
@@ -102,7 +103,7 @@ function displayBookings(hostelId) {
                         bodyBook.appendChild(tempTr);
                     });
                     tableBook.appendChild(bodyBook);
-                    bookingDiv.appendChild(tableBook);
+                    book_div.appendChild(tableBook);
                 }
                 else {
                     bookingDiv.innerHTML = "<p>No Students have booked the hostels</p>";
@@ -234,27 +235,33 @@ document
         console.log("no amenity");
     }
 });
+let booking_urls = [{ url: `/api/owner/student_bookings/${hostel_id}`, div: bookingDiv }, { url: `/api/owner/student_bookings/${hostel_id}/active/`, div: active_booking_div }];
 document.addEventListener("DOMContentLoaded", () => {
-    displayBookings(hostel_id);
-    let accept_btns = document.querySelectorAll(".accept-book-btn");
-    bookingDiv.addEventListener("click", function (event) {
-        if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
-            verifyBooking(parseInt(event.target.dataset.id), "Accept");
-            alert("The student was accepted");
-            displayBookings(hostel_id);
-        }
-        else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
-            verifyBooking(parseInt(event.target.dataset.id), "Reject");
-            alert("The student was rejected");
-            displayBookings(hostel_id);
-        }
-        else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
-            verifyBooking(parseInt(event.target.dataset.id), "End Lease");
-            alert("The student lease has ended");
-            displayBookings(hostel_id);
-        }
+    // displayBookings(hostel_id);
+    booking_urls.forEach(book_url => {
+        displayBookings(book_url.url, book_url.div);
+        book_url.div.addEventListener("click", function (event) {
+            if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
+                verifyBooking(parseInt(event.target.dataset.id), "Accept");
+                alert("The student was accepted");
+                displayBookings(book_url.url, book_url.div);
+            }
+            else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
+                verifyBooking(parseInt(event.target.dataset.id), "Reject");
+                alert("The student was rejected");
+                displayBookings(book_url.url, book_url.div);
+            }
+            else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
+                verifyBooking(parseInt(event.target.dataset.id), "End Lease");
+                alert("The student lease has ended");
+                displayBookings(book_url.url, book_url.div);
+            }
+        });
     });
 });
 setInterval(() => {
-    displayBookings(hostel_id);
+    // displayBookings(hostel_id)
+    booking_urls.forEach(book_url => {
+        displayBookings(book_url.url, book_url.div);
+    });
 }, 5000);
