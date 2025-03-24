@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block body %}
-<div class="owner-main-wrap">
+<div class="owner-main-wrap hostel-owner-div">
     <div class="owner-html">
         <nav class="navbar">
             <div class="logo">MyBrand</div>
@@ -20,12 +20,9 @@
                 <a href="{% url 'logout' %}">Logout</a>
             </div>
         </nav>
-        <div class="main-content">
+        <div class="main-content ">
             <span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
             <div class="inner-menu">
-                {% comment %} <a href="">Hostel Detail</a>
-                <a href="">Active Students</a>
-                <a href="">History</a> {% endcomment %}
                 <ul>
                     <li><a id="booking-detail-btn">Detail</a></li>
                     <li><a id="booking-active-btn">Active Students</a></li>
@@ -99,8 +96,11 @@
                         <button type="submit">Upload</button>
                     </form>
                 </div>
-                <div class="booking-active-div hide-elem"><a href="{% url 'download_active_student' hostel.id %}">Print</a><div id="activeHostelBookings"></div></div>
-                <div class="booking-history-div hide-elem"><div id="hostelBookings"></div></div>
+                <div class="booking-active-div hide-elem table-list-student">
+                    <h1>Active Students</h1>
+                    <a href="{% url 'download_active_student' hostel.id %}" id="print-a-active">Print</a>
+                    <div id="activeHostelBookings"></div></div>
+                <div class="booking-history-div hide-elem table-list-student"><div id="hostelBookings"></div></div>
             </div>
         </div>
     </div>

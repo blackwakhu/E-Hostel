@@ -1,3 +1,4 @@
+$cornflowerblue_9999ff: #9999ff;
 $forestgreen_4caf50: #4caf50;
 $whitesmoke_f1f1f1: #f1f1f1;
 $whitesmoke_f9f9f9: #f9f9f9;
@@ -64,26 +65,59 @@ $whitesmoke_f9f9f9: #f9f9f9;
     position: absolute;
     left: 0;
     width: 150px;
-    min-height: 600px;
+    background-color: rgba(153, 255, 255, .4);
+    height: 1000px;
 
     li {
       margin: 5px;
 
       &:hover {
-        background: whitesmoke;
+        background: gray;
         border: solid greenyellow 2px;
         border-radius: 3px;
-        color: greenyellow;
+        color: white;
       }
     }
   }
 
   .main-content-book {
     left: 150px;
-    min-height: 600px;
     position: absolute;
   }
-  min-height: 600px;
+
+  .table-list-student {
+    align-self: center;
+
+    table {
+      border-collapse: collapse;
+      margin: 5px;
+
+      td {
+        border: solid black 3px;
+        padding: 4px;
+      }
+
+      th {
+        border: solid black 3px;
+        padding: 4px;
+      }
+    }
+  }
+
+  #print-a-active {
+    border: solid 2px black;
+    padding: 2px;
+    border-radius: 3px;
+    color: black;
+    text-decoration: none;
+    left: 80%;
+    margin: 5px;
+
+    &:hover {
+      background: green;
+      color: white;
+    }
+  }
 }
 
 #add-amenities-div {
@@ -137,4 +171,9 @@ $whitesmoke_f9f9f9: #f9f9f9;
       display: block;
     }
   }
+}
+
+.hostel-owner-div {
+  background-color: $cornflowerblue_9999ff;
+  min-height: 1000px;
 }

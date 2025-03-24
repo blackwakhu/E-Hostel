@@ -47,7 +47,7 @@ function displayBookings(url, book_div) {
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
                     titleBook.innerHTML +=
-                        "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th></tr>";
+                        "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th><th></th></tr>";
                     tableBook.appendChild(titleBook);
                     let bodyBook = document.createElement("tbody");
                     bookings.forEach((booking) => {

@@ -8,9 +8,6 @@
     width: 100% !important;
   }
 }
-.main-content {
-  min-height: 600px;
-}
 .main-content .new-hostel-html {
   margin-top: 90px;
   width: 70%;
@@ -51,21 +48,49 @@
   position: absolute;
   left: 0;
   width: 150px;
-  min-height: 600px;
+  background-color: rgba(153, 255, 255, 0.4);
+  height: 1000px;
 }
 .main-content .inner-menu li {
   margin: 5px;
 }
 .main-content .inner-menu li:hover {
-  background: whitesmoke;
+  background: gray;
   border: solid greenyellow 2px;
   border-radius: 3px;
-  color: greenyellow;
+  color: white;
 }
 .main-content .main-content-book {
   left: 150px;
-  min-height: 600px;
   position: absolute;
+}
+.main-content .table-list-student {
+  align-self: center;
+}
+.main-content .table-list-student table {
+  border-collapse: collapse;
+  margin: 5px;
+}
+.main-content .table-list-student table td {
+  border: solid black 3px;
+  padding: 4px;
+}
+.main-content .table-list-student table th {
+  border: solid black 3px;
+  padding: 4px;
+}
+.main-content #print-a-active {
+  border: solid 2px black;
+  padding: 2px;
+  border-radius: 3px;
+  color: black;
+  text-decoration: none;
+  left: 80%;
+  margin: 5px;
+}
+.main-content #print-a-active:hover {
+  background: green;
+  color: white;
 }
 
 #add-amenities-div {
@@ -111,4 +136,9 @@
 }
 .booking_list_dropdown:hover .dropdown-content {
   display: block;
+}
+
+.hostel-owner-div {
+  background-color: #9999ff;
+  min-height: 1000px;
 }
