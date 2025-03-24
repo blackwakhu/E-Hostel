@@ -33,6 +33,8 @@ urlpatterns = [
     path('api/student/book/status/<str:admin_number>/<int:hostel_id>/', get_booking_status, name="get_booking_status"),
     path('api/student/book/status/<str:admin_number>/<int:hostel_id>/<str:book_status>/', student_book_hostel, name="student_book_hostel"),
     path('api/owner/student_bookings/<int:hostel_id>/active/', active_booking, name="active_booking"),
+    path('api/owner/student_bookings/<int:hostel_id>/active/download/', download_active_student, name='download_active_student'),
+
 
 # for the owner
     path('api/owner/update/<str:uname>/<str:column>/', owner_update, name="owner_update"),

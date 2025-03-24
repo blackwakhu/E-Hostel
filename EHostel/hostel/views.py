@@ -3,6 +3,9 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
+from django.template.loader import get_template
+from weasyprint import HTML, CSS
+from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import *
@@ -546,8 +549,49 @@ def active_booking(request, hostel_id):
         booked_people.append({
             "id": booking.id,
             "status": booking.status, 
-            "student": student
+            "student": student,
         })
     return JsonResponse({"bookings": booked_people, "vacancies": hostel.available_rooms}, safe=False)
     
+def download_active_student(request, hostel_id):
+    hostel = Hostel.objects.get(pk=hostel_id)
+    booked_people = []
+    bookings = Booking.objects.filter(hostel=hostel).filter(Q(status="Pending") | Q (status="Accept"))
+    for booking in bookings:
+        student = {
+            "admin": booking.student.admission_number,
+            "email": booking.student.email,
+            "first_name": booking.student.first_name,
+            "last_name": booking.student.last_name,
+            "contact": booking.student.phone_number,
+            "gender": booking.student.gender
+        }
+        booked_people.append({
+            "id": booking.id,
+            "status": booking.status, 
+            "student": student,
+        })
+    context = {
+        "bookings": booked_people,
+        "hostel": hostel,
+        "vacancies": hostel.available_rooms,
+        "number_of_rooms": hostel.number_rooms,
+        "landlord_name": hostel.owner.first_name+" "+hostel.owner.last_name,
+        "landlord_email": hostel.owner.email,
+    }
+    template = get_template("booking_report.html")
+    html_string = template.render(context)
+    html = HTML(string=html_string)
+    css = CSS(string='''
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    ''')
+    pdf_file = html.write_pdf(stylesheets=[css])
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="booking_report_{hostel_id}.pdf"'
+
+    return response
+
 

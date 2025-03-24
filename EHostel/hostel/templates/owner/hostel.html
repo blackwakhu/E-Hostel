@@ -94,7 +94,7 @@
                     <button type="submit">Upload</button>
                 </form>
             </div>
-            <div id="activeHostelBookings"></div>
+            <div><a href="{% url 'download_active_student' hostel.id %}">Print</a><div id="activeHostelBookings"></div></div>
             <div id="hostelBookings"></div>
         </div>
     </div>
