@@ -1,4 +1,4 @@
-import { hideSingleElements, alterAmenity } from "./mymodules.js";
+import { hideSingleElements, alterAmenity, verifyBooking } from "./mymodules.js";
 
 let hostel_id: number = Number(
   document.querySelector<HTMLSpanElement>("#hostel_id").textContent
@@ -78,28 +78,34 @@ async function displayBookings(hostelId) {
             div_status.appendChild(div_content)
 
             div_status.classList.add("booking_list_dropdown")
+          } else if (booking.status === "Accept") {
+            let btn: HTMLButtonElement = document.createElement("button")
+            btn.classList.add("end-lease-book-btn")
+            btn.innerText = "End Lease?"
+            btn.dataset.id = booking.id
+            div_status.appendChild(btn)
           }
           let tempTr = document.createElement("tr");
           const adminTd = document.createElement('td');
           adminTd.textContent = booking.student.admin;
           tempTr.appendChild(adminTd);
-        
+
           const nameTd = document.createElement('td');
           nameTd.textContent = `${booking.student.first_name} ${booking.student.last_name}`;
           tempTr.appendChild(nameTd);
-        
+
           const emailTd = document.createElement('td');
           emailTd.textContent = booking.student.email;
           tempTr.appendChild(emailTd);
-        
+
           const contactTd = document.createElement('td');
           contactTd.textContent = booking.student.contact;
           tempTr.appendChild(contactTd);
-        
+
           const statusTd = document.createElement('td');
           statusTd.textContent = booking.status;
           tempTr.appendChild(statusTd);
-        
+
           const btnTd = document.createElement('td');
           btnTd.appendChild(div_status)
           tempTr.appendChild(btnTd);
@@ -119,8 +125,6 @@ async function displayBookings(hostelId) {
     }
   }
 }
-
-
 
 add_amenities_btn.addEventListener("click", () => {
   hideSingleElements(add_amenities_btn, add_amenities_div);
@@ -252,9 +256,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   bookingDiv.addEventListener("click", function (event) {
     if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
-      alert("clicked");
-      // Access the button's data-id if needed:
-      console.log(event.target.dataset.id);
+      verifyBooking(parseInt(event.target.dataset.id), "Accept")
+      alert("The student was accepted");
+      displayBookings(hostel_id)
+    } else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
+      verifyBooking(parseInt(event.target.dataset.id), "Reject")
+      alert("The student was rejected");
+      displayBookings(hostel_id)
+    } else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
+      verifyBooking(parseInt(event.target.dataset.id), "End Lease")
+      alert("The student lease has ended");
+      displayBookings(hostel_id)
     }
   })
 });

@@ -141,3 +141,16 @@ export function alterAmenity(url) {
         }
     });
 }
+export function verifyBooking(book_id, choice) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(`/owner/hostel/book/${book_id}/${choice}/`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        }
+        catch (error) {
+            console.error("Error adding a new amenity", error);
+        }
+    });
+}

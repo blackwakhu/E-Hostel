@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideSingleElements, alterAmenity } from "./mymodules.js";
+import { hideSingleElements, alterAmenity, verifyBooking } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
@@ -72,6 +72,13 @@ function displayBookings(hostelId) {
                             div_content.appendChild(reject_btn);
                             div_status.appendChild(div_content);
                             div_status.classList.add("booking_list_dropdown");
+                        }
+                        else if (booking.status === "Accept") {
+                            let btn = document.createElement("button");
+                            btn.classList.add("end-lease-book-btn");
+                            btn.innerText = "End Lease?";
+                            btn.dataset.id = booking.id;
+                            div_status.appendChild(btn);
                         }
                         let tempTr = document.createElement("tr");
                         const adminTd = document.createElement('td');
@@ -232,9 +239,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let accept_btns = document.querySelectorAll(".accept-book-btn");
     bookingDiv.addEventListener("click", function (event) {
         if (event.target instanceof HTMLElement && event.target.classList.contains("accept-book-btn")) {
-            alert("clicked");
-            // Access the button's data-id if needed:
-            console.log(event.target.dataset.id);
+            verifyBooking(parseInt(event.target.dataset.id), "Accept");
+            alert("The student was accepted");
+            displayBookings(hostel_id);
+        }
+        else if (event.target instanceof HTMLElement && event.target.classList.contains("reject-book-btn")) {
+            verifyBooking(parseInt(event.target.dataset.id), "Reject");
+            alert("The student was rejected");
+            displayBookings(hostel_id);
+        }
+        else if (event.target instanceof HTMLElement && event.target.classList.contains("end-lease-book-btn")) {
+            verifyBooking(parseInt(event.target.dataset.id), "End Lease");
+            alert("The student was rejected");
+            displayBookings(hostel_id);
         }
     });
 });

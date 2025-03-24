@@ -258,17 +258,21 @@ def owner_hostel(request, hostel_id):
         })
 
 def verify_booking(request, book_id, choice):
-    div_status.appendChild(btn)
     book = Booking.objects.get(pk=book_id)
     if book.hostel.available_rooms > 0 and choice == "Accept":
         book.status = "Accept"
-        book.hostel.available_rooms -= 1
+        hostel = book.hostel
+        hostel.available_rooms -= 1
+        hostel.save()
     elif choice == "Reject":
         book.status = "Reject"
+    elif choice == "End Lease":
+        book.status = "End Lease"
+        hostel = book.hostel
+        hostel.available_rooms += 1
+        hostel.save()
     book.save()
     return JsonResponse({"success": True})
-    
-
 
 # API routes
 def get_bookings(request, hostel_id):
