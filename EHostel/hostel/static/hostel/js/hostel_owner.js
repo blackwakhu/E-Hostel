@@ -50,14 +50,29 @@ function displayBookings(hostelId) {
                     tableBook.appendChild(titleBook);
                     let bodyBook = document.createElement("tbody");
                     bookings.forEach((booking) => {
+                        let div_status = document.createElement("div");
+                        if (booking.status === "Pending") {
+                            let btn = document.createElement("button");
+                        }
                         let tempTr = document.createElement("tr");
-                        tempTr.innerHTML = `
-                        <td>${booking.student.admin}</td>
-                        <td>${booking.student.first_name} ${booking.student.last_name}</td>
-                        <td>${booking.student.email}</td>
-                        <td>${booking.student.contact}</td>
-                        <td>${booking.status}</td>
-                    `;
+                        const adminTd = document.createElement('td');
+                        adminTd.textContent = booking.student.admin;
+                        tempTr.appendChild(adminTd);
+                        const nameTd = document.createElement('td');
+                        nameTd.textContent = `${booking.student.first_name} ${booking.student.last_name}`;
+                        tempTr.appendChild(nameTd);
+                        const emailTd = document.createElement('td');
+                        emailTd.textContent = booking.student.email;
+                        tempTr.appendChild(emailTd);
+                        const contactTd = document.createElement('td');
+                        contactTd.textContent = booking.student.contact;
+                        tempTr.appendChild(contactTd);
+                        const statusTd = document.createElement('td');
+                        statusTd.textContent = booking.status;
+                        tempTr.appendChild(statusTd);
+                        const btnTd = document.createElement('td');
+                        btnTd.appendChild(div_status);
+                        tempTr.appendChild(btnTd);
                         bodyBook.appendChild(tempTr);
                     });
                     tableBook.appendChild(bodyBook);
