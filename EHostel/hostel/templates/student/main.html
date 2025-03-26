@@ -1,4 +1,5 @@
 {% extends './base_student.html' %} 
+
 {% load static %} 
 
 {% block header %}
@@ -10,7 +11,7 @@
   <a href="#my-account-html" class="my-account">Account</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
-{% endblock %}
+{% endblock %} 
 
 {% block content %}
 <div class="student-main-wrap">
@@ -20,6 +21,7 @@
         <h1>Home</h1>
       </div>
       <div id="hostels-html" class="hostels-html item hide-elem">
+        <h1>Hostel Lists</h1>
         <div class="hostel_page"></div>
         <div class="page-btn-div">
           <button id="prev-button" class="page-btn">&lt Prev</button>
@@ -27,12 +29,17 @@
         </div>
       </div>
       <div id="search-html" class="search-html item hide-elem">
-        <input
-          type="text"
-          id="name_query_input"
-          placeholder="Hostel name or place"
-        />
-        <button id="search_button">Search</button>
+        <h1>Search For Hostel</h1>
+        <div class="search-input-div">
+          <input
+            type="text"
+            id="name_query_input"
+            placeholder="Hostel name or place"
+          />
+          <button id="search_button">
+            <img src="{% static "admin/img/search.svg" %}" alt="search"/>
+          </button>
+        </div>
         <div class="search_results_div"></div>
       </div>
       <div id="my-hostel-html" class="my-hostel-html item hide-elem">
@@ -60,7 +67,7 @@
         </div>
       </div>
       <div id="my-account-html" class="my-account-html item hide-elem">
-        <h1>My Account</h1>
+        <h1>My Account Details</h1>
         <div class="account-div">
           <table>
             <tr>
@@ -87,8 +94,13 @@
                 </span>
               </td>
               <td>
-                <button id="stud-fname-btn">Edit</button>
-                <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+                <button id="stud-fname-btn" class="edit-btn-for-change">
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
+                </button>
+                <button class="hide-div" id="stud_fname_cancel">
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                </button>
               </td>
             </tr>
             <tr>
@@ -107,14 +119,19 @@
                 </span>
               </td>
               <td>
-                <button class="stud-lname-display" id="stud-lname-btn">
-                  Edit
+                <button
+                  class="stud-lname-display"
+                  id="stud-lname-btn"
+                  class="edit-btn-for-change"
+                >
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
                 </button>
                 <button
                   class="hide-div stud-lname-input"
                   id="stud_lname_cancel"
                 >
-                  Cancel
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
                 </button>
               </td>
             </tr>
@@ -134,14 +151,19 @@
                 </span>
               </td>
               <td>
-                <button class="stud-email-display" id="stud-email-btn">
-                  Edit
+                <button
+                  class="stud-email-display"
+                  id="stud-email-btn"
+                  class="edit-btn-for-change"
+                >
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
                 </button>
                 <button
                   class="hide-div stud-email-input"
                   id="stud_email_cancel"
                 >
-                  Cancel
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
                 </button>
               </td>
             </tr>
@@ -163,14 +185,19 @@
                 </span>
               </td>
               <td>
-                <button class="stud-contact-display" id="stud-contact-btn">
-                  Edit
+                <button
+                  class="stud-contact-display"
+                  id="stud-contact-btn"
+                  class="edit-btn-for-change"
+                >
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
                 </button>
                 <button
                   class="hide-div stud-contact-input"
                   id="stud_contact_cancel"
                 >
-                  Cancel
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
                 </button>
               </td>
             </tr>

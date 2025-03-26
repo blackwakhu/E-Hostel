@@ -26,7 +26,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 1000;
-} 
+}
 .navbar a {
   color: white;
   text-decoration: none;
@@ -162,15 +162,15 @@ body {
 }
 
 .index-card-container .index-card {
- background-color: rgba(255, 255, 255, .5);
- border-radius: 8px;
- box-shadow: 0 4px 8px rgba(0,0,0,.1);
- padding: 20px;
- width: 250px;
- text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
 }
 
-.index-card-container .index-card p{
+.index-card-container .index-card p {
   margin-bottom: 20px;
 }
 
@@ -183,7 +183,7 @@ body {
   cursor: pointer;
 }
 
-.index-card-container .index-card button:hover{
+.index-card-container .index-card button:hover {
   background-color: #0056b3;
   text-decoration: underline;
 }
@@ -196,7 +196,7 @@ body {
   border-radius: 5px;
 }
 
-.index-card-container .index-card a{
+.index-card-container .index-card a {
   text-decoration: inherit;
   color: inherit;
 }
@@ -216,7 +216,7 @@ main {
   box-sizing: border-box;
 }
 
-main .main-div{
+main .main-div {
   min-height: 1000px;
   margin: 20px;
 }
@@ -244,4 +244,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.edit-btn-for-change {
+  border: none;
 }
