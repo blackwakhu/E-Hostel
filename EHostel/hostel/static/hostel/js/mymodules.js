@@ -57,8 +57,8 @@ export function hideEditElements(btn, visibleClass, hideClass, extBtn, classStr)
     btn.classList.add(classStr);
 }
 function updateData(myurl, column, newValue) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        var _a;
         const csrfToken = (_a = document.querySelector('input[name="csrfmiddlewaretoken"]')) === null || _a === void 0 ? void 0 : _a.value;
         try {
             const response = yield fetch(myurl, {

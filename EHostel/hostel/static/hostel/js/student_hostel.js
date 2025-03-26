@@ -69,8 +69,8 @@ class HostelReviews {
         return reviewElement;
     }
 }
-function createReview(comment_1, rating_1) {
-    return __awaiter(this, arguments, void 0, function* (comment, rating, parent_id = null) {
+function createReview(comment, rating, parent_id = null) {
+    return __awaiter(this, void 0, void 0, function* () {
         const url = "/student/hostel/comment/create/"; // Adjust the URL to your API endpoint
         const reviewData = {
             student_id: admin_number,
