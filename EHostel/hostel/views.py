@@ -487,27 +487,21 @@ def delete_amenity(request, hostel_id, amenity):
 
 @csrf_exempt    
 def create_amenity(request, hostel_id):
-    hostel = Hostel.objects.get(pk=hostel_id)
+    try:
+        hostel = Hostel.objects.get(pk=hostel_id)
+    except Hostel.DoesNotExist:
+        return JsonResponse({"error": "Hostel not found"}, status=400)
     if request.method == "POST":
         try:
             data = json.loads(request.body) 
             amenity = data.get("amenity")
-            if Amenities.objects.get(amenity=amenity):
-                myamenity = Amenities.objects.get(amenity=amenity)
-                try:
-                    if HostelAmenities.objects.get(amenity=myamenity, hostel=hostel):
-                        pass
-                except HostelAmenities.DoesNotExists:
-                    HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
-            else:
-                myamenity = Amenities(amenity=amenity)
-                myamenity.save()
-                HostelAmenities.objects.create(amenity=myamenity, hostel=hostel)
+            myamenity, _ = Amenities.objects.get_or_create(amenity=amenity)
+            HostelAmenities.objects.get_or_create(amenity=myamenity, hostel=hostel)
             return JsonResponse({"success": True})
         except Hostel.DoesNotExist:
             return JsonResponse({"error": "Hostel not found"}, status=400)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+        # except Exception as e:
+        #     return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def get_booking_status(request, hostel_id, admin_number):
