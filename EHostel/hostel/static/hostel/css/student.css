@@ -86,3 +86,55 @@
 .account-div table td {
   padding: 8px;
 }
+
+caption {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  caption-side: top;
+  font-size: 1.4em;
+}
+
+.hostel-details-list {
+  font-size: 1.2em;
+  border-collapse: collapse;
+}
+
+.hostel-details-list td, .hostel-details-list th {
+  padding: 10px;
+  text-align: left;
+}
+
+.booking-status-div{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.booking-btns {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin: 10px;
+  background-color: #ddd;
+}
+
+#booking-pending-btn {
+  border-color: #198754;
+  color: #198754;
+}
+
+#booking-cancel-btn {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+#booking-pending-btn:hover {
+  background-color: #198754;
+  color: #ddd;
+}
+
+#booking-cancel-btn:hover {
+  background-color: #dc3545;
+  color: #ddd;
+}

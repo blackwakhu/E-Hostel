@@ -1,68 +1,104 @@
-{% extends './base_student.html' %}
-
-{% load static %}
-
-{% block header %}
-    <div class="nav-links" id="topNav">
-        <a href="{% url 'student_main_page' %}#home-html" class="home">Home</a>
-        <a href="{% url 'student_main_page' %}#hostels-html" class="hostels">Hostels</a>
-        <a href="{% url 'student_main_page' %}#search-html" class="search">Search</a>
-        <a href="{% url 'student_main_page' %}#my-hostel-html" class="my-hostel">My Hostel</a>
-        <a href="{% url 'student_main_page' %}#my-account-html" class="my-account">Account</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
-{% endblock %}
-
-{% block content %}
+{% extends './base_student.html' %} {% load static %} {% block header %}
+<div class="nav-links" id="topNav">
+  <a href="{% url 'student_main_page' %}#home-html" class="home">Home</a>
+  <a href="{% url 'student_main_page' %}#hostels-html" class="hostels"
+    >Hostels</a
+  >
+  <a href="{% url 'student_main_page' %}#search-html" class="search">Search</a>
+  <a href="{% url 'student_main_page' %}#my-hostel-html" class="my-hostel"
+    >My Hostel</a
+  >
+  <a href="{% url 'student_main_page' %}#my-account-html" class="my-account"
+    >Account</a
+  >
+  <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %} {% block content %}
 <div class="student-main-wrap">
-    <div class="student-html">
-        <div class="main-content">
-            <h1>{{ hostel.hostel_name }}</h1>
-
-            <p>Price: ${{ hostel.price_per_month }}/month</p>
-            <p>Location: {{ hostel.location }}</p>
-            <p>Locality: {{ hostel.locality }}</p>
-            <p>County: {{ hostel.county }}</p>
-            <p>Town: {{ hostel.town }}</p>
-            <p>Number of Rooms: {{ hostel.number_rooms }}</p>
-            <p>Room Type: {{ hostel.room_type }}</p>
-            <p>Available Rooms: {{ hostel.available_rooms }}</p>
-
-            <h2>Amenities:</h2>
-            <ul>
-                {% for amenity in amenities %}
-                    <li>{{ amenity.amenity.amenity }}</li>
-                {% empty %}
-                    <li>No amenities available.</li>
-                {% endfor %}
-            </ul>
-            
-            <div></div>
-
-            <h2>Images:</h2>
-            <div>
-                {% for image in images %}
-                    <img src="{{ image.image.url }}" alt="{{ hostel.hostel_name }}" style="max-width: 200px; margin: 5px;">
-                {% empty %}
-                    <p>No images available.</p>
-                {% endfor %}
-            </div>
-            <div class="booking-status-div">
-                <button id="booking-pending-btn">Book Hostel</button>
-                <button id="booking-cancel-btn">Cancel Booking Request</button>
-                <p id="booking-p-else">You currently have an active lease with the landlord. Call the landlord to end the lease</p>
-            </div>
-            <input type="text" id="review-comment" placeholder="Your comment">
-            <input type="number" id="review-rating" placeholder="Your rating">
-            <button id="add-review-button">Add Review</button>
-            <div id='reviews-container'></div>
-            <div id="hostel-id" data-hostel-id="{{ hostel.id }}" data-admission-number="{{ admission_number }}"></div>
-        </div>
+  <div class="student-html">
+    <div class="main-content">
+        <div>
+      <div>
+        <table class="hostel-details-list">
+            <caption> {{hostel.hostel_name}} Details</caption>
+            <tr>
+                <th>Price Per Month</th>
+                <td>Kshs. {{ hostel.price_per_month }}/month</td>
+            </tr>
+            <tr>
+                <th>Number of Available Rooms</th>
+                <td>{{hostel.available_rooms}}</td>
+            </tr>
+            <tr>
+                <th>Room Type</th>
+                <td>{{hostel.room_type}}</td>
+            </tr>
+            <tr>
+                <th>County</th>
+                <td>{{hostel.county}}</td>
+            </tr>
+            <tr>
+                <th>University campus</th>
+                <td>{{hostel.town}}</td>
+            </tr>
+            <tr>
+                <th>Town</th>
+                <td>{{hostel.locality}}</td>
+            </tr>
+            <tr>
+                <th>Location Description</th>
+                <td> {{hostel.location}}</td>
+            </tr>
+            <tr>
+                <th>Amenities</th>
+                <td>
+                    <ul>
+                        {% for amenity in amenities %}
+                        <li>{{ amenity.amenity.amenity }}</li>
+                        {% empty %}
+                        <li>No amenities available.</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </table>
     </div>
+        <div>
+        <h2>Images:</h2>
+        <div>
+          {% for image in images %}
+          <img
+            src="{{ image.image.url }}"
+            alt="{{ hostel.hostel_name }}"
+            style="width: 300px; height: auto; margin: 5px"
+          />
+          {% empty %}
+          <p>No images available.</p>
+          {% endfor %}
+        </div>
+        <div class="booking-status-div">
+          <button id="booking-pending-btn" class="booking-btns">Book Hostel</button>
+          <button id="booking-cancel-btn" class="booking-btns">Cancel Booking Request</button>
+          <p id="booking-p-else">
+            You currently have an active lease with the landlord. Call the
+            landlord to end the lease
+          </p>
+        </div>
+        <input type="text" id="review-comment" placeholder="Your comment" />
+        {% comment %} <input type="number" id="review-rating" placeholder="Your rating" /> {% endcomment %}
+        
+        <button id="add-review-button">Add Review</button>
+        <div id="reviews-container"></div>
+        <div
+          id="hostel-id"
+          data-hostel-id="{{ hostel.id }}"
+          data-admission-number="{{ admission_number }}"
+        ></div>
+      </div>
+    </div>
+  </div>
 </div>
 
+{% endblock %} {% block function %}
+<script type="module" src="{% static 'hostel/js/student_hostel.js' %}"></script>
 {% endblock %}
-
-{% block function %}
-    <script type="module" src="{% static 'hostel/js/student_hostel.js' %}"></script>
-{% endblock  %}
