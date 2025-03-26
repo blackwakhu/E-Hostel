@@ -1,4 +1,4 @@
-{% load static %}
+
 {% extends 'base.html' %}
 
 {% block body %}
@@ -6,8 +6,11 @@
     <a href="{% url 'stud_login' %}">Student</a>
     <a href="{% url 'owner_login' %}">Owner</a> {% endcomment %}
     <div class="index-card-container">
-        <div class="index-card"></div>
-        <div class="index-card"></div>
-        <div class="index-card"></div>
+        <div class="index-card">
+            <p>Are you a student in need of a hostel to rent?</p>
+        </div>
+        <div class="index-card">
+            <p>Are you a hostel Owner in search of students to rent?</p>
+        </div>
     </div>
 {% endblock %}

@@ -139,3 +139,17 @@ body {
   background-color: rgba(79, 224, 34, 0.5);
   color: blue;
 }
+
+.index-card-container {
+  display: inline-flex;
+  flex-wrap: overflow;
+}
+
+.index-card-container .index-card {
+  border: 2px solid black;
+  height: 150px;
+  width: 250px;
+  margin: 20px;
+  border-radius: 15px;
+  padding: 10px;
+}
