@@ -2,24 +2,19 @@
 
 {% load static %}
 
+{% block header %}
+    <div class="nav-links" id="topNav">
+        <a href="#home-html" class="home">Home</a>
+        <a href="#hostels-html" class="hostels">My Hostels</a>
+        <a href="#new-hostel-html" class="new-hostel">New Hostel</a>
+        <a href="#my-account-html" class="my-account">Account</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="owner-main-wrap">
         <div class="owner-html">
-            <nav class="navbar">
-                <div class="logo">MyBrand</div>
-                <div class="menu-toggle" onclick="toggleMenu()">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div class="nav-links" id="topNav">
-                    <a href="#home-html" class="home">Home</a>
-                    <a href="#hostels-html" class="hostels">My Hostels</a>
-                    <a href="#new-hostel-html" class="new-hostel">New Hostel</a>
-                    <a href="#my-account-html" class="my-account">Account</a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                </div>
-            </nav>
             <div class="main-content">
                 <div id="home-html" class="home-html item">
                     <h1>Home</h1>

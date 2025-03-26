@@ -11,12 +11,23 @@
         {% block style %}{% endblock %}
     </head>
     <body>
-        <div>
-            {% block body %}{% endblock %}
-        </div>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="{% static "images/e-hostel-logo.png" %}" alt="E-Hostel" id="e-hostel-logo">
+                </div>
+                {% block header %}{% endblock %}</header>
+            </nav>
+        <main>
+            <div class="main-div">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
         <footer>
             <div>
                 {% comment %} <p>Copyright &copy 2025. Author Derrick Shibero Wakhu</p> {% endcomment %}
+                <p>&copy; 2025 E-Hostel. All rights reserved.</p>
+                <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
             </div>
         </footer>
         <script src="{% static 'vendor/jquery.js' %}"></script>
