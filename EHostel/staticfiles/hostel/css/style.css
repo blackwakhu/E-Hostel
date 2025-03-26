@@ -9,6 +9,9 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: linear-gradient(135deg, #e0e0e0, #f8f8f8);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   /*body*/
 }
 
@@ -19,6 +22,7 @@ body {
   background-color: #333333;
   padding: 15px 20px;
   position: fixed;
+  height: 80px;
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -86,9 +90,6 @@ body {
     margin: 0 !important;
   }
 }
-.main-content {
-  margin-top: 70px;
-}
 
 .hide-elem {
   display: none;
@@ -145,10 +146,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 70vh;
   margin: 0;
-  background-color: #f4f4f4;
-  background-image: url("{% static 'images/Hostel.jpeg' %}");
+  background-size: auto;
 }
 
 .index-card-container {
@@ -157,19 +157,20 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  max-width: 800px;
+  width: 100%;
+  padding: 20px;
 }
 
 .index-card-container .index-card {
- background-color: white;
- border-radius: 8px;
- box-shadow: 0 4px 8px rgba(0,0,0,.1);
- padding: 20px;
- width: 250px;
- text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
 }
 
-.index-card-container .index-card p{
+.index-card-container .index-card p {
   margin-bottom: 20px;
 }
 
@@ -182,7 +183,7 @@ body {
   cursor: pointer;
 }
 
-.index-card-container .index-card button:hover{
+.index-card-container .index-card button:hover {
   background-color: #0056b3;
   text-decoration: underline;
 }
@@ -190,16 +191,97 @@ body {
 .index-card-container .index-card img {
   width: 200px;
   height: 150px;
-  object-fit: cover;
+  object-fit: contain;
   margin-bottom: 10px;
   border-radius: 5px;
 }
 
-.index-card-container .index-card a{
+.index-card-container .index-card a {
   text-decoration: inherit;
   color: inherit;
 }
 
 .index-card-container .index-card:hover {
   transform: scale(1.35);
+}
+
+.card:hover {
+  transform: scale(1.09);
+}
+
+main {
+  flex-grow: 1;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+}
+
+main .main-div {
+  min-height: 1000px;
+  margin: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 100;
+}
+
+#e-hostel-logo {
+  height: 80px;
+  left: 0;
+}
+.info {
+  width: 50%;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-for-change {
+  border: none;
+  background-color: inherit;
+}
+
+.btn-for-change img {
+  width: 35px;
+  height: 35px;
+}
+
+.input-change-form{
+  display: flex;
+  align-items:center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.input-change-form input {
+  padding: 8px;
+  border: none;
+  border-right: 1px solid #ccc;
+  flex-grow: 1;
+  box-sizing: border-box;
+  font-size: 1.2em;
+}
+
+.input-change-form button {
+  background-color: #198754;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.input-change-form button img {
+  width: 25px;
+  height: 25px;
 }

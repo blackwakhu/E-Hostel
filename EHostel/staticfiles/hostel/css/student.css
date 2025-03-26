@@ -1,19 +1,196 @@
-/*.hostel-card-link { /* Style the link, not just the card */
-  /*  display: inline-block; /* Makes the link behave like a block element */
-    /* width: 250px; /*Match the card width */
-    /*margin: 10px; /* Match the card margin */
-    /*text-decoration: none; /* Remove underline */
-    /*color: inherit; /* Inherit text color from parent */
-  /*}
-  
-  .hostel-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .hostel-card img {
-    max-width: 100%;
-    height: auto;
-  }*/
-  
+.page-btn-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.page-btn {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.page-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.page-btn:disabled {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.page-btn:disabled:hover {
+  background-color: #ddd;
+}
+
+#search_button {
+  border: none;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+#search_button img {
+  height: 20px;
+  width: 20px;
+}
+
+.search-input-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: fit-content;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#name_query_input {
+  padding: 8px;
+  font-size: 1.2em;
+  background-color: inherit;
+  border: none;
+  border-right: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+.search-input-div:hover,
+.search-input-div:focus {
+  box-shadow: 0 0 5px rgba(128, 128, 128, 0.5);
+}
+
+#name_query_input:hover,
+#name_query_input:focus {
+  border: none;
+  border-bottom: black 2px solid;
+  outline: none;
+}
+
+.account-div {
+  font-size: 1.2em;
+}
+
+.account-div table th {
+  text-align: left;
+}
+
+.account-div table th,
+.account-div table td {
+  padding: 8px;
+}
+
+caption {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  caption-side: top;
+  font-size: 1.4em;
+}
+
+.hostel-details-list {
+  font-size: 1.2em;
+  border-collapse: collapse;
+}
+
+.hostel-details-list td, .hostel-details-list th {
+  padding: 10px;
+  text-align: left;
+}
+
+.booking-status-div{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.booking-btns {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin: 10px;
+  background-color: #ddd;
+}
+
+#booking-pending-btn {
+  border-color: #198754;
+  color: #198754;
+}
+
+#booking-cancel-btn {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+#booking-pending-btn:hover {
+  background-color: #198754;
+  color: #ddd;
+}
+
+#booking-cancel-btn:hover {
+  background-color: #dc3545;
+  color: #ddd;
+}
+
+.rating {
+  display: inline-block;
+  unicode-bidi: bidi-isolate;
+  color: #c5c5c5;
+  font-size: 0;
+  height: 20px;
+  line-height: 20px;
+  direction: rtl;
+}
+
+.rating >input{
+  display: none;
+}
+
+.rating > label {
+  display: inline-block;
+  position: relative;
+  width: 1em;
+  /* color: #ffd900; */
+  cursor: pointer;
+}
+
+rating > label:before {
+  position: relative;
+  content: "\2605"; /* Unicode star character */
+  display: block;
+  font-size: 1em;
+  color: #c5c5c5; /* Default star color */
+}
+
+rating > label:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1em;
+  text-align: center;
+  content: "\2605";
+  display: block;
+  font-size: 1em;
+  color: #ffd900;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+rating > input:checked ~ label:after {
+  opacity: 1;
+}
+
+rating:hover > label:before {
+  color: #ffd900;
+}
+
+rating > label:hover ~ label:before {
+  color: #ffd900;
+}

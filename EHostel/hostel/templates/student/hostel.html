@@ -84,10 +84,25 @@
             landlord to end the lease
           </p>
         </div>
-        <input type="text" id="review-comment" placeholder="Your comment" />
-        {% comment %} <input type="number" id="review-rating" placeholder="Your rating" /> {% endcomment %}
-        
-        <button id="add-review-button">Add Review</button>
+        <textarea id="review-comment" placeholder="Review"></textarea>
+        <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5">
+                <img src="{% static "images/unselected_star.png" %}" alt="5"/>
+            </label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4">
+                <img src="{% static "images/unselected_star.png" %}" alt="4"/>
+            </label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3">
+                <img src="{% static "images/unselected_star.png" %}" alt="3"/>
+            </label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2">
+                <img src="{% static "images/unselected_star.png" %}" alt="2"/>
+            </label>
+            <input type="radio" id="star1" name="rating" value="1" checked /><label for="star1">
+                <img src="{% static "images/unselected_star.png" %}" alt="1"/>
+            </label>
+          </div>
+        <button id="add-review-button">Submit</button>
         <div id="reviews-container"></div>
         <div
           id="hostel-id"

@@ -138,3 +138,83 @@ caption {
   background-color: #dc3545;
   color: #ddd;
 }
+
+.rating input {
+  display: none;
+}
+
+.rating {
+  display: inline-block;
+  direction: rtl;
+}
+
+.rating img {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.2s;
+}
+
+.rating label {
+  float: right;
+  cursor: pointer;
+}
+
+.rating input:checked ~ label img, .rating label:hover img {
+  transform: scale(1.2);
+}
+
+.rating input:checked ~ label img, .rating label:hover ~ label img, .rating label:hover img {
+  content: url("/static/images/selected_star.png");
+}
+
+#review-comment {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  border: solid 2px #ddd;
+}
+
+#add-review-button {
+  color: #198754;
+  background-color: #eee;
+  border: solid 2px #198754;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border-radius: 5px;
+}
+
+#add-review-button:hover {
+  color: #ccc;
+  background-color: #198754;
+}
+
+#booking-p-else {
+  font-size: 1.2em;
+}
+
+.card-review {
+  font-size: 1.2em;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-review h3 {
+  font-size: 1.3em;
+}
+
+.card-review img {
+  width: 25px;
+  height: 25px;
+}
+
+.card-review .card-rating {
+  text-align: right;
+}
+
+.card-review p {
+  display: flex;
+  flex-wrap: wrap;
+}
