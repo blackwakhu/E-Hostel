@@ -205,6 +205,10 @@ body {
   transform: scale(1.35);
 }
 
+.card:hover {
+  transform: scale(1.09);
+}
+
 main {
   flex-grow: 1;
   padding-top: 80px;
@@ -234,4 +238,10 @@ footer {
 }
 .info {
   width: 50%;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

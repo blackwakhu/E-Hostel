@@ -1,19 +1,32 @@
-/*.hostel-card-link { /* Style the link, not just the card */
-  /*  display: inline-block; /* Makes the link behave like a block element */
-    /* width: 250px; /*Match the card width */
-    /*margin: 10px; /* Match the card margin */
-    /*text-decoration: none; /* Remove underline */
-    /*color: inherit; /* Inherit text color from parent */
-  /*}
-  
-  .hostel-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .hostel-card img {
-    max-width: 100%;
-    height: auto;
-  }*/
-  
+.page-btn-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.page-btn {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.page-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.page-btn:disabled {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.page-btn:disabled:hover {
+  background-color: #ddd;
+}
+

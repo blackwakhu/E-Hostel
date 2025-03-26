@@ -1,145 +1,193 @@
-{% extends './base_student.html' %}
-
-{% load static %}
+{% extends './base_student.html' %} 
+{% load static %} 
 
 {% block header %}
-
-    <div class="nav-links" id="topNav">
-        <a href="#home-html" class="home">Home</a>
-        <a href="#hostels-html" class="hostels">Hostels</a>
-        <a href="#search-html" class="search">Search</a>
-        <a href="#my-hostel-html" class="my-hostel">My Hostel</a>
-        <a href="#my-account-html" class="my-account">Account</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
+<div class="nav-links" id="topNav">
+  <a href="#home-html" class="home">Home</a>
+  <a href="#hostels-html" class="hostels">Hostels</a>
+  <a href="#search-html" class="search">Search</a>
+  <a href="#my-hostel-html" class="my-hostel">My Hostel</a>
+  <a href="#my-account-html" class="my-account">Account</a>
+  <a href="{% url 'logout' %}">Logout</a>
+</div>
 {% endblock %}
 
 {% block content %}
-    <div class="student-main-wrap">
-        <div class="student-html">
-            <div class="main-content">
-                <div id="home-html" class="home-html item">
-                    <h1>Home</h1>
-                </div>
-                <div id="hostels-html" class="hostels-html item hide-elem">
-                    <div class="hostel_page">
-                    </div>
-                    <button id="prev-button">Prev</button><button id="next-button">Next</button>
-                </div>
-                <div id="search-html" class="search-html item hide-elem">
-                    <input type="text" id="name_query_input" placeholder="Hostel name or place"> <button id="search_button">Search</button>
-                    <div class="search_results_div"></div>
-                </div>
-                <div id="my-hostel-html" class="my-hostel-html item hide-elem">
-                    <h1>My Hostel</h1>
-                    <div>
-                        {% for book in booked_hostels  %}
-                            <div class="card-container">
-                                <div class="card">
-                                    <img src="{{book.image}}" alt="{{book.hostel.hostel_name}}"/>
-                                    <div class="card-content">
-                                        <h3>{{book.hostel.hostel_name}}</h3>
-                                        <p>Price: ksh. {{book.hostel.price_per_month}}</p>
-                                        <p>Locality: {{book.hostel.locality}}</p>
-                                        <a href="{% url 'student_hostel' book.hostel.id %}" class="btn-link">See More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% empty %}
-                            <p>You currently have no hostels booked</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div id="my-account-html" class="my-account-html item hide-elem">
-                    <h1>My Account</h1> 
-                    <div class="account-div">
-                        <table>
-                            <tr>
-                                <th>Admission Number</th>
-                                <td><span id="stud-admin">{{ student.admission_number }}</span></td>
-                            </tr>
-                            <tr>
-                                <th>First Name</th>
-                                <td>
-                                    <span class="stud-fname-display">{{ student.first_name }} </span>
-                                    <span class="hide-div stud-fname-input">
-                                        <form>
-                                            <input type="text" value="{{ student.first_name }}" id="stud-fname-inp"/>
-                                            <input type="submit" value="save" id="stud-fname-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button id="stud-fname-btn">Edit</button>
-                                    <button class="hide-div" id="stud_fname_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Last Name</th>
-                                <td>
-                                    <span class="stud-lname-display">{{ student.last_name }} </span>
-                                    <span class="hide-div stud-lname-input">
-                                        <form>
-                                            <input type="text" value="{{ student.last_name }}" id="stud-lname-inp"/>
-                                            <input type="submit" value="save" id="stud-lname-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="stud-lname-display" id="stud-lname-btn">Edit</button>
-                                    <button class="hide-div stud-lname-input" id="stud_lname_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <span class="stud-email-display">{{ student.email }} </span>
-                                    <span class="hide-div stud-email-input">
-                                        <form>
-                                            <input type="email" value="{{ student.email }}" id="stud-email-inp"/>
-                                            <input type="submit" value="save" id="stud-email-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="stud-email-display" id="stud-email-btn">Edit</button>
-                                    <button class="hide-div stud-email-input" id="stud_email_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Phone Number</th>
-                                <td>
-                                    <span class="stud-contact-display">{{ student.phone_number }} </span>
-                                    <span class="hide-div stud-contact-input">
-                                        <form>
-                                            <input type="text" value="{{ student.phone_number }}" id="stud-contact-inp"/>
-                                            <input type="submit" value="save" id="stud-contact-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="stud-contact-display" id="stud-contact-btn">Edit</button>
-                                    <button class="hide-div stud-contact-input" id="stud_contact_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Gender</th>
-                                <td> 
-                                    {% if student.gender == 'M' %}
-                                        Male
-                                    {% else %}
-                                        Female
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<div class="student-main-wrap">
+  <div class="student-html">
+    <div class="main-content">
+      <div id="home-html" class="home-html item">
+        <h1>Home</h1>
+      </div>
+      <div id="hostels-html" class="hostels-html item hide-elem">
+        <div class="hostel_page"></div>
+        <div class="page-btn-div">
+          <button id="prev-button" class="page-btn">&lt Prev</button>
+          <button class="page-btn" id="next-button">Next &gt</button>
         </div>
+      </div>
+      <div id="search-html" class="search-html item hide-elem">
+        <input
+          type="text"
+          id="name_query_input"
+          placeholder="Hostel name or place"
+        />
+        <button id="search_button">Search</button>
+        <div class="search_results_div"></div>
+      </div>
+      <div id="my-hostel-html" class="my-hostel-html item hide-elem">
+        <h1>My Hostel</h1>
+        <div>
+          {% for book in booked_hostels %}
+          <div class="card-container">
+            <div class="card">
+              <img src="{{book.image}}" alt="{{book.hostel.hostel_name}}" />
+              <div class="card-content">
+                <h3>{{book.hostel.hostel_name}}</h3>
+                <p>Price: ksh. {{book.hostel.price_per_month}}</p>
+                <p>Locality: {{book.hostel.locality}}</p>
+                <a
+                  href="{% url 'student_hostel' book.hostel.id %}"
+                  class="btn-link"
+                  >See More</a
+                >
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>You currently have no hostels booked</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="my-account-html" class="my-account-html item hide-elem">
+        <h1>My Account</h1>
+        <div class="account-div">
+          <table>
+            <tr>
+              <th>Admission Number</th>
+              <td>
+                <span id="stud-admin">{{ student.admission_number }}</span>
+              </td>
+            </tr>
+            <tr>
+              <th>First Name</th>
+              <td>
+                <span class="stud-fname-display"
+                  >{{ student.first_name }}
+                </span>
+                <span class="hide-div stud-fname-input">
+                  <form>
+                    <input
+                      type="text"
+                      value="{{ student.first_name }}"
+                      id="stud-fname-inp"
+                    />
+                    <input type="submit" value="save" id="stud-fname-sub" />
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button id="stud-fname-btn">Edit</button>
+                <button class="hide-div" id="stud_fname_cancel">Cancel</button>
+              </td>
+            </tr>
+            <tr>
+              <th>Last Name</th>
+              <td>
+                <span class="stud-lname-display">{{ student.last_name }} </span>
+                <span class="hide-div stud-lname-input">
+                  <form>
+                    <input
+                      type="text"
+                      value="{{ student.last_name }}"
+                      id="stud-lname-inp"
+                    />
+                    <input type="submit" value="save" id="stud-lname-sub" />
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button class="stud-lname-display" id="stud-lname-btn">
+                  Edit
+                </button>
+                <button
+                  class="hide-div stud-lname-input"
+                  id="stud_lname_cancel"
+                >
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>
+                <span class="stud-email-display">{{ student.email }} </span>
+                <span class="hide-div stud-email-input">
+                  <form>
+                    <input
+                      type="email"
+                      value="{{ student.email }}"
+                      id="stud-email-inp"
+                    />
+                    <input type="submit" value="save" id="stud-email-sub" />
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button class="stud-email-display" id="stud-email-btn">
+                  Edit
+                </button>
+                <button
+                  class="hide-div stud-email-input"
+                  id="stud_email_cancel"
+                >
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Phone Number</th>
+              <td>
+                <span class="stud-contact-display"
+                  >{{ student.phone_number }}
+                </span>
+                <span class="hide-div stud-contact-input">
+                  <form>
+                    <input
+                      type="text"
+                      value="{{ student.phone_number }}"
+                      id="stud-contact-inp"
+                    />
+                    <input type="submit" value="save" id="stud-contact-sub" />
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button class="stud-contact-display" id="stud-contact-btn">
+                  Edit
+                </button>
+                <button
+                  class="hide-div stud-contact-input"
+                  id="stud_contact_cancel"
+                >
+                  Cancel
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td>
+                {% if student.gender == 'M' %} Male {% else %} Female {% endif%}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
-{% endblock %}
+  </div>
+</div>
+{% endblock %} 
 
 {% block function %}
-    <script type="module" src="{% static 'hostel/js/student.js' %}"></script>
-{% endblock  %}
+<script type="module" src="{% static 'hostel/js/student.js' %}"></script>
+{% endblock %}
