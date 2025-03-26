@@ -54,65 +54,25 @@
   display: block;
 }
 
-.main-content .inner-menu { 
-  position: absolute;  
-  left: 0px;
-  width: 150px;
-  background-color: rgba(153, 255, 255, .4);
+.inner-menu {
+  border-right: solid 2px #ddd; 
   height: 1000px;
-  
-}
-
-.main-content .inner-menu li {
-  margin: 5px;
-}
-
-.main-content .inner-menu li:hover {
-  color: white;
-  background: gray;
-  border: solid greenyellow 2px;
-  border-radius: 3px;
-}
-
-.main-content .main-content-book {
   position: absolute;
-  left: 150px;
-
+  left: 0;
+  margin-top: 200;
+  font-size: 1.2em;
 }
 
-
-.main-content .table-list-student {
-  align-self: center;
+.inner-menu li {
+  list-style: none;
+  border: #ccc 2px solid;
+  padding: 8px 12px;
 }
 
-.main-content .table-list-student table {
-  border-collapse: collapse;
-  margin: 5px;
-}
-
-.main-content #print-a-active {
-  border: solid 2px black;
-  padding: 2px;
-  border-radius: 3px;
-  color: black;
-  text-decoration: none;
-  left: 80%;
-  margin: 5px;
-}
-
-.main-content #print-a-active:hover {
-  color: white;
-  background: green;
-}
-
-.main-content .table-list-student table td, .main-content .table-list-student table th {
-  border: solid black 3px;
-  padding: 4px;
-}
-
-.hostel-owner-div {
-  background-color: #9999ff;
-  min-height: 1000px;
+.inner-menu li:hover {
+  transform: scale(1.05);
+  color: #198754;
+  border-color: #198754;
 }
 
 #new-hostel-html {
@@ -127,15 +87,24 @@
   border-bottom: 2px #ddd solid;
   background-color: #f9f9f9;
   font-size: 1.2em;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  margin: 5px;
 }
 
-#hostelForm label {
+.submit-btn {
+  color: #198754;
+  border: 2px #198754 solid;
+  background-color: #ddd;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border-radius: 5px;
+}
+
+label {
   font-size: 1.2em;
 }
 
-#hostelForm .button {
-  background-color: #ccc;
-  color: #198754;
+.account-div th, .account-div td {
+  padding: 8px 12px;
+  font-size: 1.2em;
 }
+
