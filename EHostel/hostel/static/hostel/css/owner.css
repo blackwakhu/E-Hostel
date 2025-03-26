@@ -6,45 +6,6 @@
   }
 }
 
-.main-content .new-hostel-html {
-  margin-top: 90px;
-  width: 70%;
-  margin-left: 15%;
-  padding: 20px;
-}
-
-.main-content .new-hostel-html .label {
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-content .new-hostel-html .input,
-.main-content .new-hostel-html .label {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 5px;
-  text-align: center;
-}
-
-.main-content .new-hostel-html .input,
-.main-content .new-hostel-html .button {
-  border-radius: 20px;
-  padding: 10px;
-  font-size: 15px;
-}
-
-.main-content .new-hostel-html .group {
-  margin-bottom: 10px;
-}
-
-.main-content .new-hostel-html .button {
-  background: greenyellow;
-  width: 50%;
-  margin-left: 25%;
-}
-
 #add-amenities-div,
 #add-amenities-div #new-amenities-div {
   display: none;
@@ -152,4 +113,29 @@
 .hostel-owner-div {
   background-color: #9999ff;
   min-height: 1000px;
+}
+
+#new-hostel-html {
+  width: 100%;
+}
+
+#hotelForm .input {
+  width: 60%;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  border-bottom: 2px #ddd solid;
+  background-color: #f9f9f9;
+  font-size: 1.2em;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#hostelForm label {
+  font-size: 1.2em;
+}
+
+#hostelForm .button {
+  background-color: #ccc;
+  color: #198754;
 }

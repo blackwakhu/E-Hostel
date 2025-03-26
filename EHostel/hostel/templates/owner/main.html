@@ -1,8 +1,4 @@
-{% extends './base_owner.html' %} 
-
-{% load static %}
-
-{% block header %}
+{% extends './base_owner.html' %} {% load static %} {% block header %}
 <div class="nav-links" id="topNav">
   <a href="#home-html" class="home">Home</a>
   <a href="#hostels-html" class="hostels">My Hostels</a>
@@ -10,9 +6,7 @@
   <a href="#my-account-html" class="my-account">Account</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="owner-main-wrap">
   <div class="owner-html">
     <div class="main-content">
@@ -20,83 +14,87 @@
         <h1>Home</h1>
       </div>
       <div id="new-hostel-html" class="new-hostel-html item hide-elem">
+        <h1>New Hostel</h1>
         <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
           {% csrf_token %}
-          <div class="group">
-            <label class="label" for="hname">Name</label>
-            <input type="text" id="hname" name="hname" required class="input" />
-          </div>
-          <div class="group">
-            <label class="label" for="hprice">Price</label>
-            <input
-              type="number"
-              min="500"
-              value="1000"
-              id="hprice"
-              name="hprice"
-              required
-              class="input"
-            />
-          </div>
-          <div class="group">
-            <label class="label" for="hrooms">Number of Rooms</label>
-            <input
-              type="number"
-              min="1"
-              value="10"
-              id="hrooms"
-              name="hrooms"
-              required
-              class="input"
-            />
-          </div>
-          <div class="group">
-            <label class="label" for="hroom_type">Room Type</label>
-            <input
-              type="text"
-              id="hroom_type"
-              name="hroom_type"
-              required
-              class="input"
-            />
-          </div>
-          <div class="group">
-            <label class="label" for="hlocation_description"
-              >Location Description</label
-            >
-            <textarea
-              id="hlocation_description"
-              name="hlocation_description"
-              class="input"
-            ></textarea>
-          </div>
-          <div class="group">
-            <label class="label" for="hcounty">County</label>
-            <input
-              type="text"
-              id="hcounty"
-              name="hcounty"
-              required
-              class="input"
-            />
-          </div>
-          <div class="group">
-            <label class="label" for="htown">Town</label>
-            <input type="text" id="htown" name="htown" required class="input" />
-          </div>
-          <div class="group">
-            <label class="label" for="hlocality">Locality</label>
-            <input
-              type="text"
-              id="hlocality"
-              name="hlocality"
-              required
-              class="input"
-            />
-          </div>
-          <div class="group">
-            <input type="submit" value="Add Hotel" class="button" />
-          </div>
+          <label class="label" for="hname">Hostel Name</label><br />
+          <input
+            type="text"
+            id="hname"
+            name="hname"
+            placeholder="Hostel Name example Kigali Hostels"
+            required
+            class="input"
+          /><br />
+          <label class="label" for="hprice">Price</label><br />
+          <input
+            type="number"
+            min="500"
+            placeholder="Enter the rent paid per month e.g 1000"
+            id="hprice"
+            name="hprice"
+            required
+            class="input"
+          /><br />
+          <label class="label" for="hrooms">Number of Rooms</label><br />
+          <input
+            type="number"
+            min="1"
+            placeholder="Enter the number of hostels e.g. 10"
+            id="hrooms"
+            name="hrooms"
+            required
+            class="input"
+          /><br />
+          <label class="label" for="hroom_type">Room Type</label><br />
+          <select id="hroom_type" name="hroom_type" required class="input">
+            <option value="" disabled selected>Select Room Type</option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Triple">Triple</option>
+            <option value="Quad">Quad</option>
+            <option value="Bed Seater">Bed Seater</option>
+            <option value="Self Contained">Self Contained</option></select
+          ><br />
+
+          <label class="label" for="hlocation_description"
+            >Location Description</label
+          ><br />
+          <textarea
+            placeholder="Overall description of where the hostel is at e.g. opposite Shell Petrol Station"
+            id="hlocation_description"
+            name="hlocation_description"
+            class="input"
+          ></textarea
+          ><br />
+          <label class="label" for="hcounty">County</label><br />
+          <input
+            type="text"
+            id="hcounty"
+            name="hcounty"
+            required
+            class="input"
+            placeholder="The county the hostel is located at e.g. Nairobi"
+          /><br />
+          <label class="label" for="htown">Campus</label><br />
+          <input
+            type="text"
+            id="htown"
+            name="htown"
+            required
+            placeholder="The Campus it is located near e.g. Kenyatta University Main Campus"
+            class="input"
+          /><br />
+          <label class="label" for="hlocality">Locality</label><br />
+          <input
+            type="text"
+            id="hlocality"
+            name="hlocality"
+            required
+            placeholder="Where it is located e.g. Kahawa Sukari"
+            class="input"
+          /><br />
+          <input type="submit" value="Add Hotel" class="button" />
         </form>
 
         <div id="overlay"></div>
@@ -256,8 +254,6 @@
     </div>
   </div>
 </div>
-{% endblock %} 
-
-{% block script %}
+{% endblock %} {% block script %}
 <script type="module" src="{% static 'hostel/js/owner.js' %}"></script>
 {% endblock %}
