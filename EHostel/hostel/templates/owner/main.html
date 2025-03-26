@@ -1,166 +1,263 @@
-{% extends './base_owner.html' %}
+{% extends './base_owner.html' %} 
 
 {% load static %}
 
 {% block header %}
-    <div class="nav-links" id="topNav">
-        <a href="#home-html" class="home">Home</a>
-        <a href="#hostels-html" class="hostels">My Hostels</a>
-        <a href="#new-hostel-html" class="new-hostel">New Hostel</a>
-        <a href="#my-account-html" class="my-account">Account</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
-{% endblock %}
+<div class="nav-links" id="topNav">
+  <a href="#home-html" class="home">Home</a>
+  <a href="#hostels-html" class="hostels">My Hostels</a>
+  <a href="#new-hostel-html" class="new-hostel">New Hostel</a>
+  <a href="#my-account-html" class="my-account">Account</a>
+  <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %} 
 
 {% block content %}
-    <div class="owner-main-wrap">
-        <div class="owner-html">
-            <div class="main-content">
-                <div id="home-html" class="home-html item">
-                    <h1>Home</h1>
-                </div>
-                <div id="new-hostel-html" class="new-hostel-html item hide-elem">
-                     <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
-                        {% csrf_token %}
-                        <div class="group">
-                            <label class="label" for="hname">Name</label>
-                            <input type="text" id="hname" name="hname" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="hprice">Price</label>
-                            <input type="number" min="500" value="1000" id="hprice" name="hprice" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="hrooms">Number of Rooms</label>
-                            <input type="number" min="1" value="10" id="hrooms" name="hrooms" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="hroom_type">Room Type</label>
-                            <input type="text" id="hroom_type" name="hroom_type" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="hlocation_description">Location Description</label>
-                            <textarea id="hlocation_description" name="hlocation_description" class="input"></textarea>
-                            </div>
-                        <div class="group">
-                            <label class="label" for="hcounty">County</label>
-                            <input type="text" id="hcounty" name="hcounty" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="htown">Town</label>
-                            <input type="text" id="htown" name="htown" required class="input">
-                        </div>
-                        <div class="group">
-                            <label class="label" for="hlocality">Locality</label>
-                            <input type="text" id="hlocality" name="hlocality" required class="input">
-                        </div>
-                        <div class="group">
-                            <input type="submit" value="Add Hotel" class="button">
-                        </div>
-                    </form> 
+<div class="owner-main-wrap">
+  <div class="owner-html">
+    <div class="main-content">
+      <div id="home-html" class="home-html item">
+        <h1>Home</h1>
+      </div>
+      <div id="new-hostel-html" class="new-hostel-html item hide-elem">
+        <form id="hotelForm" action="{% url 'add_hostel' %}" method="post">
+          {% csrf_token %}
+          <div class="group">
+            <label class="label" for="hname">Name</label>
+            <input type="text" id="hname" name="hname" required class="input" />
+          </div>
+          <div class="group">
+            <label class="label" for="hprice">Price</label>
+            <input
+              type="number"
+              min="500"
+              value="1000"
+              id="hprice"
+              name="hprice"
+              required
+              class="input"
+            />
+          </div>
+          <div class="group">
+            <label class="label" for="hrooms">Number of Rooms</label>
+            <input
+              type="number"
+              min="1"
+              value="10"
+              id="hrooms"
+              name="hrooms"
+              required
+              class="input"
+            />
+          </div>
+          <div class="group">
+            <label class="label" for="hroom_type">Room Type</label>
+            <input
+              type="text"
+              id="hroom_type"
+              name="hroom_type"
+              required
+              class="input"
+            />
+          </div>
+          <div class="group">
+            <label class="label" for="hlocation_description"
+              >Location Description</label
+            >
+            <textarea
+              id="hlocation_description"
+              name="hlocation_description"
+              class="input"
+            ></textarea>
+          </div>
+          <div class="group">
+            <label class="label" for="hcounty">County</label>
+            <input
+              type="text"
+              id="hcounty"
+              name="hcounty"
+              required
+              class="input"
+            />
+          </div>
+          <div class="group">
+            <label class="label" for="htown">Town</label>
+            <input type="text" id="htown" name="htown" required class="input" />
+          </div>
+          <div class="group">
+            <label class="label" for="hlocality">Locality</label>
+            <input
+              type="text"
+              id="hlocality"
+              name="hlocality"
+              required
+              class="input"
+            />
+          </div>
+          <div class="group">
+            <input type="submit" value="Add Hotel" class="button" />
+          </div>
+        </form>
 
-                    <div id="overlay"></div> 
-                </div>
+        <div id="overlay"></div>
+      </div>
 
-                <div id="hostels-html" class="hostels-html item hide-elem">
-                    <div>
-                        {% for hostel in hostels  %}
-                            <div class="card-container">
-                                <div class="card">
-                                    <img src="{{hostel.image}}" alt="{{hostel.hostel.hostel_name}}"/>
-                                    <div class="card-content">
-                                        <h3>{{hostel.hostel.hostel_name}}</h3>
-                                        <p>Price: ksh. {{hostel.hostel.price_per_month}}</p>
-                                        <p>Locality: {{hostel.hostel.locality}}</p>
-                                        <a href="{% url 'owner_hostel' hostel.hostel.id %}" class="btn-link">See More</a>
-                                    </div>
-                                </div>
-                            </div> 
-                        {% empty %}
-                            <p>You currently have no hostels booked</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div id="my-account-html" class="my-account-html item hide-elem">
-                    <div class="account-div">
-                        <h1>Account</h1>
-                        <table>
-                            <tr>
-                                <th>Username</th>
-                                <td><span id="owner-uname">{{ owner.username }}</span></td>
-                            </tr>
-                            <tr>
-                                <th>First Name</th>
-                                <td>
-                                    <span class="owner-fname-display">{{ owner.first_name }} </span>
-                                    <span class="hide-div owner-fname-input">
-                                        <form>
-                                            <input type="text" value="{{ owner.first_name }}" id="owner-fname-inp"/>
-                                            <input type="submit" value="save" id="owner-fname-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button id="owner-fname-btn">Edit</button>
-                                    <button class="hide-div" id="owner_fname_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Last Name</th>
-                                <td>
-                                    <span class="owner-lname-display">{{ owner.last_name }} </span>
-                                    <span class="hide-div owner-lname-input">
-                                        <form>
-                                            <input type="text" value="{{ owner.last_name }}" id="owner-lname-inp"/>
-                                            <input type="submit" value="save" id="owner-lname-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button id="owner-lname-btn">Edit</button>
-                                    <button class="hide-div" id="owner_lname_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>
-                                    <span class="owner-email-display">{{ owner.email }} </span>
-                                    <span class="hide-div owner-email-input">
-                                        <form>
-                                            <input type="text" value="{{ owner.email }}" id="owner-email-inp"/>
-                                            <input type="submit" value="save" id="owner-email-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button id="owner-email-btn">Edit</button>
-                                    <button class="hide-div" id="owner_email_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Phone Number</th>
-                                <td>
-                                    <span class="owner-contact-display">{{ owner.phone_number }} </span>
-                                    <span class="hide-div owner-contact-input">
-                                        <form>
-                                            <input type="text" value="{{ owner.phone_number }}" id="owner-contact-inp"/>
-                                            <input type="submit" value="save" id="owner-contact-sub"/>
-                                        </form>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button id="owner-contact-btn">Edit</button>
-                                    <button class="hide-div" id="owner_contact_cancel">Cancel</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+      <div id="hostels-html" class="hostels-html item hide-elem">
+        <div>
+          {% for hostel in hostels %}
+          <div class="card-container">
+            <div class="card">
+              <img src="{{hostel.image}}" alt="{{hostel.hostel.hostel_name}}" />
+              <div class="card-content">
+                <h3>{{hostel.hostel.hostel_name}}</h3>
+                <p>Price: ksh. {{hostel.hostel.price_per_month}}</p>
+                <p>Locality: {{hostel.hostel.locality}}</p>
+                <a
+                  href="{% url 'owner_hostel' hostel.hostel.id %}"
+                  class="btn-link"
+                  >See More</a
+                >
+              </div>
             </div>
+          </div>
+          {% empty %}
+          <p>You currently have no hostels booked</p>
+          {% endfor %}
         </div>
+      </div>
+      <div id="my-account-html" class="my-account-html item hide-elem">
+        <div class="account-div">
+          <h1>Account</h1>
+          <table>
+            <tr>
+              <th>Username</th>
+              <td><span id="owner-uname">{{ owner.username }}</span></td>
+            </tr>
+            <tr>
+              <th>First Name</th>
+              <td>
+                <span class="owner-fname-display">{{ owner.first_name }} </span>
+                <span class="hide-div owner-fname-input">
+                  <form class="input-change-form">
+                    <input
+                      type="text"
+                      value="{{ owner.first_name }}"
+                      id="owner-fname-inp"
+                    />
+                    <button type="submit" id="owner-fname-sub">
+                      <img src="{% static "admin/img/icon-yes.svg" %}"
+                      alt="Save"/>
+                    </button>
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button id="owner-fname-btn" class="btn-for-change">
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
+                </button>
+                <button class="hide-div btn-for-change" id="owner_fname_cancel">
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Last Name</th>
+              <td>
+                <span class="owner-lname-display">{{ owner.last_name }} </span>
+                <span class="hide-div owner-lname-input">
+                  <form class="input-change-form">
+                    <input
+                      type="text"
+                      value="{{ owner.last_name }}"
+                      id="owner-lname-inp"
+                    />
+                    <button type="submit" id="owner-lname-sub">
+                      <img src="{% static "admin/img/icon-yes.svg" %}"
+                      alt="Save"/>
+                    </button>
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button id="owner-lname-btn" class="btn-for-change">
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
+                </button>
+                <button class="hide-div btn-for-change" id="owner_lname_cancel">
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>
+                <span class="owner-email-display">{{ owner.email }} </span>
+                <span class="hide-div owner-email-input">
+                  <form class="input-change-form">
+                    <input
+                      type="text"
+                      value="{{ owner.email }}"
+                      id="owner-email-inp"
+                    />
+                    <button type="submit" id="owner-email-sub">
+                      <img src="{% static "admin/img/icon-yes.svg" %}"
+                      alt="Save"/>
+                    </button>
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button id="owner-email-btn" class="btn-for-change">
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
+                </button>
+                <button class="hide-div btn-for-change" id="owner_email_cancel">
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Phone Number</th>
+              <td>
+                <span class="owner-contact-display"
+                  >{{ owner.phone_number }}
+                </span>
+                <span class="hide-div owner-contact-input">
+                  <form class="input-change-form">
+                    <input
+                      type="text"
+                      value="{{ owner.phone_number }}"
+                      id="owner-contact-inp"
+                    />
+                    <button type="submit" id="owner-contact-sub">
+                      <img src="{% static "admin/img/icon-yes.svg" %}"
+                      alt="Save"/>
+                    </button>
+                  </form>
+                </span>
+              </td>
+              <td>
+                <button id="owner-contact-btn" class="btn-for-change">
+                  <img src="{% static "admin/img/icon-changelink.svg" %}"
+                  alt="Edit">
+                </button>
+                <button
+                  class="hide-div btn-for-change"
+                  id="owner_contact_cancel"
+                >
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
-{% endblock %}
+  </div>
+</div>
+{% endblock %} 
 
 {% block script %}
-    <script type="module" src="{% static 'hostel/js/owner.js' %}"></script>
-{% endblock  %}
+<script type="module" src="{% static 'hostel/js/owner.js' %}"></script>
+{% endblock %}

@@ -1,8 +1,4 @@
-{% extends './base_student.html' %} 
-
-{% load static %} 
-
-{% block header %}
+{% extends './base_student.html' %} {% load static %} {% block header %}
 <div class="nav-links" id="topNav">
   <a href="#home-html" class="home">Home</a>
   <a href="#hostels-html" class="hostels">Hostels</a>
@@ -11,9 +7,7 @@
   <a href="#my-account-html" class="my-account">Account</a>
   <a href="{% url 'logout' %}">Logout</a>
 </div>
-{% endblock %} 
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="student-main-wrap">
   <div class="student-html">
     <div class="main-content">
@@ -83,22 +77,24 @@
                   >{{ student.first_name }}
                 </span>
                 <span class="hide-div stud-fname-input">
-                  <form>
+                  <form class="input-change-form">
                     <input
                       type="text"
                       value="{{ student.first_name }}"
                       id="stud-fname-inp"
                     />
-                    <input type="submit" value="save" id="stud-fname-sub" />
+                    <button type="submit" id="stud-fname-sub">
+                        <img src="{% static "admin/img/icon-yes.svg" %}" alt="Save"/>
+                    </button>
                   </form>
                 </span>
               </td>
               <td>
-                <button id="stud-fname-btn" class="edit-btn-for-change">
+                <button id="stud-fname-btn" class="btn-for-change">
                   <img src="{% static "admin/img/icon-changelink.svg" %}"
                   alt="Edit">
                 </button>
-                <button class="hide-div" id="stud_fname_cancel">
+                <button class="hide-div btn-for-change" id="stud_fname_cancel">
                   <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
                 </button>
               </td>
@@ -108,27 +104,25 @@
               <td>
                 <span class="stud-lname-display">{{ student.last_name }} </span>
                 <span class="hide-div stud-lname-input">
-                  <form>
+                  <form class="input-change-form">
                     <input
                       type="text"
                       value="{{ student.last_name }}"
                       id="stud-lname-inp"
                     />
-                    <input type="submit" value="save" id="stud-lname-sub" />
+                    <button type="submit" id="stud-lname-sub">
+                        <img src="{% static "admin/img/icon-yes.svg" %}" alt="Save"/>
+                    </button>
                   </form>
                 </span>
               </td>
               <td>
-                <button
-                  class="stud-lname-display"
-                  id="stud-lname-btn"
-                  class="edit-btn-for-change"
-                >
+                <button id="stud-lname-btn" class="btn-for-change">
                   <img src="{% static "admin/img/icon-changelink.svg" %}"
                   alt="Edit">
                 </button>
                 <button
-                  class="hide-div stud-lname-input"
+                  class="hide-div btn-for-change"
                   id="stud_lname_cancel"
                 >
                   <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
@@ -140,27 +134,25 @@
               <td>
                 <span class="stud-email-display">{{ student.email }} </span>
                 <span class="hide-div stud-email-input">
-                  <form>
+                  <form class="input-change-form">
                     <input
                       type="email"
                       value="{{ student.email }}"
                       id="stud-email-inp"
                     />
-                    <input type="submit" value="save" id="stud-email-sub" />
+                    <button type="submit" id="stud-email-sub" >
+                        <img src="{% static "admin/img/icon-yes.svg" %}" alt="Save"/>
+                    </button>
                   </form>
                 </span>
               </td>
               <td>
-                <button
-                  class="stud-email-display"
-                  id="stud-email-btn"
-                  class="edit-btn-for-change"
-                >
+                <button id="stud-email-btn" class="btn-for-change">
                   <img src="{% static "admin/img/icon-changelink.svg" %}"
                   alt="Edit">
                 </button>
                 <button
-                  class="hide-div stud-email-input"
+                  class="hide-div btn-for-change"
                   id="stud_email_cancel"
                 >
                   <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
@@ -174,30 +166,28 @@
                   >{{ student.phone_number }}
                 </span>
                 <span class="hide-div stud-contact-input">
-                  <form>
+                  <form class="input-change-form">
                     <input
                       type="text"
                       value="{{ student.phone_number }}"
                       id="stud-contact-inp"
                     />
-                    <input type="submit" value="save" id="stud-contact-sub" />
+                    <button type="submit"  id="stud-contact-sub" >
+                        <img src="{% static "admin/img/icon-yes.svg" %}" alt="Save"/>
+                    </button>
                   </form>
                 </span>
               </td>
               <td>
-                <button
-                  class="stud-contact-display"
-                  id="stud-contact-btn"
-                  class="edit-btn-for-change"
-                >
+                <button id="stud-contact-btn" class="btn-for-change">
                   <img src="{% static "admin/img/icon-changelink.svg" %}"
                   alt="Edit">
                 </button>
                 <button
-                  class="hide-div stud-contact-input"
+                  class="hide-div btn-for-change"
                   id="stud_contact_cancel"
                 >
-                  <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                  <img src="{% static "admin/img/icon-no.svg" %}" alt="Cancel"/>
                 </button>
               </td>
             </tr>
@@ -213,8 +203,6 @@
     </div>
   </div>
 </div>
-{% endblock %} 
-
-{% block function %}
+{% endblock %} {% block function %}
 <script type="module" src="{% static 'hostel/js/student.js' %}"></script>
 {% endblock %}

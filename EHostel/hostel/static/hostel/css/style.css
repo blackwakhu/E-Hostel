@@ -246,6 +246,42 @@ footer {
   justify-content: center;
 }
 
-.edit-btn-for-change {
+.btn-for-change {
   border: none;
+  background-color: inherit;
+}
+
+.btn-for-change img {
+  width: 35px;
+  height: 35px;
+}
+
+.input-change-form{
+  display: flex;
+  align-items:center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.input-change-form input {
+  padding: 8px;
+  border: none;
+  border-right: 1px solid #ccc;
+  flex-grow: 1;
+  box-sizing: border-box;
+  font-size: 1.2em;
+}
+
+.input-change-form button {
+  background-color: #198754;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.input-change-form button img {
+  width: 25px;
+  height: 25px;
 }
