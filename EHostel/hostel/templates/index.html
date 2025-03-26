@@ -1,16 +1,19 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
-    {% comment %} <h1>The index Page</h1>
-    <a href="{% url 'stud_login' %}">Student</a>
-    <a href="{% url 'owner_login' %}">Owner</a> {% endcomment %}
-    <div class="index-card-container">
-        <div class="index-card">
-            <p>Are you a student in need of a hostel to rent?</p>
-        </div>
-        <div class="index-card">
-            <p>Are you a hostel Owner in search of students to rent?</p>
+    <div class="super-index-card-container">
+        <div class="index-card-container">
+            <div class="index-card">
+                <img src="{% static "images/student.jpeg" %}" alt="student image">
+                <p>Are you a student in need of a hostel to rent?</p>
+                <button><a href="{% url "stud_login" %}">Click Here</a></button>
+            </div>
+            <div class="index-card">
+                <img src="{% static "images/landlord.jpeg" %}" alt="landlord image">
+                <p>Are you a hostel Owner in search of students to rent?</p>
+                <button><a href="{% url "owner_login" %}">Click Here</a></button>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -110,8 +110,8 @@ function searchButtonFind() {
     });
 }
 class HostelList {
-    fetchHostels() {
-        return __awaiter(this, arguments, void 0, function* (page = 1) {
+    fetchHostels(page = 1) {
+        return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(`/api/student/hostel/hostel/list?page=${page}`); // Replace with your actual URL
             const data = yield response.json();
             this.hostels = data.hostels;

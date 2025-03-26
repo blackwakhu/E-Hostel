@@ -8,6 +8,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  background: linear-gradient(135deg, #e0e0e0, #f8f8f8);
   /*body*/
 }
 
@@ -140,16 +141,66 @@ body {
   color: blue;
 }
 
+.super-index-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+  background-size: auto;
+}
+
 .index-card-container {
-  display: inline-flex;
-  flex-wrap: overflow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
 }
 
 .index-card-container .index-card {
-  border: 2px solid black;
+ background-color: rgba(255, 255, 255, .5);
+ border-radius: 8px;
+ box-shadow: 0 4px 8px rgba(0,0,0,.1);
+ padding: 20px;
+ width: 250px;
+ text-align: center;
+}
+
+.index-card-container .index-card p{
+  margin-bottom: 20px;
+}
+
+.index-card-container .index-card button {
+  background-color: #004bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.index-card-container .index-card button:hover{
+  background-color: #0056b3;
+  text-decoration: underline;
+}
+
+.index-card-container .index-card img {
+  width: 200px;
   height: 150px;
-  width: 250px;
-  margin: 20px;
-  border-radius: 15px;
-  padding: 10px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.index-card-container .index-card a{
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.index-card-container .index-card:hover {
+  transform: scale(1.35);
 }

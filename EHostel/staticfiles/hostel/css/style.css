@@ -8,6 +8,8 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
+  background: linear-gradient(135deg, #e0e0e0, #f8f8f8);
+  /*body*/
 }
 
 .navbar {
@@ -137,4 +139,67 @@ body {
 .card-container .card .card-content .btn-link:hover {
   background-color: rgba(79, 224, 34, 0.5);
   color: blue;
+}
+
+.super-index-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+  background-image: url("{% static 'images/Hostel.jpeg' %}");
+}
+
+.index-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 800px;
+}
+
+.index-card-container .index-card {
+ background-color: white;
+ border-radius: 8px;
+ box-shadow: 0 4px 8px rgba(0,0,0,.1);
+ padding: 20px;
+ width: 250px;
+ text-align: center;
+}
+
+.index-card-container .index-card p{
+  margin-bottom: 20px;
+}
+
+.index-card-container .index-card button {
+  background-color: #004bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.index-card-container .index-card button:hover{
+  background-color: #0056b3;
+  text-decoration: underline;
+}
+
+.index-card-container .index-card img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.index-card-container .index-card a{
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.index-card-container .index-card:hover {
+  transform: scale(1.35);
 }
