@@ -85,6 +85,7 @@ owner_btn.addEventListener("click", function () {
     let print_a: HTMLAnchorElement = document.createElement("a")
     print_a.classList.add("print-a")
     print_a.innerText = "Print Owners"
+    print_a.href = "/myadmin/get_owners/download/"
     print_div.appendChild(print_a)
     admin_div.appendChild(print_div)
 
