@@ -55,7 +55,7 @@
 }
 
 .inner-menu {
-  border-right: solid 2px #ddd; 
+  border-right: solid 2px #ddd;
   height: 1000px;
   position: absolute;
   left: 0;
@@ -103,8 +103,153 @@ label {
   font-size: 1.2em;
 }
 
-.account-div th, .account-div td {
+.account-div th,
+.account-div td {
   padding: 8px 12px;
   font-size: 1.2em;
 }
 
+table {
+  font-size: 1.2em;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.bookings-table-list td,
+.bookings-table-list {
+  padding: 4px 6px;
+}
+
+.amenity-current-item {
+  border: solid 2px #bbb;
+  display: inline-flex;
+  margin: 5px;
+  padding: 0 0 0 3px;
+  border-radius: 5px;
+}
+
+.amenity-current-item button {
+  height: 25px;
+  width: 25px;
+  margin-left: 2px;
+  font-size: 1.1em;
+  background-color: red;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
+}
+
+#add-amenities-btn, #close-amenity-btn {
+  border: none;
+}
+
+#add-amenities-btn img, #close-amenity-btn img {
+  height: 25px;
+  width: 25px;
+}
+
+#add-amenities-btn:hover {
+  border: 2px solid #198754;
+  border-radius: 5px;
+}
+
+#close-amenity-btn:hover {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.amenity-item-btn {
+  color: #198754;
+  border: solid 2px #198754;
+  background-color: #ddd;
+  border-radius: 5px;
+  font-size: 1.1em;
+  padding: 5px;
+}
+
+#add-amenities-btn img:hover,
+.amenity-current-item:hover,
+.amenity-item-btn:hover, #close-amenity-btn:hover{
+  transform: scale(1.04);
+}
+
+#new-amenity-btn {
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  background-color: #ddd;
+  padding: 5px;
+  font-size: 1.1em;
+  border-radius: 5px;
+}
+
+#new-amenity-btn:hover {
+  color: #ddd;
+  background-color: #0d6efd;
+}
+
+#new-amenity-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+#amenity-input {
+  padding: 8px;
+  font-size: 1.1em;
+  background-color: #fff;
+  border: none;
+  border-right: 2px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  margin: 0;
+}
+
+#submit-amenity-btn {
+  border: none;
+  background-color: #198754;
+  padding: 8px 12px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+#submit-amenity-btn img {
+  height: 20px;
+  width: 20px;
+}
+
+#add-img-form {
+  display: inline-flex;
+  font-size: 1.2em;
+}
+
+#add-img-form input {
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border: 2px solid #0d6efd;
+  border-radius: 5px 0 0 5px;
+  color: #0d6efd;
+  background-color: #ddd;
+}
+
+#add-img-form input:hover {
+  background-color: #0d6efd;
+  color: #ddd;
+}
+
+#add-img-form button img {
+  height: 25px;
+  width: 25px;
+}
+
+#add-img-form button {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: solid 2px #198754;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #198754;
+}

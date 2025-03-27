@@ -56,7 +56,7 @@ class HostelReviews {
                     <h3>${review.student}</h3>
                     <p class="card-comment">${review.comment}</p>
                 </div>
-                <div class="card-rating" style="float:right;">
+                <div class="card-rating" >
                     ${review.rating} <img src="/static/images/selected_star.png" alt="stars"/>
                 </div>
             </div>

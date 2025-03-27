@@ -161,8 +161,9 @@ class Amenities {
             this.amenities.forEach((amenity) => {
                 let span = document.createElement("span");
                 span.innerHTML = `${amenity.amenity}`;
+                span.classList.add("amenity-current-item");
                 let del_btn = document.createElement("button");
-                del_btn.innerText = "X";
+                del_btn.innerHTML = "X";
                 del_btn.addEventListener("click", function () {
                     let myurl1 = `/owner/hostel/${hostel_id}/remove_amenity/${amenity.amenity}/`;
                     alterAmenity(myurl1);
@@ -297,4 +298,4 @@ setInterval(() => {
     booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
     });
-}, 5000);
+}, 10000);

@@ -1,110 +1,133 @@
-{% extends './base_owner.html' %}
-
-{% load static %}
-
-{% block header %}
-    <div class="nav-links" id="topNav">
-        <a href="{% url 'owner_main_page' %}#home-html" class="home">Home</a>
-        <a href="{% url 'owner_main_page' %}#hostels-html" class="hostels">My Hostels</a>
-        <a href="{% url 'owner_main_page' %}#new-hostel-html" class="new-hostel">New Hostel</a>
-        <a href="{% url 'owner_main_page' %}#my-account-html" class="my-account">Account</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
-{% endblock %}
-
-{% block body %}
+{% extends './base_owner.html' %} {% load static %} {% block header %}
+<div class="nav-links" id="topNav">
+  <a href="{% url 'owner_main_page' %}#home-html" class="home">Home</a>
+  <a href="{% url 'owner_main_page' %}#hostels-html" class="hostels"
+    >My Hostels</a
+  >
+  <a href="{% url 'owner_main_page' %}#new-hostel-html" class="new-hostel"
+    >New Hostel</a
+  >
+  <a href="{% url 'owner_main_page' %}#my-account-html" class="my-account"
+    >Account</a
+  >
+  <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %} {% block body %}
 <div class="owner-main-wrap hostel-owner-div">
-    <div class="owner-html">
-        <div class="main-content ">
-            <div>
-            <span style="display: none;" id="hostel_id">{{ hostel.id }}</span>
-            <div class="inner-menu">
-                <ul>
-                    <li><a id="booking-detail-btn">Detail</a></li>
-                    <li><a id="booking-active-btn">Active Students</a></li>
-                    <li><a id="booking-history-btn">History</a></li>
-                </ul>
-            </div>
-            <div class="main-content-book">
-                <div class="bookings-table-list">
-                    <table>
-                        <tr>
-                            <th>Hostel Name</th>
-                            <td>{{ hostel.hostel_name }}</td>
-                        </tr>
-                        <tr>
-                            <th>Owner</th>
-                            <td>{{ hostel.owner.first_name }} {{ hostel.owner.last_name }}</td>
-                        </tr>
-                        <tr>
-                            <th>Price of rent</th>
-                            <td>ksh. {{ hostel.price_per_month }}</td>
-                        </tr>
-                        <tr>
-                            <th>Number of rooms</th>
-                            <td>{{ hostel.number_rooms }}</td>
-                        </tr>
-                        <tr>
-                            <th>Room type</th>
-                            <td>{{ hostel.room_type }}</td>
-                        </tr>
-                        <tr>
-                            <th>Available rooms</th>
-                            <td><span id="avail_rooms">{{ hostel.available_rooms }}</span></td>
-                        </tr>
-                        <tr>
-                            <th>Amenities</th>
-                            <td>
-                                <div class="amenities-display"></div>
-                                <button id="add-amenities-btn">Add amenities</button>
-                                <div id="add-amenities-div">
-                                    <hr>
-                                    <div class="amenities-global"></div>
-                                    <button id="new-amenity-btn">Create New Amenity</button>
-                                    <div id="new-amenity-div">
-                                        <input type="text" id="amenity-input">
-                                        <button id="submit-amenity-btn">Submit</button><br>
-                                    </div>
-                                    <button id="close-amenity-btn">Close</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Location</th>
-                            <td>
-                                {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
-                                <br>{{ hostel.location }}
-                            </td>
-                        </tr>
-                    </table>
-                
-                    <div>
-                        {% for image in images %}
-                            <img src="{{ image.image.url }}" alt="{{ hostel.hostel_name }}" style="max-width: 200px; margin: 5px;">
-                        {% empty %}
-                            <p>No images available.</p>
-                        {% endfor %}
+  <div class="owner-html">
+    <div class="main-content">
+      <div>
+        <span style="display: none" id="hostel_id">{{ hostel.id }}</span>
+        <div class="inner-menu">
+          <ul>
+            <li><a id="booking-detail-btn">Detail</a></li>
+            <li><a id="booking-active-btn">Active Students</a></li>
+            <li><a id="booking-history-btn">History</a></li>
+          </ul>
+        </div>
+        <div class="main-content-book">
+          <div class="bookings-table-list">
+            <table>
+              <tr>
+                <th>Hostel Name</th>
+                <td>{{ hostel.hostel_name }}</td>
+              </tr>
+              <tr>
+                <th>Owner</th>
+                <td>
+                  {{ hostel.owner.first_name }} {{ hostel.owner.last_name }}
+                </td>
+              </tr>
+              <tr>
+                <th>Price of rent</th>
+                <td>ksh. {{ hostel.price_per_month }}</td>
+              </tr>
+              <tr>
+                <th>Number of rooms</th>
+                <td>{{ hostel.number_rooms }}</td>
+              </tr>
+              <tr>
+                <th>Room type</th>
+                <td>{{ hostel.room_type }}</td>
+              </tr>
+              <tr>
+                <th>Available rooms</th>
+                <td>
+                  <span id="avail_rooms">{{ hostel.available_rooms }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th>Amenities</th>
+                <td>
+                  <div class="amenities-display"></div>
+                  <button id="add-amenities-btn">
+                    <img src="{% static "admin/img/icon-addlink.svg" %}"
+                    alt='Add Amenity'>
+                  </button>
+                  <div id="add-amenities-div">
+                    <hr />
+                    <div class="amenities-global"></div>
+                    <button id="new-amenity-btn">Create New Amenity</button>
+                    <div id="new-amenity-div">
+                      <input type="text" id="amenity-input" />
+                      <button id="submit-amenity-btn">
+                        <img src="{% static "admin/img/icon-yes.svg" %}"
+                        alt='Submit'/></button
+                      ><br />
                     </div>
+                    <button id="close-amenity-btn">
+                      <img src="{% static "admin/img/icon-no.svg" %}"
+                      alt="Close">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Location</th>
+                <td>
+                  {{ hostel.locality }} - {{ hostel.town }}, {{ hostel.county }}
+                  <br />{{ hostel.location }}
+                </td>
+              </tr>
+            </table>
 
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ hostelImageForm.as_p }}
-                        <button type="submit">Upload</button>
-                    </form>
-                </div>
-                <div class="booking-active-div hide-elem table-list-student">
-                    <h1>Active Students</h1>
-                    <a href="{% url 'download_active_student' hostel.id %}" id="print-a-active">Print</a>
-                    <div id="activeHostelBookings"></div></div>
-                <div class="booking-history-div hide-elem table-list-student"><div id="hostelBookings"></div></div>
+            <div>
+              {% for image in images %}
+              <img
+                src="{{ image.image.url }}"
+                alt="{{ hostel.hostel_name }}"
+                style="max-width: 200px; margin: 5px"
+              />
+              {% empty %}
+              <p>No images available.</p>
+              {% endfor %}
             </div>
+
+            <form method="post" enctype="multipart/form-data" id="add-img-form">
+              {% csrf_token %} {{ hostelImageForm.as_p }}
+              <button type="submit">
+                <img src="{% static "images/upload_image.png" %}" alt="Upload">
+              </button>
+            </form>
+          </div>
+          <div class="booking-active-div hide-elem table-list-student">
+            <h1>Active Students</h1>
+            <a
+              href="{% url 'download_active_student' hostel.id %}"
+              id="print-a-active"
+              >Print</a
+            >
+            <div id="activeHostelBookings"></div>
+          </div>
+          <div class="booking-history-div hide-elem table-list-student">
+            <div id="hostelBookings"></div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 
+{% endblock %} {% block script %}
+<script type="module" src="{% static 'hostel/js/hostel_owner.js' %}"></script>
 {% endblock %}
-
-{% block script %}
-    <script type="module" src="{% static 'hostel/js/hostel_owner.js' %}"></script>
-{% endblock  %}
