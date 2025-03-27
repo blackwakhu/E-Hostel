@@ -44,5 +44,9 @@ urlpatterns = [
     path('api/student/update/<admin>/<str:column>/', stud_update, name="student_update"),
 
 #  for admin
-    path('myadmin', my_admin, name="my_admin"),
+    path('myadmin/', my_admin, name="my_admin"),
+    path("myadmin/get_students/", admin_get_students, name="admin-get-students"),
+    path("myadmin/get_owners/", admin_get_owners, name="admin-get-owners"),
+    path("myadmin/get_hostels/", admin_get_hostels, name="admin-get-hostels"),
+    path("myadmin/get_bookings/<str:status>/", admin_get_bookings, name="admin-get-bookings"),
 ]

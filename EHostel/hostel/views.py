@@ -687,6 +687,66 @@ def download_active_student(request, hostel_id, status):
 def my_admin(request):
     return render(request, "admin.html")
 
+def admin_get_students(request):
+    students = Student.objects.all()
+    dstudent = [{
+        "admin": stud.admission_number, 
+        "fname": stud.first_name,
+        "lname": stud.last_name,
+        "email": stud.email,
+        "contact": stud.phone_number} for stud in students]
+    
+    return JsonResponse({"data": dstudent})
+
+def admin_get_owners(request):
+    owner = Owner.objects.all()
+    downer = [{
+        "admin": own.username, 
+        "fname": own.first_name,
+        "lname": own.last_name,
+        "email": own.email,
+        "contact": own.phone_number} for own in owner]
+    
+    return JsonResponse({"data": downer})
+
+def admin_get_hostels(request):
+    hostel = Hostel.objects.all()
+    dhostel = [{ 
+        "name": host.hostel_name,
+        "owner_fname": host.owner.first_name,
+        "owner_lname": host.owner.last_name,
+        "rent": host.price_per_month,
+        "locality": host.locality,
+        "type": host.room_type,
+        "capacity": host.number_rooms,
+        "availability": host.available_rooms } for host in hostel]
+    return JsonResponse({"data": dhostel})
+
+def admin_get_bookings(request, status):
+    if status == "Accept":
+        bookings = Booking.objects.filter(status="Accept")
+    elif status == "Reject":
+        bookings = Booking.objects.filter(status="Reject")
+    elif status == "Pending":
+        bookings = Booking.objects.filter(status="Pending")
+    elif status == "Cancel":
+        bookings = Booking.objects.filter(status="Cancel")
+    elif status == "EndLease":
+        bookings = Booking.objects.filter(status="End Lease")
+    else:
+        bookings = Booking.objects.all()
+    
+    dbookings = [{
+        "sfname": book.student.first_name,
+        "slname": book.student.last_name,
+        "hostel": book.hostel.hostel_name,
+        "ofname": book.hostel.owner.first_name,
+        "olname": book.hostel.owner.last_name,
+        "status": book.status
+    } for book in bookings]
+
+    return JsonResponse({"data": dbookings})
+
 
 
 
