@@ -37,6 +37,7 @@ stud_btn.addEventListener("click", function () {
     let print_a = document.createElement("a");
     print_a.classList.add("print-a");
     print_a.innerText = "Print Students";
+    print_a.href = "/myadmin/get_students/download/";
     print_div.appendChild(print_a);
     admin_div.appendChild(print_div);
     let stud_div = document.createElement("div");
@@ -155,6 +156,12 @@ book_btn.addEventListener("click", function () {
             a_url: null
         }, {
             btn: document.createElement("button"),
+            url: "/myadmin/get_bookings/EndLease/",
+            title: "Complete Lease",
+            a_title: "Print Complete Lease",
+            a_url: null
+        }, {
+            btn: document.createElement("button"),
             url: "/myadmin/get_bookings/Cancel/",
             title: "Cancelled",
             a_title: "Print Cancelled",
@@ -165,6 +172,7 @@ book_btn.addEventListener("click", function () {
     let booking_table = document.createElement("table");
     choice_arr.forEach(choice => {
         choice.btn.innerText = choice.title;
+        choice.btn.classList.add("admin-booking-btns");
         choice.btn.addEventListener("click", function () {
             booking_table.innerHTML = "";
             load_booking(booking_table, choice.url);

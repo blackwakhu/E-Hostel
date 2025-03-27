@@ -49,4 +49,6 @@ urlpatterns = [
     path("myadmin/get_owners/", admin_get_owners, name="admin-get-owners"),
     path("myadmin/get_hostels/", admin_get_hostels, name="admin-get-hostels"),
     path("myadmin/get_bookings/<str:status>/", admin_get_bookings, name="admin-get-bookings"),
+
+    path("myadmin/get_students/download/",  admin_get_students_download, name="admin-get-students-download"),
 ]
