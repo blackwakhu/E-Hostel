@@ -253,3 +253,12 @@ table {
   border-radius: 0 5px 5px 0;
   background-color: #198754;
 }
+
+.table-list-bookies {
+  border-collapse: collapse;
+}
+
+.table-list-bookies td .table-list-bookies th {
+  padding: 6px;
+  border: solid 1px solid;
+}

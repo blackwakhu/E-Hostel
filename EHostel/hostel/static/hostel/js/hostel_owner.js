@@ -46,6 +46,7 @@ function displayBookings(url, book_div) {
                 if (bookings && bookings.length > 0) {
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
+                    tableBook.classList.add("table-list-bookies");
                     titleBook.innerHTML +=
                         "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th><th></th></tr>";
                     tableBook.appendChild(titleBook);
