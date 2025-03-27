@@ -254,11 +254,11 @@ table {
   background-color: #198754;
 }
 
-.table-list-bookies {
+.table-list-student table {
   border-collapse: collapse;
 }
 
-.table-list-bookies td .table-list-bookies th {
-  padding: 6px;
-  border: solid 1px solid;
+.table-list-student th, .table-list-student td {
+  padding: 5px;
+  border: 1px solid black;
 }
