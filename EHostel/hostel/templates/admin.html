@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block header %}
+<div class="nav-links" id="topNav">
+    <a href="">Students</a>
+    <a href="">LandLords</a>
+    <a href="">Bookings</a>
+    <a href="">Hostels</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+{% endblock %}
+
+{% block body %} {% endblock %}
+
+{% block js %} {% endblock %}

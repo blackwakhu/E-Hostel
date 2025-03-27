@@ -342,6 +342,11 @@ def owner_update(request, uname, column):
             return JsonResponse({"message": str(e)}, status=500)
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
+class TooSmallError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
+
 @csrf_exempt
 def hostel_update(request, hostel_id, column):
     if request.method == "POST":
@@ -354,9 +359,26 @@ def hostel_update(request, hostel_id, column):
                 return JsonResponse({"error": f"Column '{column}' not found in request"}, status=400)
 
             hostel_item = Hostel.objects.get(pk=hostel_id)
-            print("Hostel found:", hostel_item)
 
             value = data[column]  # Get value from request JSON
+
+            if column == "number_rooms":
+                print("Updating number_rooms...") 
+                myvalue = int(value)
+                value = int(value)# More descriptive print
+                if value < hostel_item.number_rooms:
+                    rooms_difference = hostel_item.number_rooms - value
+                    if rooms_difference > hostel_item.available_rooms:
+                        raise TooSmallError("This update will result in some students losing hostels. Rejected")
+                    else:
+                        hostel_item.available_rooms -= rooms_difference #Corrected available_rooms calculation
+                else:
+                    hostel_item.available_rooms += (value - hostel_item.number_rooms) #correct available rooms calculation when number of rooms increases.
+                hostel_item.number_rooms = myvalue
+                print("number_rooms updated successfully.") #More descriptive print.
+            else:
+                setattr(hostel_item, column, value)
+            
             setattr(hostel_item, column, value)  # Dynamically update field
             hostel_item.save()
 
@@ -364,6 +386,8 @@ def hostel_update(request, hostel_id, column):
 
         except Hostel.DoesNotExist:
             return JsonResponse({"error": "Hostel does not exist"}, status=400)
+        except TooSmallError as e:
+            return JsonResponse({"error": str(e)})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 
@@ -406,6 +430,7 @@ def create_review(request):
             return JsonResponse({'error': 'Parent review not found'}, status=404)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
 
 def get_hostel_list(request):
     page_number = request.GET.get('page', 1)
