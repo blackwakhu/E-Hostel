@@ -4,14 +4,18 @@
 
 {% block header %}
 <div class="nav-links" id="topNav">
-    <a href="">Students</a>
-    <a href="">LandLords</a>
-    <a href="">Bookings</a>
-    <a href="">Hostels</a>
+    <a href="" id="stud-btn">Students</a>
+    <a href="" id="owner-btn">LandLords</a>
+    <a href="" id="book-btn">Bookings</a>
+    <a href="" id="hostel-btn">Hostels</a>
     <a href="{% url 'logout' %}">Logout</a>
   </div>
 {% endblock %}
 
-{% block body %} {% endblock %}
+{% block body %} 
+<div class="admin-div"></div>
+{% endblock %}
 
-{% block js %} {% endblock %}
+{% block js %} 
+<script src="{% static "/hostel/js/admin.js" %}"></script>
+{% endblock %}
