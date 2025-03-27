@@ -669,7 +669,7 @@ def download_active_student(request, hostel_id, status):
         "letterhead": letterhead_html,
         "report_title": report_title
     }
-    template = get_template("booking_report.html")
+    template = get_template("print/booking_report.html")
     html_string = template.render(context)
     html = HTML(string=html_string)
     css = CSS(string='''
@@ -680,7 +680,7 @@ def download_active_student(request, hostel_id, status):
     ''')
     pdf_file = html.write_pdf(stylesheets=[css])
     response = HttpResponse(pdf_file, content_type="application/pdf")
-    response["Content-Disposition"] = f'attachment; filename={filename}'
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
 
     return response
 
