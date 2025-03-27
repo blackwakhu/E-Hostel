@@ -169,42 +169,42 @@ book_btn.addEventListener("click", function () {
     let print_div: HTMLDivElement = document.createElement("div")
     print_div.classList.add("print-a-div")
 
-    let choice_arr: { btn: HTMLButtonElement, url: string, title: string, a_title: string, a_url: string| null }[] = [{
+    let choice_arr: { btn: HTMLButtonElement, url: string, title: string, a_title: string, a_url: string }[] = [{
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/all/",
         title: "History",
         a_title: "Print All",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/all/",
     }, {
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/Accept/",
         title: "Accepted",
         a_title: "Print Accepted",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/Accept/"
     }, {
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/Reject/",
         title: "Rejected",
         a_title: "Print Rejected",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/Reject/"
     }, {
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/Pending/",
         title: "Pending",
         a_title: "Print Pending",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/Pending/"
     }, {
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/EndLease/",
         title: "Complete Lease",
         a_title: "Print Complete Lease",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/EndLease/"
     }, {
         btn: document.createElement("button"),
         url: "/myadmin/get_bookings/Cancel/",
         title: "Cancelled",
         a_title: "Print Cancelled",
-        a_url: null
+        a_url: "/myadmin/get_bookings/download/Cancel/"
     }
     ]
     let booking_div: HTMLDivElement = document.createElement("div")
@@ -219,6 +219,7 @@ book_btn.addEventListener("click", function () {
         button_div.appendChild(choice.btn)
         let a: HTMLAnchorElement = document.createElement("a")
         a.classList.add("print-a")
+        a.href = choice.a_url
         a.innerText = choice.a_title
         print_div.appendChild(a)
     })
