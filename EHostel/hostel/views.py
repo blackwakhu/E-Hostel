@@ -347,16 +347,27 @@ def hostel_update(request, hostel_id, column):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
+            print("Received data:", data)  # Debugging print
+            print("Column to update:", column)
+
+            if column not in data:
+                return JsonResponse({"error": f"Column '{column}' not found in request"}, status=400)
+
             hostel_item = Hostel.objects.get(pk=hostel_id)
-            item = data.get(item)
-            setattr(hostel_item, column, item)
+            print("Hostel found:", hostel_item)
+
+            value = data[column]  # Get value from request JSON
+            setattr(hostel_item, column, value)  # Dynamically update field
             hostel_item.save()
-            return JsonResponse({"message": "saved successfull", "output":item})
+
+            return JsonResponse({"message": "Saved successfully", "output": value})
+
         except Hostel.DoesNotExist:
-            return JsonResponse({"error":"Hostel does not exists"}, status=400)
+            return JsonResponse({"error": "Hostel does not exist"}, status=400)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
-    return JsonResponse({"error": "invalid method"}, status=405)
+
+    return JsonResponse({"error": "Invalid method"}, status=405)
 
 
 

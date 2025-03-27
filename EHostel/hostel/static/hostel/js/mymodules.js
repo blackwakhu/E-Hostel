@@ -161,26 +161,3 @@ export function verifyBooking(book_id, choice) {
         }
     });
 }
-export function newUpdate(url, column, value, display) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({ "value": value }),
-            });
-            if (!response.ok) {
-                alert(`error ${response.status}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = yield response.json();
-            display.textContent = data.output;
-        }
-        catch (error) {
-            alert(error);
-            console.error("Error adding a new amenity", error);
-        }
-    });
-}

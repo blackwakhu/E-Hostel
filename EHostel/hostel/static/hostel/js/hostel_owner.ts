@@ -5,7 +5,7 @@ import {
   hideBookDiv,
   UpdatedElementsint,
   hideEditElements,
-  newUpdate,
+  handleUpdateClick,
 } from "./mymodules.js";
 
 let hostel_id: number = Number(
@@ -322,9 +322,9 @@ document.addEventListener("DOMContentLoaded", () => {
     elem.subbtn.addEventListener("click", () => {
       const url: string = `/api/owner/hostel_update/${hostel_id}/${elem.column}/`
       if (elem.column === "") {
-        newUpdate(url, elem.column, parseInt(elem.inputElem.value), elem.displayClass)
+        handleUpdateClick(url, elem.column, parseInt(elem.inputElem.value), elem.displayClass)
       } else {
-        newUpdate(url, elem.column, elem.inputElem.value, elem.displayClass)
+        handleUpdateClick(url, elem.column, elem.inputElem.value, elem.displayClass)
       }
       hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
     })
