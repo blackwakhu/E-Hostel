@@ -99,6 +99,10 @@ body {
   display: none;
 }
 
+.hide-div {
+  display: none;
+}
+
 .card-container {
   display: inline-flex;
   flex-wrap: wrap;

@@ -343,6 +343,24 @@ def owner_update(request, uname, column):
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
 @csrf_exempt
+def hostel_update(request, hostel_id, column):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            hostel_item = Hostel.objects.get(pk=hostel_id)
+            item = data.get(item)
+            setattr(hostel_item, column, item)
+            hostel_item.save()
+            return JsonResponse({"message": "saved successfull", "output":item})
+        except Hostel.DoesNotExist:
+            return JsonResponse({"error":"Hostel does not exists"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "invalid method"}, status=405)
+
+
+
+@csrf_exempt
 def create_review(request):
     if request.method == "POST":
         try:
@@ -500,8 +518,8 @@ def create_amenity(request, hostel_id):
             return JsonResponse({"success": True})
         except Hostel.DoesNotExist:
             return JsonResponse({"error": "Hostel not found"}, status=400)
-        # except Exception as e:
-        #     return JsonResponse({"error": str(e)}, status=500)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def get_booking_status(request, hostel_id, admin_number):

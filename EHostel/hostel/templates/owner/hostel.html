@@ -29,26 +29,85 @@
           <div class="bookings-table-list">
             <table>
               <tr>
-                <th>Hostel Name</th>
-                <td>{{ hostel.hostel_name }}</td>
-              </tr>
-              <tr>
                 <th>Owner</th>
                 <td>
                   {{ hostel.owner.first_name }} {{ hostel.owner.last_name }}
                 </td>
               </tr>
               <tr>
+                <th>Hostel Name</th>
+                <td>
+                  <span class="hostel-name-display"
+                    >{{ hostel.hostel_name }}</span
+                  >
+                  <span class="hide-div hostel-name-input">
+                    <form class="input-change-form">
+                      <input
+                        type="text"
+                        value="{{hostel.hostel_name}}"
+                        id="hostel-name-inp"
+                      />
+                      <button type="submit" id="hostel-name-sub">
+                        <img src="{% static "admin/img/icon-yes.svg" %}"
+                        alt="Save"/>
+                      </button>
+                    </form>
+                  </span>
+                </td>
+                <td>
+                  <button id="hostel-name-btn" class="btn-for-change">
+                    <img src="{% static "admin/img/icon-changelink.svg" %}"
+                    alt="Edit">
+                  </button>
+                  <button
+                    class="hide-div btn-for-change"
+                    id="hostel_name_cancel"
+                  >
+                    <img src="{% static "admin/img/icon-no.svg" %}"
+                    alt="cancel"/>
+                  </button>
+                </td>
+              </tr>
+              <tr>
                 <th>Price of rent</th>
-                <td>ksh. {{ hostel.price_per_month }}</td>
+                <td>
+                    ksh. {{ hostel.price_per_month }}
+                </td>
+                <td>
+                    <button id="hostel-price-btn" class="btn-for-change">
+                      <img src="{% static "admin/img/icon-changelink.svg" %}"
+                      alt="Edit">
+                    </button>
+                    <button class="hide-div btn-for-change" id="hostel_price_cancel">
+                      <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                    </button>
+                  </td>
               </tr>
               <tr>
                 <th>Number of rooms</th>
                 <td>{{ hostel.number_rooms }}</td>
+                <td>
+                    <button id="hostel-rooms-btn" class="btn-for-change">
+                      <img src="{% static "admin/img/icon-changelink.svg" %}"
+                      alt="Edit">
+                    </button>
+                    <button class="hide-div btn-for-change" id="hostel_rooms_cancel">
+                      <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                    </button>
+                  </td>
               </tr>
               <tr>
                 <th>Room type</th>
                 <td>{{ hostel.room_type }}</td>
+                <td>
+                    <button id="hostel-type-btn" class="btn-for-change">
+                      <img src="{% static "admin/img/icon-changelink.svg" %}"
+                      alt="Edit">
+                    </button>
+                    <button class="hide-div btn-for-change" id="hostel_type_cancel">
+                      <img src="{% static "admin/img/icon-no.svg" %}" alt="cancel"/>
+                    </button>
+                  </td>
               </tr>
               <tr>
                 <th>Available rooms</th>

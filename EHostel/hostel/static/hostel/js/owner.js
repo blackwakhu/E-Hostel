@@ -62,8 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     hideUrlDivElements(home_div, divElements);
     updateElementsOwner.forEach((elem) => {
-        elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div"); });
-        elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
+        elem.editBtn.addEventListener("click", () => {
+            hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div");
+        });
+        elem.cancelBtn.addEventListener("click", () => {
+            hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
+        });
         elem.subbtn.addEventListener("click", () => {
             // saveData(elem.inputElem)
             if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {

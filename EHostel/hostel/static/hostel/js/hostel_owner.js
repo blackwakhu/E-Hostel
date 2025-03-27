@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideSingleElements, alterAmenity, verifyBooking, hideBookDiv, } from "./mymodules.js";
+import { hideSingleElements, alterAmenity, verifyBooking, hideBookDiv, hideEditElements, newUpdate, } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
@@ -268,8 +268,34 @@ let booking_urls = [
         div: active_booking_div,
     },
 ];
+let updateElementsHostel = [
+    {
+        editBtn: document.querySelector("#hostel-name-btn"),
+        displayClass: document.querySelector(".hostel-name-display"),
+        inputClass: document.querySelector(".hostel-name-input"),
+        cancelBtn: document.querySelector("#hostel_name_cancel"),
+        inputElem: document.querySelector("#hostel-name-inp"),
+        subbtn: document.querySelector("#hostel-name-sub"),
+        column: "hostel_name"
+    }
+];
 document.addEventListener("DOMContentLoaded", () => {
-    // displayBookings(hostel_id);
+    updateElementsHostel.forEach(elem => {
+        elem.editBtn.addEventListener("click", () => {
+            hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div");
+        });
+        elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
+        elem.subbtn.addEventListener("click", () => {
+            const url = `/api/owner/hostel_update/${hostel_id}/${elem.column}/`;
+            if (elem.column === "") {
+                newUpdate(url, elem.column, parseInt(elem.inputElem.value), elem.displayClass);
+            }
+            else {
+                newUpdate(url, elem.column, elem.inputElem.value, elem.displayClass);
+            }
+            hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
+        });
+    });
     booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
         book_url.div.addEventListener("click", function (event) {

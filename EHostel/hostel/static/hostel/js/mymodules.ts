@@ -237,3 +237,24 @@ export async function verifyBooking(
     console.error("Error adding a new amenity", error);
   }
 }
+
+export  async function newUpdate(url: string, column: string, value: string | number, display: HTMLElement) {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ "value": value }),
+    })
+    if (!response.ok) {
+      alert(`error ${response.status}`)
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    display.textContent = data.output
+  } catch (error) {
+    alert(error)
+    console.error("Error adding a new amenity", error);
+  }
+}
