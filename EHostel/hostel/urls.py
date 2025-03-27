@@ -42,4 +42,7 @@ urlpatterns = [
 
 # for the student
     path('api/student/update/<admin>/<str:column>/', stud_update, name="student_update"),
+
+#  for admin
+    path('myadmin', my_admin, name="my_admin"),
 ]

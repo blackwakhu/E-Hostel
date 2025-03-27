@@ -659,6 +659,9 @@ def download_active_student(request, hostel_id, status):
 
     return response
 
+def my_admin(request):
+    return render(request, "admin.html")
+
 
 
 
