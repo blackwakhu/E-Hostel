@@ -209,16 +209,27 @@
           </div>
           <div class="booking-active-div hide-elem table-list-student">
             <h1>Active Students</h1>
+            <div class="print-a-div">
             <a
-              href="{% url 'download_active_student' hostel.id %}"
-              id="print-a-active"
-              >Print</a
-            >
+              href="{% url 'download_active_student' hostel.id 'Active'%}"
+              class="print-a"
+              >Print Active Students</a>
+              <a
+              href="{% url 'download_active_student' hostel.id 'Pending'%}"
+              class="print-a"
+              >Print Pending Students</a>
+              <a
+              href="{% url 'download_active_student' hostel.id 'Accept'%}"
+              class="print-a"
+              >Print Accepted Students</a>
+            </div>
             <div id="activeHostelBookings"></div>
           </div>
           <div class="booking-history-div hide-elem table-list-student">
             <h1>History of Students who have booked the Hostel</h1>
-            <a href="">Print</a>
+            <div class="print-a-div">
+            <a class="print-a" href="{% url 'download_active_student' hostel.id 'All'%}">Print</a>
+            </div>
             <div id="hostelBookings"></div>
           </div>
         </div>

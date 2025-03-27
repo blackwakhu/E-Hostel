@@ -581,10 +581,29 @@ def active_booking(request, hostel_id):
         })
     return JsonResponse({"bookings": booked_people, "vacancies": hostel.available_rooms}, safe=False)
     
-def download_active_student(request, hostel_id):
+def download_active_student(request, hostel_id, status):
     hostel = Hostel.objects.get(pk=hostel_id)
     booked_people = []
-    bookings = Booking.objects.filter(hostel=hostel).filter(Q(status="Pending") | Q (status="Accept"))
+    report_title = ""
+    filename = f"{hostel.hostel_name}.pdf"
+    if status == "Active":
+        report_title = "Active Students"
+        filename = f"booking_report_for_active_students_in_{hostel.hostel_name}.pdf"
+        bookings = Booking.objects.filter(hostel=hostel).filter(Q(status="Pending") | Q (status="Accept"))
+    elif status == "All":
+        filename = f"booking_report_history_for_{hostel.hostel_name}.pdf"
+        report_title = "Booking History"
+        bookings = Booking.objects.filter(hostel=hostel)
+    elif status == "Pending":
+        filename = f"booking_report_for_pending_students_in_{hostel.hostel_name}.pdf"
+        report_title = "Pending Bookings"
+        bookings = Booking.objects.filter(hostel=hostel, status='Pending')
+    elif status == "Accept":
+        filename = f"booking_report_for_accepted_students_in_{hostel.hostel_name}.pdf"
+        report_title = "Accepted Bookings"
+        bookings = Booking.objects.filter(hostel=hostel, status="Accept")
+    else:
+        return JsonResponse({"error": "did not find a suitable title"}, status=404)
     for booking in bookings:
         student = {
             "admin": booking.student.admission_number,
@@ -623,6 +642,7 @@ def download_active_student(request, hostel_id):
         "landlord_name": hostel.owner.first_name+" "+hostel.owner.last_name,
         "landlord_email": hostel.owner.email,
         "letterhead": letterhead_html,
+        "report_title": report_title
     }
     template = get_template("booking_report.html")
     html_string = template.render(context)
@@ -635,8 +655,10 @@ def download_active_student(request, hostel_id):
     ''')
     pdf_file = html.write_pdf(stylesheets=[css])
     response = HttpResponse(pdf_file, content_type="application/pdf")
-    response["Content-Disposition"] = f'attachment; filename="booking_report_for_{hostel.hostel_name}.pdf"'
+    response["Content-Disposition"] = f'attachment; filename={filename}'
 
     return response
+
+
 
 
