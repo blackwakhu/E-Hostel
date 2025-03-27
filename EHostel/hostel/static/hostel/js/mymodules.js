@@ -87,6 +87,7 @@ export function handleUpdateClick(myurl, column, newValue, messageElement) {
         try {
             const result = yield updateData(myurl, column, newValue);
             messageElement.textContent = result.output;
+            alert("The changes made were successful");
         }
         catch (error) {
             let errmsg = error.message || "An error occurred during update.";

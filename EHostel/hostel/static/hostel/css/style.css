@@ -268,7 +268,7 @@ footer {
   overflow: hidden;
 }
 
-.input-change-form input {
+.input-change-form input, .input-change-form select {
   padding: 8px;
   border: none;
   border-right: 1px solid #ccc;

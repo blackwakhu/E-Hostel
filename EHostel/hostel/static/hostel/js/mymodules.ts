@@ -154,6 +154,7 @@ export async function handleUpdateClick(
   try {
     const result = await updateData(myurl, column, newValue);
     messageElement.textContent = result.output;
+    alert("The changes made were successful")
   } catch (error: any) {
     let errmsg: string = error.message || "An error occurred during update.";
     alert(errmsg);

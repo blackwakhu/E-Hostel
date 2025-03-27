@@ -310,6 +310,30 @@ let updateElementsHostel: UpdatedElementsint[] = [
     inputElem: document.querySelector("#hostel-name-inp"),
     subbtn: document.querySelector("#hostel-name-sub"),
     column: "hostel_name"
+  }, {
+    editBtn: document.querySelector("#hostel-price-btn"),
+    displayClass: document.querySelector(".hostel-price-display"),
+    inputClass: document.querySelector(".hostel-price-input"),
+    cancelBtn: document.querySelector("#hostel_price_cancel"),
+    inputElem: document.querySelector("#hostel-price-inp"),
+    subbtn: document.querySelector("#hostel-price-sub"),
+    column: "price_per_month"
+  }, {
+    editBtn: document.querySelector("#hostel-rooms-btn"),
+    displayClass: document.querySelector(".hostel-rooms-display"),
+    inputClass: document.querySelector(".hostel-rooms-input"),
+    cancelBtn: document.querySelector("#hostel_rooms_cancel"),
+    inputElem: document.querySelector("#hostel-rooms-inp"),
+    subbtn: document.querySelector("#hostel-rooms-sub"),
+    column: "number_rooms"
+  }, {
+    editBtn: document.querySelector("#hostel-type-btn"),
+    displayClass: document.querySelector(".hostel-type-display"),
+    inputClass: document.querySelector(".hostel-type-input"),
+    cancelBtn: document.querySelector("#hostel_type_cancel"),
+    inputElem: document.querySelector("#hostel-type-inp"),
+    subbtn: document.querySelector("#hostel-type-sub"),
+    column: "room_type"
   }
 ]
 
@@ -321,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
     elem.subbtn.addEventListener("click", () => {
       const url: string = `/api/owner/hostel_update/${hostel_id}/${elem.column}/`
-      if (elem.column === "") {
+      if (elem.column === "price_per_month") {
         handleUpdateClick(url, elem.column, parseInt(elem.inputElem.value), elem.displayClass)
       } else {
         handleUpdateClick(url, elem.column, elem.inputElem.value, elem.displayClass)
@@ -359,7 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 setInterval(() => {
-  // displayBookings(hostel_id)
   booking_urls.forEach((book_url) => {
     displayBookings(book_url.url, book_url.div);
   });

@@ -69,9 +69,18 @@
                 </td>
               </tr>
               <tr>
-                <th>Price of rent</th>
+                <th>Price of rent (ksh.)</th>
                 <td>
-                    ksh. {{ hostel.price_per_month }}
+                    <span class="hostel-price-display">{{ hostel.price_per_month }}</span>
+                    <span class="hide-div hostel-price-input">
+                      <form class="input-change-form">
+                        <input type="number" min="500" value="{{hostel.price_per_month}}" id="hostel-price-inp"/>
+                        <button type="submit" id="hostel-price-sub">
+                          <img src="{% static "admin/img/icon-yes.svg" %}"
+                          alt="Save"/>
+                        </button>
+                      </form>
+                    </span>
                 </td>
                 <td>
                     <button id="hostel-price-btn" class="btn-for-change">
@@ -85,7 +94,17 @@
               </tr>
               <tr>
                 <th>Number of rooms</th>
-                <td>{{ hostel.number_rooms }}</td>
+                <td>
+                  <span class="hostel-rooms-display">{{ hostel.number_rooms }}</span>
+                  <span class="hostel-rooms-input hide-div">
+                    <form class="input-change-form">
+                      <input type="number" min="1" value="{{hostel.number_rooms}}" id="hostel-rooms-inp"/>
+                      <button type="submit" id="hostel-rooms-sub">
+                        <img src="{% static "admin/img/icon-yes.svg" %}"
+                        alt="Save"/>
+                      </button>
+                    </form>
+                </td>
                 <td>
                     <button id="hostel-rooms-btn" class="btn-for-change">
                       <img src="{% static "admin/img/icon-changelink.svg" %}"
@@ -98,7 +117,26 @@
               </tr>
               <tr>
                 <th>Room type</th>
-                <td>{{ hostel.room_type }}</td>
+                <td>
+                  <span class="hostel-type-display">{{ hostel.room_type }}</span>
+                  <span class="hostel-type-input hide-div">
+                    <form class="input-change-form">
+                      <select id="hostel-type-inp" name="hroom_type">
+                        <option value="{{hostel.room_type}}">{{hostel.room_type}}</option>
+                        <option value="Single">Single</option>
+                        <option value="Double">Double</option>
+                        <option value="Triple">Triple</option>
+                        <option value="Quad">Quad</option>
+                        <option value="Bed Seater">Bed Seater</option>
+                        <option value="Self Contained">Self Contained</option></select
+                      ><br />
+                      <button type="submit" id="hostel-type-sub">
+                        <img src="{% static "admin/img/icon-yes.svg" %}"
+                        alt="Save"/>
+                      </button>
+                    </form>
+                  </span>
+                </td>
                 <td>
                     <button id="hostel-type-btn" class="btn-for-change">
                       <img src="{% static "admin/img/icon-changelink.svg" %}"
