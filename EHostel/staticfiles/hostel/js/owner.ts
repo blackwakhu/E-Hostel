@@ -16,7 +16,7 @@ let buttonElements: HTMLAnchorElement[] = [home_btn, hostels_btn, new_hostel_btn
 let btnObj: { button: HTMLAnchorElement, div: HTMLDivElement }[] = new Array()
 
 for (let i = 0; i < divElements.length; i++) {
-    btnObj.push({"button": buttonElements[i], "div": divElements[i]})
+    btnObj.push({ "button": buttonElements[i], "div": divElements[i] })
 }
 
 let updateElementsOwner: UpdatedElementsint[] = [
@@ -62,7 +62,7 @@ const uname: string = document.querySelector("#owner-uname").textContent
 
 document.addEventListener("DOMContentLoaded", () => {
     btnObj.forEach((bObj) => {
-        if (bObj !== null){
+        if (bObj !== null) {
             bObj.button.addEventListener("click", () => {
                 hideDivElements(bObj.button, buttonElements, bObj.div, divElements)
             })
@@ -71,18 +71,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hideUrlDivElements(home_div, divElements)
     updateElementsOwner.forEach((elem) => {
-            elem.editBtn.addEventListener("click", () => { hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div") })
-            elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div") })
-            elem.subbtn.addEventListener("click", () => {
-                // saveData(elem.inputElem)
-                if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
-                    alert("The phone number is not valid")
-                } else {
-                    const elemurl: string = `/api/owner/update/${uname}/${elem.column}/`
-                    handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
-                    hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
-                }
-            })
+        elem.editBtn.addEventListener("click", () => {
+            hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div")
         })
-   
+        elem.cancelBtn.addEventListener("click", () => {
+            hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
+        })
+        elem.subbtn.addEventListener("click", () => {
+            // saveData(elem.inputElem)
+            if (elem.column === "phone_number" && !(validateNumber(elem.inputElem.value))) {
+                alert("The phone number is not valid")
+            } else {
+                const elemurl: string = `/api/owner/update/${uname}/${elem.column}/`
+                handleUpdateClick(elemurl, elem.column, elem.inputElem.value, elem.displayClass)
+                hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div")
+            }
+        })
+    })
+
 })

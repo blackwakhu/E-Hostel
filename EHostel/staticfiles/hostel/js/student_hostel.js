@@ -51,14 +51,15 @@ class HostelReviews {
     createReviewElement(review) {
         const reviewElement = document.createElement('div');
         reviewElement.innerHTML = `
-            <p><strong>${review.student}</strong> (${review.rating} stars) - ${review.comment}</p>
-            <button class="reply-button" data-review-id="${review.id}">Reply</button>
-            <div id="reply-form-${review.id}" style="display: none;">
-                <input type="text" id="reply-comment-${review.id}" placeholder="Reply comment">
-                <input type="number" id="reply-rating-${review.id}" placeholder="Reply rating">
-                <button class="submit-reply" data-review-id="${review.id}">Submit Reply</button>
+            <div class="card-review">
+                <div>
+                    <h3>${review.student}</h3>
+                    <p class="card-comment">${review.comment}</p>
+                </div>
+                <div class="card-rating" >
+                    ${review.rating} <img src="/static/images/selected_star.png" alt="stars"/>
+                </div>
             </div>
-            <div id="replies-${review.id}"></div>
         `;
         review.replies.forEach((reply) => {
             var _a;
@@ -100,7 +101,7 @@ function createReview(comment, rating, parent_id = null) {
 }
 (_c = document.getElementById('add-review-button')) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
     const comment = document.querySelector('#review-comment').value;
-    const rating = parseInt(document.querySelector('#review-rating').value);
+    const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
     createReview(comment, rating);
 });
 new HostelReviews();

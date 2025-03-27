@@ -6,45 +6,6 @@
   }
 }
 
-.main-content .new-hostel-html {
-  margin-top: 90px;
-  width: 70%;
-  margin-left: 15%;
-  padding: 20px;
-}
-
-.main-content .new-hostel-html .label {
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-content .new-hostel-html .input,
-.main-content .new-hostel-html .label {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 5px;
-  text-align: center;
-}
-
-.main-content .new-hostel-html .input,
-.main-content .new-hostel-html .button {
-  border-radius: 20px;
-  padding: 10px;
-  font-size: 15px;
-}
-
-.main-content .new-hostel-html .group {
-  margin-bottom: 10px;
-}
-
-.main-content .new-hostel-html .button {
-  background: greenyellow;
-  width: 50%;
-  margin-left: 25%;
-}
-
 #add-amenities-div,
 #add-amenities-div #new-amenities-div {
   display: none;
@@ -93,63 +54,211 @@
   display: block;
 }
 
-.main-content .inner-menu { 
-  position: absolute;  
-  left: 0px;
-  width: 150px;
-  background-color: rgba(153, 255, 255, .4);
+.inner-menu {
+  border-right: solid 2px #ddd;
   height: 1000px;
-  
-}
-
-.main-content .inner-menu li {
-  margin: 5px;
-}
-
-.main-content .inner-menu li:hover {
-  color: white;
-  background: gray;
-  border: solid greenyellow 2px;
-  border-radius: 3px;
-}
-
-.main-content .main-content-book {
   position: absolute;
-  left: 150px;
-
+  left: 0;
+  margin-top: 200;
+  font-size: 1.2em;
 }
 
-
-.main-content .table-list-student {
-  align-self: center;
+.inner-menu li {
+  list-style: none;
+  border: #ccc 2px solid;
+  padding: 8px 12px;
 }
 
-.main-content .table-list-student table {
+.inner-menu li:hover {
+  transform: scale(1.05);
+  color: #198754;
+  border-color: #198754;
+}
+
+#new-hostel-html {
+  width: 100%;
+}
+
+#hotelForm .input {
+  width: 60%;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  border-bottom: 2px #ddd solid;
+  background-color: #f9f9f9;
+  font-size: 1.2em;
+  margin: 5px;
+}
+
+.submit-btn {
+  color: #198754;
+  border: 2px #198754 solid;
+  background-color: #ddd;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border-radius: 5px;
+}
+
+label {
+  font-size: 1.2em;
+}
+
+.account-div th,
+.account-div td {
+  padding: 8px 12px;
+  font-size: 1.2em;
+}
+
+table {
+  font-size: 1.2em;
+  text-align: left;
   border-collapse: collapse;
-  margin: 5px;
 }
 
-.main-content #print-a-active {
-  border: solid 2px black;
-  padding: 2px;
-  border-radius: 3px;
-  color: black;
-  text-decoration: none;
-  left: 80%;
-  margin: 5px;
+.bookings-table-list td,
+.bookings-table-list {
+  padding: 4px 6px;
 }
 
-.main-content #print-a-active:hover {
+.amenity-current-item {
+  border: solid 2px #bbb;
+  display: inline-flex;
+  margin: 5px;
+  padding: 0 0 0 3px;
+  border-radius: 5px;
+}
+
+.amenity-current-item button {
+  height: 25px;
+  width: 25px;
+  margin-left: 2px;
+  font-size: 1.1em;
+  background-color: red;
   color: white;
-  background: green;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: none;
 }
 
-.main-content .table-list-student table td, .main-content .table-list-student table th {
-  border: solid black 3px;
-  padding: 4px;
+#add-amenities-btn, #close-amenity-btn {
+  border: none;
 }
 
-.hostel-owner-div {
-  background-color: #9999ff;
-  min-height: 1000px;
+#add-amenities-btn img, #close-amenity-btn img {
+  height: 25px;
+  width: 25px;
+}
+
+#add-amenities-btn:hover {
+  border: 2px solid #198754;
+  border-radius: 5px;
+}
+
+#close-amenity-btn:hover {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.amenity-item-btn {
+  color: #198754;
+  border: solid 2px #198754;
+  background-color: #ddd;
+  border-radius: 5px;
+  font-size: 1.1em;
+  padding: 5px;
+}
+
+#add-amenities-btn img:hover,
+.amenity-current-item:hover,
+.amenity-item-btn:hover, #close-amenity-btn:hover{
+  transform: scale(1.04);
+}
+
+#new-amenity-btn {
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  background-color: #ddd;
+  padding: 5px;
+  font-size: 1.1em;
+  border-radius: 5px;
+}
+
+#new-amenity-btn:hover {
+  color: #ddd;
+  background-color: #0d6efd;
+}
+
+#new-amenity-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+#amenity-input {
+  padding: 8px;
+  font-size: 1.1em;
+  background-color: #fff;
+  border: none;
+  border-right: 2px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  margin: 0;
+}
+
+#submit-amenity-btn {
+  border: none;
+  background-color: #198754;
+  padding: 8px 12px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+#submit-amenity-btn img {
+  height: 20px;
+  width: 20px;
+}
+
+#add-img-form {
+  display: inline-flex;
+  font-size: 1.2em;
+}
+
+#add-img-form input {
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border: 2px solid #0d6efd;
+  border-radius: 5px 0 0 5px;
+  color: #0d6efd;
+  background-color: #ddd;
+}
+
+#add-img-form input:hover {
+  background-color: #0d6efd;
+  color: #ddd;
+}
+
+#add-img-form button img {
+  height: 25px;
+  width: 25px;
+}
+
+#add-img-form button {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: solid 2px #198754;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  background-color: #198754;
+}
+
+.table-list-student table {
+  border-collapse: collapse;
+}
+
+.table-list-student th, .table-list-student td {
+  padding: 5px;
+  border: 1px solid black;
 }

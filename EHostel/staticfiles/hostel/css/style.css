@@ -99,6 +99,10 @@ body {
   display: none;
 }
 
+.hide-div {
+  display: none;
+}
+
 .card-container {
   display: inline-flex;
   flex-wrap: wrap;
@@ -217,7 +221,7 @@ main {
 }
 
 main .main-div {
-  min-height: 1000px;
+  /* min-height: 1000px; */
   margin: 20px;
 }
 
@@ -264,7 +268,7 @@ footer {
   overflow: hidden;
 }
 
-.input-change-form input {
+.input-change-form input, .input-change-form select {
   padding: 8px;
   border: none;
   border-right: 1px solid #ccc;

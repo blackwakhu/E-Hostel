@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { hideSingleElements, alterAmenity, verifyBooking, hideBookDiv, } from "./mymodules.js";
+import { hideSingleElements, alterAmenity, verifyBooking, hideBookDiv, hideEditElements, handleUpdateClick, } from "./mymodules.js";
 let hostel_id = Number(document.querySelector("#hostel_id").textContent);
 let bookingDiv = document.querySelector("#hostelBookings");
 let availRoomsTd = document.querySelector("#avail_rooms");
@@ -46,6 +46,7 @@ function displayBookings(url, book_div) {
                 if (bookings && bookings.length > 0) {
                     let tableBook = document.createElement("table");
                     let titleBook = document.createElement("thead");
+                    tableBook.classList.add("table-list-bookies");
                     titleBook.innerHTML +=
                         "<tr><th>Admission Number</th><th>Name</th><th>Email</th><th>Phone number</th><th>Booking status</th><th></th></tr>";
                     tableBook.appendChild(titleBook);
@@ -161,8 +162,9 @@ class Amenities {
             this.amenities.forEach((amenity) => {
                 let span = document.createElement("span");
                 span.innerHTML = `${amenity.amenity}`;
+                span.classList.add("amenity-current-item");
                 let del_btn = document.createElement("button");
-                del_btn.innerText = "X";
+                del_btn.innerHTML = "X";
                 del_btn.addEventListener("click", function () {
                     let myurl1 = `/owner/hostel/${hostel_id}/remove_amenity/${amenity.amenity}/`;
                     alterAmenity(myurl1);
@@ -266,8 +268,58 @@ let booking_urls = [
         div: active_booking_div,
     },
 ];
+let updateElementsHostel = [
+    {
+        editBtn: document.querySelector("#hostel-name-btn"),
+        displayClass: document.querySelector(".hostel-name-display"),
+        inputClass: document.querySelector(".hostel-name-input"),
+        cancelBtn: document.querySelector("#hostel_name_cancel"),
+        inputElem: document.querySelector("#hostel-name-inp"),
+        subbtn: document.querySelector("#hostel-name-sub"),
+        column: "hostel_name"
+    }, {
+        editBtn: document.querySelector("#hostel-price-btn"),
+        displayClass: document.querySelector(".hostel-price-display"),
+        inputClass: document.querySelector(".hostel-price-input"),
+        cancelBtn: document.querySelector("#hostel_price_cancel"),
+        inputElem: document.querySelector("#hostel-price-inp"),
+        subbtn: document.querySelector("#hostel-price-sub"),
+        column: "price_per_month"
+    }, {
+        editBtn: document.querySelector("#hostel-rooms-btn"),
+        displayClass: document.querySelector(".hostel-rooms-display"),
+        inputClass: document.querySelector(".hostel-rooms-input"),
+        cancelBtn: document.querySelector("#hostel_rooms_cancel"),
+        inputElem: document.querySelector("#hostel-rooms-inp"),
+        subbtn: document.querySelector("#hostel-rooms-sub"),
+        column: "number_rooms"
+    }, {
+        editBtn: document.querySelector("#hostel-type-btn"),
+        displayClass: document.querySelector(".hostel-type-display"),
+        inputClass: document.querySelector(".hostel-type-input"),
+        cancelBtn: document.querySelector("#hostel_type_cancel"),
+        inputElem: document.querySelector("#hostel-type-inp"),
+        subbtn: document.querySelector("#hostel-type-sub"),
+        column: "room_type"
+    }
+];
 document.addEventListener("DOMContentLoaded", () => {
-    // displayBookings(hostel_id);
+    updateElementsHostel.forEach(elem => {
+        elem.editBtn.addEventListener("click", () => {
+            hideEditElements(elem.editBtn, elem.displayClass, elem.inputClass, elem.cancelBtn, "hide-div");
+        });
+        elem.cancelBtn.addEventListener("click", () => { hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div"); });
+        elem.subbtn.addEventListener("click", () => {
+            const url = `/api/owner/hostel_update/${hostel_id}/${elem.column}/`;
+            if (elem.column === "price_per_month") {
+                handleUpdateClick(url, elem.column, parseInt(elem.inputElem.value), elem.displayClass);
+            }
+            else {
+                handleUpdateClick(url, elem.column, elem.inputElem.value, elem.displayClass);
+            }
+            hideEditElements(elem.cancelBtn, elem.inputClass, elem.displayClass, elem.editBtn, "hide-div");
+        });
+    });
     booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
         book_url.div.addEventListener("click", function (event) {
@@ -293,8 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 setInterval(() => {
-    // displayBookings(hostel_id)
     booking_urls.forEach((book_url) => {
         displayBookings(book_url.url, book_url.div);
     });
-}, 5000);
+}, 10000);

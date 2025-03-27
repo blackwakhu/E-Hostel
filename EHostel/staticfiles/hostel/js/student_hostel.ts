@@ -48,16 +48,16 @@ class HostelReviews {
     createReviewElement(review: Review): HTMLDivElement {
         const reviewElement = document.createElement('div');
         reviewElement.innerHTML = `
-            <p><strong>${review.student}</strong> (${review.rating} stars) - ${review.comment}</p>
-            <button class="reply-button" data-review-id="${review.id}">Reply</button>
-            <div id="reply-form-${review.id}" style="display: none;">
-                <input type="text" id="reply-comment-${review.id}" placeholder="Reply comment">
-                <input type="number" id="reply-rating-${review.id}" placeholder="Reply rating">
-                <button class="submit-reply" data-review-id="${review.id}">Submit Reply</button>
+            <div class="card-review">
+                <div>
+                    <h3>${review.student}</h3>
+                    <p class="card-comment">${review.comment}</p>
+                </div>
+                <div class="card-rating" >
+                    ${review.rating} <img src="/static/images/selected_star.png" alt="stars"/>
+                </div>
             </div>
-            <div id="replies-${review.id}"></div>
-        `;
-            
+        `          
         review.replies.forEach((reply) => {
             const replyElement = document.createElement('div');
             replyElement.innerHTML = `<p><strong>${reply.student}</strong> (${reply.rating} stars) - ${reply.comment}</p>`;
@@ -102,7 +102,7 @@ async function createReview(comment: string, rating: number, parent_id: number |
 
 document.getElementById('add-review-button')?.addEventListener("click", () => {
     const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
-    const rating: number = parseInt(document.querySelector<HTMLInputElement>('#review-rating').value)   
+    const rating: number = parseInt(document.querySelector<HTMLInputElement>('input[name="rating"]:checked').value)
     createReview(comment, rating)
 })
 
