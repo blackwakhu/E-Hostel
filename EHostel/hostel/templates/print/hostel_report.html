@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Report for Hostels</title>
+        <style>
+            body { font-family: sans-serif; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+        </style>
+    </head>
+    <body>
+        {{ letterhead|safe }}
+        <h1>All Hostels</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Owner</th>
+                    <th>Rent(ksh)</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Capacity</th>
+                    <th>Empty Rooms</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hostel in hostels %}
+                <tr>
+                    <td>{{ hostel.name }}</td>
+                    <td>{{ hostel.owner_fname }} {{ hostel.owner_lname }}</td>
+                    <td>{{ hostel.rent }}</td>
+                    <td>{{ hostel.locality }}</td>
+                    <td>{{ hostel.type }}</td>
+                    <td>{{ hostel.capacity }}</td>
+                    <td>{{ hostel.availability }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

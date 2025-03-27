@@ -52,4 +52,5 @@ urlpatterns = [
 
     path("myadmin/get_students/download/",  admin_get_students_download, name="admin-get-students-download"),
     path("myadmin/get_owners/download/",  admin_get_owners_download, name="admin-get-owners-download"),
+    path("myadmin/get_hostels/download/",  admin_get_hostels_download, name="admin-get-hostels-download"),
 ]
