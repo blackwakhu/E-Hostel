@@ -32,42 +32,60 @@ stud_btn.addEventListener("click", function () {
     active_thing();
 });
 function active_thing() {
-    admin_title.innerText = "Student Registry Report";
-    admin_div.innerHTML = "";
-    let title = document.createElement("h1");
-    title.innerText = "Students List";
-    admin_div.appendChild(title);
-    let print_div = document.createElement("div");
-    print_div.classList.add("print-a-div");
-    let print_a = document.createElement("a");
-    print_a.classList.add("print-a");
-    print_a.innerText = "Convert To PDF";
-    print_a.href = "/myadmin/get_students/download/";
-    print_div.appendChild(print_a);
-    admin_div.appendChild(print_div);
-    let stud_div = document.createElement("div");
-    let stud_table = document.createElement("table");
-    load_person(stud_table, "/myadmin/get_students/", "Admission Number");
-    stud_div.appendChild(stud_table);
-    admin_div.appendChild(stud_div);
+    return __awaiter(this, void 0, void 0, function* () {
+        admin_title.innerText = "Student Registry Report";
+        admin_div.innerHTML = "";
+        let print_div = document.createElement("div");
+        let searchInput = document.createElement("input");
+        searchInput.placeholder = "Enter the Name or Admission Number";
+        searchInput.classList.add("admin-search-input");
+        print_div.appendChild(searchInput);
+        let searchBtn = document.createElement("button");
+        searchBtn.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+        print_div.appendChild(searchBtn);
+        searchBtn.classList.add("admin-search-btn");
+        let stud_div = document.createElement("div");
+        let stud_table = document.createElement("table");
+        searchBtn.addEventListener("click", function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                let data = yield getData("/myadmin/get_students/");
+                let searchTerm = searchInput.value.toLocaleLowerCase();
+                let mydata = data.filter((student) => {
+                    return (student.fname.toLowerCase().includes(searchTerm) ||
+                        student.lname.toLowerCase().includes(searchTerm) ||
+                        student.admin.toLocaleLowerCase().includes(searchTerm));
+                });
+                stud_table.innerHTML = "";
+                load_person(stud_table, "Admission Number", mydata);
+            });
+        });
+        print_div.classList.add("print-a-div");
+        let print_a = document.createElement("a");
+        print_a.classList.add("print-a");
+        print_a.innerText = "Convert To PDF";
+        print_a.href = "/myadmin/get_students/download/";
+        print_div.appendChild(print_a);
+        admin_div.appendChild(print_div);
+        let data = yield getData("/myadmin/get_students/");
+        load_person(stud_table, "Admission Number", data);
+        stud_div.appendChild(stud_table);
+        admin_div.appendChild(stud_div);
+    });
 }
 active_thing();
-function load_person(table, url, title) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const data = yield getData(url);
-        let trHead = document.createElement("tr");
-        trHead.innerHTML = `<th>${title}</th> <th>Name</th> <th>Email</th><th>Contact</th>`;
-        table.appendChild(trHead);
-        data.forEach(datum => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
+function load_person(table, title, data) {
+    let trHead = document.createElement("tr");
+    trHead.innerHTML = `<th>${title}</th> <th>Name</th> <th>Email</th><th>Contact</th>`;
+    table.appendChild(trHead);
+    data.forEach((datum) => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${datum.admin}</td>
             <td>${datum.fname} ${datum.lname}</td>
             <td>${datum.email}</td>
             <td>${datum.contact}</td>
         `;
-            table.appendChild(tr);
-        });
+        table.appendChild(tr);
     });
 }
 function load_owner(table, url) {
@@ -76,7 +94,7 @@ function load_owner(table, url) {
         let trHead = document.createElement("tr");
         trHead.innerHTML = `<th>Name</th> <th>Email</th><th>Contact</th>`;
         table.appendChild(trHead);
-        data.forEach(datum => {
+        data.forEach((datum) => {
             let tr = document.createElement("tr");
             tr.innerHTML = `
             <td>${datum.fname} ${datum.lname}</td>
@@ -102,7 +120,7 @@ owner_btn.addEventListener("click", function () {
     admin_div.appendChild(print_div);
     let owner_div = document.createElement("div");
     let owner_table = document.createElement("table");
-    load_person(owner_table, "/myadmin/get_owners/", "UserName");
+    load_owner(owner_table, "/myadmin/get_owners/");
     owner_div.appendChild(owner_table);
     admin_div.appendChild(owner_div);
 });
@@ -129,9 +147,10 @@ function load_hostel(table, url) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield getData(url);
         let trHead = document.createElement("tr");
-        trHead.innerHTML = "<th>Name</th> <th>Owner Name</th> <th>Rent(ksh)</th><th>Location</th><th>Type</th><th>Capacity</th><th>Empty Rooms</th>";
+        trHead.innerHTML =
+            "<th>Name</th> <th>Owner Name</th> <th>Rent(ksh)</th><th>Location</th><th>Type</th><th>Capacity</th><th>Empty Rooms</th>";
         table.appendChild(trHead);
-        data.forEach(datum => {
+        data.forEach((datum) => {
             let tr = document.createElement("tr");
             tr.innerHTML = `
             <td>${datum.name}</td>
@@ -155,47 +174,53 @@ book_btn.addEventListener("click", function () {
     let url = "/myadmin/get_bookings/all/";
     let print_div = document.createElement("div");
     print_div.classList.add("print-a-div");
-    let choice_arr = [{
+    let choice_arr = [
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/all/",
             title: "History",
             a_title: "Print All",
             a_url: "/myadmin/get_bookings/download/all/",
-        }, {
+        },
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/Accept/",
             title: "Accepted",
             a_title: "Print Accepted",
-            a_url: "/myadmin/get_bookings/download/Accept/"
-        }, {
+            a_url: "/myadmin/get_bookings/download/Accept/",
+        },
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/Reject/",
             title: "Rejected",
             a_title: "Print Rejected",
-            a_url: "/myadmin/get_bookings/download/Reject/"
-        }, {
+            a_url: "/myadmin/get_bookings/download/Reject/",
+        },
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/Pending/",
             title: "Pending",
             a_title: "Print Pending",
-            a_url: "/myadmin/get_bookings/download/Pending/"
-        }, {
+            a_url: "/myadmin/get_bookings/download/Pending/",
+        },
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/EndLease/",
             title: "Complete Lease",
             a_title: "Print Complete Lease",
-            a_url: "/myadmin/get_bookings/download/EndLease/"
-        }, {
+            a_url: "/myadmin/get_bookings/download/EndLease/",
+        },
+        {
             btn: document.createElement("button"),
             url: "/myadmin/get_bookings/Cancel/",
             title: "Cancelled",
             a_title: "Print Cancelled",
-            a_url: "/myadmin/get_bookings/download/Cancel/"
-        }
+            a_url: "/myadmin/get_bookings/download/Cancel/",
+        },
     ];
     let booking_div = document.createElement("div");
     let booking_table = document.createElement("table");
-    choice_arr.forEach(choice => {
+    choice_arr.forEach((choice) => {
         choice.btn.innerText = choice.title;
         choice.btn.classList.add("admin-booking-btns");
         choice.btn.addEventListener("click", function () {
@@ -219,9 +244,10 @@ function load_booking(table, url) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield getData(url);
         let trHead = document.createElement("tr");
-        trHead.innerHTML = "<th>Student Name</th><th>Owner Name</th> <th>Hostel Name</th><th>Book Status</th>";
+        trHead.innerHTML =
+            "<th>Student Name</th><th>Owner Name</th> <th>Hostel Name</th><th>Book Status</th>";
         table.appendChild(trHead);
-        data.forEach(datum => {
+        data.forEach((datum) => {
             let tr = document.createElement("tr");
             tr.innerHTML = `
             <td>${datum.sfname} ${datum.slname}</td>
