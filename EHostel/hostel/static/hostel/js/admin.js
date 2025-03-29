@@ -11,6 +11,7 @@ let stud_btn = document.querySelector("#stud-btn");
 let owner_btn = document.querySelector("#owner-btn");
 let book_btn = document.querySelector("#book-btn");
 let hostel_btn = document.querySelector("#hostel-btn");
+let admin_title = document.querySelector("#admin-title");
 let admin_div = document.querySelector(".admin-div");
 function getData(url) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,6 +29,10 @@ function getData(url) {
     });
 }
 stud_btn.addEventListener("click", function () {
+    active_thing();
+});
+function active_thing() {
+    admin_title.innerText = "Student Registry Report";
     admin_div.innerHTML = "";
     let title = document.createElement("h1");
     title.innerText = "Students List";
@@ -36,7 +41,7 @@ stud_btn.addEventListener("click", function () {
     print_div.classList.add("print-a-div");
     let print_a = document.createElement("a");
     print_a.classList.add("print-a");
-    print_a.innerText = "Print Students";
+    print_a.innerText = "Convert To PDF";
     print_a.href = "/myadmin/get_students/download/";
     print_div.appendChild(print_a);
     admin_div.appendChild(print_div);
@@ -45,7 +50,8 @@ stud_btn.addEventListener("click", function () {
     load_person(stud_table, "/myadmin/get_students/", "Admission Number");
     stud_div.appendChild(stud_table);
     admin_div.appendChild(stud_div);
-});
+}
+active_thing();
 function load_person(table, url, title) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield getData(url);
@@ -64,10 +70,27 @@ function load_person(table, url, title) {
         });
     });
 }
+function load_owner(table, url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = yield getData(url);
+        let trHead = document.createElement("tr");
+        trHead.innerHTML = `<th>Name</th> <th>Email</th><th>Contact</th>`;
+        table.appendChild(trHead);
+        data.forEach(datum => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td>${datum.fname} ${datum.lname}</td>
+            <td>${datum.email}</td>
+            <td>${datum.contact}</td>
+        `;
+            table.appendChild(tr);
+        });
+    });
+}
 owner_btn.addEventListener("click", function () {
     admin_div.innerHTML = "";
     let title = document.createElement("h1");
-    title.innerText = "Landlord List";
+    title.innerText = "Convert To PDF";
     admin_div.appendChild(title);
     let print_div = document.createElement("div");
     print_div.classList.add("print-a-div");
@@ -92,7 +115,7 @@ hostel_btn.addEventListener("click", function () {
     print_div.classList.add("print-a-div");
     let print_a = document.createElement("a");
     print_a.classList.add("print-a");
-    print_a.innerText = "Print Hostels";
+    print_a.innerText = "Convert to PDF";
     print_a.href = "/myadmin/get_hostels/download/";
     print_div.appendChild(print_a);
     admin_div.appendChild(print_div);

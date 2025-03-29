@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'hostel/css/admin.css' %}" type="text/css"/>
+{% endblock  %}
+
 {% block header %}
 <div class="nav-links" id="topNav">
     <a id="stud-btn">Students</a>
@@ -13,7 +17,14 @@
 {% endblock %}
 
 {% block body %} 
-<div class="admin-div"></div>
+<div class="admin">
+  <div  class="admin-header">
+    <img src="{% static "images/e-hostel-logo.png" %}" alt="logo"/>
+    <h2 id="admin-title"></h2>
+    <hr>
+  </div>
+  <div class="admin-div"></div>
+</div>
 {% endblock %}
 
 {% block js %} 

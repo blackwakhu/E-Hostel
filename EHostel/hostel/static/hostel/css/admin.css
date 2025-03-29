@@ -1,0 +1,13 @@
+.admin {
+    padding: 20px;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-header img {
+    max-height: 100px;
+    margin-bottom: 10px;
+}
