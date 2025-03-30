@@ -985,6 +985,71 @@ def admin_get_hostels_download(request):
 
     return response
 
+def admin_get_hostels_download_query(request, search_term, min_price, max_price, room_type):
+    print(f"Received: search_term={search_term}, min_price={min_price}, max_price={max_price}, room_type={room_type}")
+    q_objects = Q()
+
+    if search_term and search_term != "null": # handle null search term
+        q_objects &= (Q(hostel_name__icontains=search_term) | Q(locality__icontains=search_term))
+
+    if min_price and min_price != "null": # handle null min price
+        q_objects &= Q(price_per_month__gte=min_price)
+
+    if max_price and max_price != "null": # handle null max price
+        q_objects &= Q(price_per_month__lte=max_price)
+
+    if room_type and room_type != "null" and room_type != "All": # handle null room_type and All room_type
+        q_objects &= Q(room_type=room_type)
+
+    print(f"q_objects: {q_objects}")
+
+    hostel = Hostel.objects.filter(q_objects)
+    dhostel = [{ 
+        "name": host.hostel_name,
+        "owner_fname": host.owner.first_name,
+        "owner_lname": host.owner.last_name,
+        "rent": host.price_per_month,
+        "locality": host.locality,
+        "type": host.room_type,
+        "capacity": host.number_rooms,
+        "availability": host.available_rooms } for host in hostel]
+    
+    print(dhostel)
+    logo_path = finders.find("images/e-hostel-logo.png")
+    if logo_path:
+        logo_path = os.path.join(settings.BASE_DIR, logo_path)
+        letterhead_html = f"""
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="file://{logo_path}" alt="E-Hostel logo" style="max-width: 150px;"><br>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
+    else:
+      letterhead_html = """
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #007bff;">E-Hostel</h2>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
+    context = {
+        "hostels": dhostel,
+        "letterhead": letterhead_html,
+    }
+    template = get_template("print/hostel_report.html")
+    html_string = template.render(context)
+    html = HTML(string=html_string)
+    css = CSS(string='''
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    ''')
+    pdf_file = html.write_pdf(stylesheets=[css])
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="all_hostels.pdf"'
+
+    return response
+
 def admin_get_bookings_download(request, status):
     if status == "Accept":
         bookings = Booking.objects.filter(status="Accept")

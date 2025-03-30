@@ -57,6 +57,9 @@ urlpatterns = [
 
     path("myadmin/get_students/download/<str:search_term>/",  admin_get_students_download_query, name="admin-get-students-download-query"),
     path("myadmin/get_owners/download/<str:search_term>/",  admin_get_owners_download_query, name="admin-get-owners-download-query"),
+    path("myadmin/get_hostels/download/<str:search_term>/<int:min_price>/<int:max_price>/<str:room_type>/",  admin_get_hostels_download_query, name="admin-get-hostels-download-query"),
     
 ]
 
+
+# def admin_get_hostels_download_query(request, search_term, min_price, max_price, type):

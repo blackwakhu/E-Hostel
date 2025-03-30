@@ -238,6 +238,20 @@ hostel_btn.addEventListener("click", async function () {
     print_a.innerText = "Convert to PDF";
     print_a.href = "/myadmin/get_hostels/download/";
     print_div.appendChild(print_a);
+    let print_a_query: HTMLButtonElement = document.createElement("button")
+    print_a_query.innerText = "Convert Query To PDF"
+    print_a_query.addEventListener("click", function () {
+        let url: string = "/myadmin/get_hostels/download/"
+        const searchTerm = search_input.value
+        const max_price = parseInt(search_max_rent.value) || 0
+        const min_price = parseInt(search_min_rent.value) || 20000
+        const type_term = select_search.value
+        if (searchTerm || max_price || min_price || type_term) {
+            url += `${searchTerm || "null"}/${max_price}/${min_price}/${type_term}/`
+        }
+        window.location.href = url
+    })
+    print_div.appendChild(print_a_query)
     admin_div.appendChild(print_div);
 
     let hostel_div: HTMLDivElement = document.createElement("div");
