@@ -306,93 +306,51 @@ function load_hostel(table: HTMLTableElement, data: Hostel[]) {
     });
 }
 
-book_btn.addEventListener("click", function () {
+book_btn.addEventListener("click", async function () {
+    admin_title.innerText = "Booking Registry Report";
     admin_div.innerHTML = "";
 
-    let title: HTMLHeadElement = document.createElement("h1");
-    title.innerText = "Booking List";
-    admin_div.appendChild(title);
+    let print_div: HTMLDivElement = document.createElement("div")
+    print_div.classList.add("print-a-div")
 
-    let button_div: HTMLDivElement = document.createElement("div");
-    let url: string = "/myadmin/get_bookings/all/";
+    let input_search: HTMLInputElement = document.createElement("input")
+    input_search.placeholder = "Enter hostel name or student name"
+    print_div.appendChild(input_search)
 
-    let print_div: HTMLDivElement = document.createElement("div");
-    print_div.classList.add("print-a-div");
+    let start_button: HTMLInputElement = document.createElement("input")
+    start_button.type = "date"
+    function getDateTenYearsAgo(): string {
+        const currentDate = new Date();
+        const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+        return tenYearsAgo.toISOString().split('T')[0];
+      }
+      
+    start_button.value = getDateTenYearsAgo();
+    print_div.appendChild(start_button)
+    let stop_button: HTMLInputElement = document.createElement("input")
+    stop_button.type = "date"
+    stop_button.value = new Date().toISOString().split('T')[0];
+    print_div.appendChild(stop_button)
+    let input_button: HTMLButtonElement = document.createElement("button")
+    input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
 
-    let choice_arr: {
-        btn: HTMLButtonElement;
-        url: string;
-        title: string;
-        a_title: string;
-        a_url: string;
-    }[] = [
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/all/",
-                title: "History",
-                a_title: "Print All",
-                a_url: "/myadmin/get_bookings/download/all/",
-            },
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/Accept/",
-                title: "Accepted",
-                a_title: "Print Accepted",
-                a_url: "/myadmin/get_bookings/download/Accept/",
-            },
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/Reject/",
-                title: "Rejected",
-                a_title: "Print Rejected",
-                a_url: "/myadmin/get_bookings/download/Reject/",
-            },
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/Pending/",
-                title: "Pending",
-                a_title: "Print Pending",
-                a_url: "/myadmin/get_bookings/download/Pending/",
-            },
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/EndLease/",
-                title: "Complete Lease",
-                a_title: "Print Complete Lease",
-                a_url: "/myadmin/get_bookings/download/EndLease/",
-            },
-            {
-                btn: document.createElement("button"),
-                url: "/myadmin/get_bookings/Cancel/",
-                title: "Cancelled",
-                a_title: "Print Cancelled",
-                a_url: "/myadmin/get_bookings/download/Cancel/",
-            },
-        ];
-    let booking_div: HTMLDivElement = document.createElement("div");
-    let booking_table: HTMLTableElement = document.createElement("table");
-    choice_arr.forEach((choice) => {
-        choice.btn.innerText = choice.title;
-        choice.btn.classList.add("admin-booking-btns");
-        choice.btn.addEventListener("click", function () {
-            booking_table.innerHTML = "";
-            load_booking(booking_table, choice.url);
-        });
-        button_div.appendChild(choice.btn);
-        let a: HTMLAnchorElement = document.createElement("a");
-        a.classList.add("print-a");
-        a.href = choice.a_url;
-        a.innerText = choice.a_title;
-        print_div.appendChild(a);
-    });
+    let booking_table: HTMLTableElement = document.createElement("table")
+    print_div.appendChild(input_button)
+    let print_a: HTMLAnchorElement = document.createElement("a")
+    print_a.innerText = "Convert To PDF"
+    print_a.classList.add("print-a")
+    print_a.href = "/myadmin/get_bookings/download/"
+    print_div.appendChild(print_a)
 
-    admin_div.appendChild(button_div);
-    admin_div.appendChild(print_div);
+    admin_div.appendChild(print_div)
+    const data: Booking[] = await getData("/myadmin/get_bookings/")
+    load_booking(booking_table, data)
+    let booking_div: HTMLDivElement = document.createElement("div")
+    booking_div.appendChild(booking_table)
 
-    load_booking(booking_table, url);
-    booking_div.appendChild(booking_table);
+    admin_div.appendChild(booking_div)
 
-    admin_div.appendChild(booking_div);
+
 });
 
 interface Booking {
@@ -402,10 +360,10 @@ interface Booking {
     ofname: string;
     olname: string;
     status: string;
+    created: string | Date
 }
 
-async function load_booking(table: HTMLTableElement, url: string) {
-    const data: Booking[] = await getData(url);
+function load_booking(table: HTMLTableElement, data: Booking[]) {
 
     let trHead: HTMLTableRowElement = document.createElement("tr");
     trHead.innerHTML =
@@ -423,3 +381,10 @@ async function load_booking(table: HTMLTableElement, url: string) {
         table.appendChild(tr);
     });
 }
+
+// function formatDateForInput(date: Date): string {
+//     const year = date.getFullYear();
+//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+//     const day = String(date.getDate()).padStart(2, '0');
+//     return `${year}-${month}-${day}`;
+//   }

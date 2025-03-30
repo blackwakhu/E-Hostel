@@ -48,12 +48,12 @@ urlpatterns = [
     path("myadmin/get_students/", admin_get_students, name="admin-get-students"),
     path("myadmin/get_owners/", admin_get_owners, name="admin-get-owners"),
     path("myadmin/get_hostels/", admin_get_hostels, name="admin-get-hostels"),
-    path("myadmin/get_bookings/<str:status>/", admin_get_bookings, name="admin-get-bookings"),
+    path("myadmin/get_bookings/", admin_get_bookings, name="admin-get-bookings"),
 
     path("myadmin/get_students/download/",  admin_get_students_download, name="admin-get-students-download"),
     path("myadmin/get_owners/download/",  admin_get_owners_download, name="admin-get-owners-download"),
     path("myadmin/get_hostels/download/",  admin_get_hostels_download, name="admin-get-hostels-download"),
-    path("myadmin/get_bookings/download/<str:status>/",  admin_get_bookings_download, name="admin-get-bookings-download"),
+    path("myadmin/get_bookings/download/",  admin_get_bookings_download, name="admin-get-bookings-download"),
 
     path("myadmin/get_students/download/<str:search_term>/",  admin_get_students_download_query, name="admin-get-students-download-query"),
     path("myadmin/get_owners/download/<str:search_term>/",  admin_get_owners_download_query, name="admin-get-owners-download-query"),

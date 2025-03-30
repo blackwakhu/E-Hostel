@@ -10,6 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.staticfiles import finders
 from django.conf import settings
 from urllib.parse import parse_qs
+from datetime import datetime
 
 import os
 
@@ -723,19 +724,8 @@ def admin_get_hostels(request):
         "availability": host.available_rooms } for host in hostel]
     return JsonResponse({"data": dhostel})
 
-def admin_get_bookings(request, status):
-    if status == "Accept":
-        bookings = Booking.objects.filter(status="Accept")
-    elif status == "Reject":
-        bookings = Booking.objects.filter(status="Reject")
-    elif status == "Pending":
-        bookings = Booking.objects.filter(status="Pending")
-    elif status == "Cancel":
-        bookings = Booking.objects.filter(status="Cancel")
-    elif status == "EndLease":
-        bookings = Booking.objects.filter(status="End Lease")
-    else:
-        bookings = Booking.objects.all()
+def admin_get_bookings(request):
+    bookings = Booking.objects.all()
     
     dbookings = [{
         "sfname": book.student.first_name,
@@ -743,7 +733,8 @@ def admin_get_bookings(request, status):
         "hostel": book.hostel.hostel_name,
         "ofname": book.hostel.owner.first_name,
         "olname": book.hostel.owner.last_name,
-        "status": book.status
+        "status": book.status,
+        "created": book.created_at
     } for book in bookings]
 
     return JsonResponse({"data": dbookings})
@@ -1050,24 +1041,9 @@ def admin_get_hostels_download_query(request, search_term, min_price, max_price,
 
     return response
 
-def admin_get_bookings_download(request, status):
-    if status == "Accept":
-        bookings = Booking.objects.filter(status="Accept")
-    elif status == "Reject":
-        bookings = Booking.objects.filter(status="Reject")
-    elif status == "Pending":
-        bookings = Booking.objects.filter(status="Pending")
-    elif status == "Cancel":
-        bookings = Booking.objects.filter(status="Cancel")
-    elif status == "EndLease":
-        status = "End Lease"
-        bookings = Booking.objects.filter(status="End Lease")
-    else:
-        status = "History"
-        bookings = Booking.objects.all()
+def admin_get_bookings_download(request):
+    bookings = Booking.objects.all()
 
-    print(bookings)
-    
     dbookings = [{
         "sfname": book.student.first_name,
         "slname": book.student.last_name,
@@ -1097,7 +1073,6 @@ def admin_get_bookings_download(request, status):
         """
     context = {
         "bookings": dbookings,
-        "status": status,
         "letterhead": letterhead_html,
     }
     template = get_template("print/booking_all_report.html")
@@ -1111,6 +1086,64 @@ def admin_get_bookings_download(request, status):
     ''')
     pdf_file = html.write_pdf(stylesheets=[css])
     response = HttpResponse(pdf_file, content_type="application/pdf")
-    response["Content-Disposition"] = f'attachment; filename="all_bookings_for_{status}.pdf"'
+    response["Content-Disposition"] = f'attachment; filename="all_bookings.pdf"'
 
     return response
+
+def admin_get_bookings_download_query(request, start_date, stop_date):
+    try:
+        # bookings = Booking.objects.all()
+        start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
+        stop_date_obj = datetime.strptime(stop_date, '%Y-%m-%d').date()
+
+        # Filter bookings based on the created_at field
+        bookings = Booking.objects.filter(
+            Q(created_at__date__gte=start_date_obj) & Q(created_at__date__lte=stop_date_obj)
+        )
+        dbookings = [{
+            "sfname": book.student.first_name,
+            "slname": book.student.last_name,
+            "hostel": book.hostel.hostel_name,
+            "ofname": book.hostel.owner.first_name,
+            "olname": book.hostel.owner.last_name,
+            "status": book.status
+        } for book in bookings]
+
+        print(dbookings)
+        
+        logo_path = finders.find("images/e-hostel-logo.png")
+        if logo_path:
+            logo_path = os.path.join(settings.BASE_DIR, logo_path)
+            letterhead_html = f"""
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="file://{logo_path}" alt="E-Hostel logo" style="max-width: 150px;"><br>
+                    <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+                </div>
+            """
+        else:
+            letterhead_html = """
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="color: #007bff;">E-Hostel</h2>
+                    <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+                </div>
+            """
+        context = {
+            "bookings": dbookings,
+            "letterhead": letterhead_html,
+        }
+        template = get_template("print/booking_all_report.html")
+        html_string = template.render(context)
+        html = HTML(string=html_string)
+        css = CSS(string='''
+            body { font-family: sans-serif; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+        ''')
+        pdf_file = html.write_pdf(stylesheets=[css])
+        response = HttpResponse(pdf_file, content_type="application/pdf")
+        response["Content-Disposition"] = f'attachment; filename="all_bookings.pdf"'
+
+        return response
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

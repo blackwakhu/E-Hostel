@@ -221,7 +221,6 @@ hostel_btn.addEventListener("click", function () {
             if (searchTerm || max_price || min_price || type_term) {
                 url += `${searchTerm || "null"}/${max_price}/${min_price}/${type_term}/`;
             }
-            console.log(url)
             window.location.href = url;
         });
         print_div.appendChild(print_a_query);
@@ -264,96 +263,63 @@ function load_hostel(table, data) {
     });
 }
 book_btn.addEventListener("click", function () {
-    admin_div.innerHTML = "";
-    let title = document.createElement("h1");
-    title.innerText = "Booking List";
-    admin_div.appendChild(title);
-    let button_div = document.createElement("div");
-    let url = "/myadmin/get_bookings/all/";
-    let print_div = document.createElement("div");
-    print_div.classList.add("print-a-div");
-    let choice_arr = [
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/all/",
-            title: "History",
-            a_title: "Print All",
-            a_url: "/myadmin/get_bookings/download/all/",
-        },
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/Accept/",
-            title: "Accepted",
-            a_title: "Print Accepted",
-            a_url: "/myadmin/get_bookings/download/Accept/",
-        },
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/Reject/",
-            title: "Rejected",
-            a_title: "Print Rejected",
-            a_url: "/myadmin/get_bookings/download/Reject/",
-        },
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/Pending/",
-            title: "Pending",
-            a_title: "Print Pending",
-            a_url: "/myadmin/get_bookings/download/Pending/",
-        },
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/EndLease/",
-            title: "Complete Lease",
-            a_title: "Print Complete Lease",
-            a_url: "/myadmin/get_bookings/download/EndLease/",
-        },
-        {
-            btn: document.createElement("button"),
-            url: "/myadmin/get_bookings/Cancel/",
-            title: "Cancelled",
-            a_title: "Print Cancelled",
-            a_url: "/myadmin/get_bookings/download/Cancel/",
-        },
-    ];
-    let booking_div = document.createElement("div");
-    let booking_table = document.createElement("table");
-    choice_arr.forEach((choice) => {
-        choice.btn.innerText = choice.title;
-        choice.btn.classList.add("admin-booking-btns");
-        choice.btn.addEventListener("click", function () {
-            booking_table.innerHTML = "";
-            load_booking(booking_table, choice.url);
-        });
-        button_div.appendChild(choice.btn);
-        let a = document.createElement("a");
-        a.classList.add("print-a");
-        a.href = choice.a_url;
-        a.innerText = choice.a_title;
-        print_div.appendChild(a);
-    });
-    admin_div.appendChild(button_div);
-    admin_div.appendChild(print_div);
-    load_booking(booking_table, url);
-    booking_div.appendChild(booking_table);
-    admin_div.appendChild(booking_div);
-});
-function load_booking(table, url) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield getData(url);
-        let trHead = document.createElement("tr");
-        trHead.innerHTML =
-            "<th>Student Name</th><th>Owner Name</th> <th>Hostel Name</th><th>Book Status</th>";
-        table.appendChild(trHead);
-        data.forEach((datum) => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
+        admin_title.innerText = "Booking Registry Report";
+        admin_div.innerHTML = "";
+        let print_div = document.createElement("div");
+        print_div.classList.add("print-a-div");
+        let input_search = document.createElement("input");
+        input_search.placeholder = "Enter hostel name or student name";
+        print_div.appendChild(input_search);
+        let start_button = document.createElement("input");
+        start_button.type = "date";
+        function getDateTenYearsAgo() {
+            const currentDate = new Date();
+            const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
+            return tenYearsAgo.toISOString().split('T')[0];
+        }
+        start_button.value = getDateTenYearsAgo();
+        print_div.appendChild(start_button);
+        let stop_button = document.createElement("input");
+        stop_button.type = "date";
+        stop_button.value = new Date().toISOString().split('T')[0];
+        print_div.appendChild(stop_button);
+        let input_button = document.createElement("button");
+        input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+        let booking_table = document.createElement("table");
+        print_div.appendChild(input_button);
+        let print_a = document.createElement("a");
+        print_a.innerText = "Convert To PDF";
+        print_a.classList.add("print-a");
+        print_a.href = "/myadmin/get_bookings/download/";
+        print_div.appendChild(print_a);
+        admin_div.appendChild(print_div);
+        const data = yield getData("/myadmin/get_bookings/");
+        load_booking(booking_table, data);
+        let booking_div = document.createElement("div");
+        booking_div.appendChild(booking_table);
+        admin_div.appendChild(booking_div);
+    });
+});
+function load_booking(table, data) {
+    let trHead = document.createElement("tr");
+    trHead.innerHTML =
+        "<th>Student Name</th><th>Owner Name</th> <th>Hostel Name</th><th>Book Status</th>";
+    table.appendChild(trHead);
+    data.forEach((datum) => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${datum.sfname} ${datum.slname}</td>
             <td>${datum.ofname} ${datum.olname}</td>
             <td>${datum.hostel}</td>
             <td>${datum.status}</td>
         `;
-            table.appendChild(tr);
-        });
+        table.appendChild(tr);
     });
 }
+// function formatDateForInput(date: Date): string {
+//     const year = date.getFullYear();
+//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+//     const day = String(date.getDate()).padStart(2, '0');
+//     return `${year}-${month}-${day}`;
+//   }
