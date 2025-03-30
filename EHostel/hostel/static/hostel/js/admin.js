@@ -70,10 +70,8 @@ function active_thing() {
         print_a_query.addEventListener("click", function () {
             let url = "/myadmin/get_students/download/";
             const searchTerm = searchInput.value;
-            console.log(searchTerm);
             if (searchTerm) {
                 url += `${searchTerm}/`;
-                console.log(url);
             }
             window.location.href = url;
         });
@@ -101,41 +99,68 @@ function load_person(table, title, data) {
         table.appendChild(tr);
     });
 }
-function load_owner(table, url) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const data = yield getData(url);
-        let trHead = document.createElement("tr");
-        trHead.innerHTML = `<th>Name</th> <th>Email</th><th>Contact</th>`;
-        table.appendChild(trHead);
-        data.forEach((datum) => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
+function load_owner(table, data) {
+    let trHead = document.createElement("tr");
+    trHead.innerHTML = `<th>Name</th> <th>Email</th><th>Contact</th>`;
+    table.appendChild(trHead);
+    data.forEach((datum) => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${datum.fname} ${datum.lname}</td>
             <td>${datum.email}</td>
             <td>${datum.contact}</td>
         `;
-            table.appendChild(tr);
-        });
+        table.appendChild(tr);
     });
 }
 owner_btn.addEventListener("click", function () {
-    admin_div.innerHTML = "";
-    let title = document.createElement("h1");
-    title.innerText = "Convert To PDF";
-    admin_div.appendChild(title);
-    let print_div = document.createElement("div");
-    print_div.classList.add("print-a-div");
-    let print_a = document.createElement("a");
-    print_a.classList.add("print-a");
-    print_a.innerText = "Print Owners";
-    print_a.href = "/myadmin/get_owners/download/";
-    print_div.appendChild(print_a);
-    admin_div.appendChild(print_div);
-    let owner_div = document.createElement("div");
-    let owner_table = document.createElement("table");
-    load_owner(owner_table, "/myadmin/get_owners/");
-    owner_div.appendChild(owner_table);
-    admin_div.appendChild(owner_div);
+    return __awaiter(this, void 0, void 0, function* () {
+        admin_title.innerText = "LandLord Registry Report";
+        admin_div.innerHTML = "";
+        let print_div = document.createElement("div");
+        print_div.classList.add("print-a-div");
+        let print_a = document.createElement("a");
+        print_a.classList.add("print-a");
+        let input_search = document.createElement("input");
+        input_search.placeholder = "Enter Name";
+        print_div.appendChild(input_search);
+        let input_button = document.createElement("button");
+        input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+        let owner_table = document.createElement("table");
+        input_button.addEventListener("click", function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                let data = yield getData("/myadmin/get_owners/");
+                let searchTerm = input_search.value.toLowerCase();
+                let mydata = data.filter((owner) => {
+                    return (owner.fname.toLowerCase().includes(searchTerm) ||
+                        owner.lname.toLowerCase().includes(searchTerm));
+                });
+                owner_table.innerHTML = "";
+                load_owner(owner_table, mydata);
+            });
+        });
+        print_div.appendChild(input_button);
+        print_a.innerText = "Convert To PDF";
+        print_a.href = "/myadmin/get_owners/download/";
+        print_div.appendChild(print_a);
+        let print_a_query = document.createElement("button");
+        print_a_query.innerText = "Convert Query To PDF";
+        print_a_query.addEventListener("click", function () {
+            let url = '/myadmin/get_owners/download/';
+            const searchTerm = input_search.value;
+            if (searchTerm) {
+                url += `${searchTerm}`;
+            }
+            window.location.href = url;
+        });
+        print_div.appendChild(print_a_query);
+        admin_div.appendChild(print_div);
+        let owner_div = document.createElement("div");
+        let data = yield getData("/myadmin/get_owners/");
+        load_owner(owner_table, data);
+        owner_div.appendChild(owner_table);
+        admin_div.appendChild(owner_div);
+    });
 });
 hostel_btn.addEventListener("click", function () {
     admin_div.innerHTML = "";

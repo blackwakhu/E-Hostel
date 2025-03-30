@@ -67,10 +67,8 @@ async function active_thing() {
     print_a_query.addEventListener("click", function () {
         let url: string = "/myadmin/get_students/download/"
         const searchTerm = searchInput.value
-        console.log(searchTerm)
         if (searchTerm) {
             url += `${searchTerm}/`
-            console.log(url)
         }
         window.location.href = url
     })
@@ -112,9 +110,7 @@ function load_person(table: HTMLTableElement, title: string, data: Person[]) {
     });
 }
 
-async function load_owner(table: HTMLTableElement, url: string) {
-    const data: Person[] = await getData(url);
-
+function load_owner(table: HTMLTableElement, data: Person[]) {
     let trHead: HTMLTableRowElement = document.createElement("tr");
     trHead.innerHTML = `<th>Name</th> <th>Email</th><th>Contact</th>`;
     table.appendChild(trHead);
@@ -130,25 +126,58 @@ async function load_owner(table: HTMLTableElement, url: string) {
     });
 }
 
-owner_btn.addEventListener("click", function () {
+owner_btn.addEventListener("click", async function () {
+    admin_title.innerText = "LandLord Registry Report";
     admin_div.innerHTML = "";
-    let title: HTMLHeadElement = document.createElement("h1");
-    title.innerText = "Convert To PDF";
-    admin_div.appendChild(title);
 
     let print_div: HTMLDivElement = document.createElement("div");
     print_div.classList.add("print-a-div");
 
     let print_a: HTMLAnchorElement = document.createElement("a");
     print_a.classList.add("print-a");
-    print_a.innerText = "Print Owners";
+    let input_search: HTMLInputElement = document.createElement("input")
+    input_search.placeholder = "Enter Name"
+    print_div.appendChild(input_search)
+
+    let input_button: HTMLButtonElement = document.createElement("button")
+    input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+    let owner_table: HTMLTableElement = document.createElement("table");
+    input_button.addEventListener("click", async function () {
+        let data: Person[] = await getData("/myadmin/get_owners/")
+        let searchTerm: string = input_search.value.toLowerCase()
+        let mydata: Person[] = data.filter((owner) => {
+            return (
+                owner.fname.toLowerCase().includes(searchTerm) ||
+                owner.lname.toLowerCase().includes(searchTerm)
+            )
+        })
+        owner_table.innerHTML = ""
+        load_owner(owner_table, mydata)
+    })
+    print_div.appendChild(input_button)
+
+    print_a.innerText = "Convert To PDF";
     print_a.href = "/myadmin/get_owners/download/";
     print_div.appendChild(print_a);
+
+    let print_a_query: HTMLButtonElement = document.createElement("button")
+    print_a_query.innerText = "Convert Query To PDF"
+    print_a_query.addEventListener("click", function () {
+        let url: string = '/myadmin/get_owners/download/'
+        const searchTerm = input_search.value
+        if (searchTerm) {
+            url += `${searchTerm}`
+        }
+        window.location.href = url
+    })
+    print_div.appendChild(print_a_query)
     admin_div.appendChild(print_div);
 
     let owner_div: HTMLDivElement = document.createElement("div");
-    let owner_table: HTMLTableElement = document.createElement("table");
-    load_owner(owner_table, "/myadmin/get_owners/");
+    let data:Person[] = await getData("/myadmin/get_owners/")
+    load_owner(owner_table, data);
+    
+
     owner_div.appendChild(owner_table);
 
     admin_div.appendChild(owner_div);

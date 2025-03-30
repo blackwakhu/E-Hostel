@@ -56,4 +56,7 @@ urlpatterns = [
     path("myadmin/get_bookings/download/<str:status>/",  admin_get_bookings_download, name="admin-get-bookings-download"),
 
     path("myadmin/get_students/download/<str:search_term>/",  admin_get_students_download_query, name="admin-get-students-download-query"),
+    path("myadmin/get_owners/download/<str:search_term>/",  admin_get_owners_download_query, name="admin-get-owners-download-query"),
+    
 ]
+

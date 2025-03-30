@@ -888,6 +888,56 @@ def admin_get_owners_download(request):
 
     return response
 
+def admin_get_owners_download_query(request, search_term):
+    owner = Owner.objects.all()
+    if search_term:
+        owner = owner.filter(
+            first_name__icontains=search_term
+        ) | owner.filter(
+            last_name__icontains=search_term
+        )
+    downer = [{
+        "username": own.username, 
+        "first_name": own.first_name,
+        "last_name": own.last_name,
+        "email": own.email,
+        "contact": own.phone_number} for own in owner]
+    
+    logo_path = finders.find("images/e-hostel-logo.png")
+    if logo_path:
+        logo_path = os.path.join(settings.BASE_DIR, logo_path)
+        letterhead_html = f"""
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="file://{logo_path}" alt="E-Hostel logo" style="max-width: 150px;"><br>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
+    else:
+      letterhead_html = """
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h2 style="color: #007bff;">E-Hostel</h2>
+                <p>Phone: +254 114386583 | Email: shiberoderrickwakhu@gmail.com</p>
+            </div>
+        """
+    context = {
+        "owners": downer,
+        "letterhead": letterhead_html,
+    }
+    template = get_template("print/owner_report.html")
+    html_string = template.render(context)
+    html = HTML(string=html_string)
+    css = CSS(string='''
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    ''')
+    pdf_file = html.write_pdf(stylesheets=[css])
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = f'attachment; filename="all_landlords.pdf"'
+
+    return response
+
 def admin_get_hostels_download(request):
     hostel = Hostel.objects.all()
     dhostel = [{ 
