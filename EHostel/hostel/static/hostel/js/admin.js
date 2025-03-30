@@ -65,6 +65,19 @@ function active_thing() {
         print_a.innerText = "Convert To PDF";
         print_a.href = "/myadmin/get_students/download/";
         print_div.appendChild(print_a);
+        let print_a_query = document.createElement("button");
+        print_a_query.innerText = "Conver Query Results To PDF";
+        print_a_query.addEventListener("click", function () {
+            let url = "/myadmin/get_students/download/";
+            const searchTerm = searchInput.value;
+            console.log(searchTerm);
+            if (searchTerm) {
+                url += `${searchTerm}/`;
+                console.log(url);
+            }
+            window.location.href = url;
+        });
+        print_div.appendChild(print_a_query);
         admin_div.appendChild(print_div);
         let data = yield getData("/myadmin/get_students/");
         load_person(stud_table, "Admission Number", data);
