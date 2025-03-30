@@ -183,14 +183,55 @@ owner_btn.addEventListener("click", async function () {
     admin_div.appendChild(owner_div);
 });
 
-hostel_btn.addEventListener("click", function () {
+hostel_btn.addEventListener("click", async function () {
+    admin_title.innerText = "Hostel Registry Report";
     admin_div.innerHTML = "";
-    let title: HTMLHeadElement = document.createElement("h1");
-    title.innerText = "Hostel List";
-    admin_div.appendChild(title);
+    
 
     let print_div: HTMLDivElement = document.createElement("div");
     print_div.classList.add("print-a-div");
+
+    let search_input: HTMLInputElement = document.createElement("input")
+
+    search_input.placeholder = "Enter Hostel Name or Location"
+    
+    let search_button: HTMLButtonElement = document.createElement("button")
+    search_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+    print_div.appendChild(search_input)
+    let search_min_rent: HTMLInputElement = document.createElement("input")
+    search_min_rent.type = "number"
+    search_min_rent.placeholder = "Enter the min rent"
+    print_div.appendChild(search_min_rent)
+    let search_max_rent: HTMLInputElement = document.createElement("input")
+    search_max_rent.type = "number"
+    search_max_rent.placeholder = "Enter the max rent"
+    print_div.appendChild(search_max_rent)
+    let options: string[] = ["All", "Single", "Double", "Triple", "Quad", "Bed Seater", "Self Contained"]
+    let select_search: HTMLSelectElement = document.createElement("select")
+    add_select(select_search, options, "All")
+    print_div.appendChild(select_search)
+
+    let hostel_table: HTMLTableElement = document.createElement("table");
+
+    search_button.addEventListener("click", async function () {
+        let search_term_inp = search_input.value.toLowerCase()
+        let min_rent: number = parseFloat(search_min_rent.value) || 0
+        let max_rent: number = parseFloat(search_max_rent.value) || Infinity
+        const data: Hostel[] = await getData("/myadmin/get_hostels/")
+        let mydata: Hostel[] = data.filter((hostel) => {
+            const priceRange = hostel.rent <= max_rent && hostel.rent >= min_rent
+            const room_type = select_search.value === "All" || hostel.type === select_search.value
+            return (
+                (hostel.name.toLowerCase().includes(search_term_inp) || 
+                    hostel.locality.toLocaleLowerCase().includes(search_term_inp))
+                && priceRange 
+                && room_type
+            )
+        })
+        hostel_table.innerHTML = ""
+        load_hostel(hostel_table, mydata)
+    })
+    print_div.appendChild(search_button)
 
     let print_a: HTMLAnchorElement = document.createElement("a");
     print_a.classList.add("print-a");
@@ -200,8 +241,8 @@ hostel_btn.addEventListener("click", function () {
     admin_div.appendChild(print_div);
 
     let hostel_div: HTMLDivElement = document.createElement("div");
-    let hostel_table: HTMLTableElement = document.createElement("table");
-    load_hostel(hostel_table, "/myadmin/get_hostels/");
+    const data: Hostel[] = await getData("/myadmin/get_hostels/")
+    load_hostel(hostel_table, data);
     hostel_div.appendChild(hostel_table);
 
     admin_div.appendChild(hostel_div);
@@ -217,8 +258,19 @@ interface Hostel {
     availability: number;
 }
 
-async function load_hostel(table: HTMLTableElement, url: string) {
-    const data: Hostel[] = await getData(url);
+function add_select(select: HTMLSelectElement, options: string[], selval?: string) {
+    options.forEach((option) => {
+        let optionelem = document.createElement("option")
+        optionelem.textContent = option
+        optionelem.value = option
+        if (selval && selval === option) {
+            optionelem.selected = true
+        }
+        select.appendChild(optionelem)
+    })
+}
+
+function load_hostel(table: HTMLTableElement, data: Hostel[]) {
 
     let trHead: HTMLTableRowElement = document.createElement("tr");
     trHead.innerHTML =

@@ -163,34 +163,80 @@ owner_btn.addEventListener("click", function () {
     });
 });
 hostel_btn.addEventListener("click", function () {
-    admin_div.innerHTML = "";
-    let title = document.createElement("h1");
-    title.innerText = "Hostel List";
-    admin_div.appendChild(title);
-    let print_div = document.createElement("div");
-    print_div.classList.add("print-a-div");
-    let print_a = document.createElement("a");
-    print_a.classList.add("print-a");
-    print_a.innerText = "Convert to PDF";
-    print_a.href = "/myadmin/get_hostels/download/";
-    print_div.appendChild(print_a);
-    admin_div.appendChild(print_div);
-    let hostel_div = document.createElement("div");
-    let hostel_table = document.createElement("table");
-    load_hostel(hostel_table, "/myadmin/get_hostels/");
-    hostel_div.appendChild(hostel_table);
-    admin_div.appendChild(hostel_div);
-});
-function load_hostel(table, url) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield getData(url);
-        let trHead = document.createElement("tr");
-        trHead.innerHTML =
-            "<th>Name</th> <th>Owner Name</th> <th>Rent(ksh)</th><th>Location</th><th>Type</th><th>Capacity</th><th>Empty Rooms</th>";
-        table.appendChild(trHead);
-        data.forEach((datum) => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
+        admin_title.innerText = "Hostel Registry Report";
+        admin_div.innerHTML = "";
+        let print_div = document.createElement("div");
+        print_div.classList.add("print-a-div");
+        let search_input = document.createElement("input");
+        search_input.placeholder = "Enter Hostel Name or Location";
+        let search_button = document.createElement("button");
+        search_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+        print_div.appendChild(search_input);
+        let search_min_rent = document.createElement("input");
+        search_min_rent.type = "number";
+        search_min_rent.placeholder = "Enter the min rent";
+        print_div.appendChild(search_min_rent);
+        let search_max_rent = document.createElement("input");
+        search_max_rent.type = "number";
+        search_max_rent.placeholder = "Enter the max rent";
+        print_div.appendChild(search_max_rent);
+        let options = ["All", "Single", "Double", "Triple", "Quad", "Bed Seater", "Self Contained"];
+        let select_search = document.createElement("select");
+        add_select(select_search, options, "All");
+        print_div.appendChild(select_search);
+        let hostel_table = document.createElement("table");
+        search_button.addEventListener("click", function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                let search_term_inp = search_input.value.toLowerCase();
+                let min_rent = parseFloat(search_min_rent.value) || 0;
+                let max_rent = parseFloat(search_max_rent.value) || Infinity;
+                const data = yield getData("/myadmin/get_hostels/");
+                let mydata = data.filter((hostel) => {
+                    const priceRange = hostel.rent <= max_rent && hostel.rent >= min_rent;
+                    const room_type = select_search.value === "All" || hostel.type === select_search.value;
+                    return ((hostel.name.toLowerCase().includes(search_term_inp) ||
+                        hostel.locality.toLocaleLowerCase().includes(search_term_inp))
+                        && priceRange
+                        && room_type);
+                });
+                hostel_table.innerHTML = "";
+                load_hostel(hostel_table, mydata);
+            });
+        });
+        print_div.appendChild(search_button);
+        let print_a = document.createElement("a");
+        print_a.classList.add("print-a");
+        print_a.innerText = "Convert to PDF";
+        print_a.href = "/myadmin/get_hostels/download/";
+        print_div.appendChild(print_a);
+        admin_div.appendChild(print_div);
+        let hostel_div = document.createElement("div");
+        const data = yield getData("/myadmin/get_hostels/");
+        load_hostel(hostel_table, data);
+        hostel_div.appendChild(hostel_table);
+        admin_div.appendChild(hostel_div);
+    });
+});
+function add_select(select, options, selval) {
+    options.forEach((option) => {
+        let optionelem = document.createElement("option");
+        optionelem.textContent = option;
+        optionelem.value = option;
+        if (selval && selval === option) {
+            optionelem.selected = true;
+        }
+        select.appendChild(optionelem);
+    });
+}
+function load_hostel(table, data) {
+    let trHead = document.createElement("tr");
+    trHead.innerHTML =
+        "<th>Name</th> <th>Owner Name</th> <th>Rent(ksh)</th><th>Location</th><th>Type</th><th>Capacity</th><th>Empty Rooms</th>";
+    table.appendChild(trHead);
+    data.forEach((datum) => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${datum.name}</td>
             <td>${datum.owner_fname} ${datum.owner_lname}</td>
             <td>${datum.rent}</td>
@@ -199,8 +245,7 @@ function load_hostel(table, url) {
             <td>${datum.capacity}</td>
             <td>${datum.availability}</td>
         `;
-            table.appendChild(tr);
-        });
+        table.appendChild(tr);
     });
 }
 book_btn.addEventListener("click", function () {
