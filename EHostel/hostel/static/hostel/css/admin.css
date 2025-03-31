@@ -12,6 +12,10 @@
   margin-bottom: 10px;
 }
 
+.print-input input[type="number"] {
+    width: 40px;
+}
+
 .print-input {
   padding: 8px 12px;
   font-size: 1.2em;

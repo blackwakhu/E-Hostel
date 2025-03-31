@@ -31,14 +31,14 @@ async function active_thing() {
     let print_div: HTMLDivElement = document.createElement("div");
     let searchInput: HTMLInputElement = document.createElement("input");
     searchInput.placeholder = "Enter the Name or Admission Number";
-    searchInput.classList.add("admin-search-input");
+    searchInput.classList.add("print-input");
     searchInput.classList.add("print-input")
     print_div.appendChild(searchInput);
 
     let searchBtn: HTMLButtonElement = document.createElement("button");
     searchBtn.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
     print_div.appendChild(searchBtn);
-    searchBtn.classList.add("admin-search-btn");
+    searchBtn.classList.add("print-input-btn");
 
     let stud_div: HTMLDivElement = document.createElement("div");
     let stud_table: HTMLTableElement = document.createElement("table");
@@ -200,22 +200,29 @@ hostel_btn.addEventListener("click", async function () {
     print_div.classList.add("print-a-div");
 
     let search_input: HTMLInputElement = document.createElement("input")
-
+    search_input.classList.add("print-input")
     search_input.placeholder = "Enter Hostel Name or Location"
 
     let search_button: HTMLButtonElement = document.createElement("button")
     search_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+    search_button.classList.add("print-input-btn")
     print_div.appendChild(search_input)
+
     let search_min_rent: HTMLInputElement = document.createElement("input")
     search_min_rent.type = "number"
+    search_min_rent.classList.add("print-input")
     search_min_rent.placeholder = "Enter the min rent"
     print_div.appendChild(search_min_rent)
+
     let search_max_rent: HTMLInputElement = document.createElement("input")
     search_max_rent.type = "number"
+    search_max_rent.classList.add("print-input")
     search_max_rent.placeholder = "Enter the max rent"
     print_div.appendChild(search_max_rent)
+
     let options: string[] = ["All", "Single", "Double", "Triple", "Quad", "Bed Seater", "Self Contained"]
     let select_search: HTMLSelectElement = document.createElement("select")
+    select_search.classList.add("print-input")
     add_select(select_search, options, "All")
     print_div.appendChild(select_search)
 
@@ -248,6 +255,7 @@ hostel_btn.addEventListener("click", async function () {
     print_div.appendChild(print_a);
     let print_a_query: HTMLButtonElement = document.createElement("button")
     print_a_query.innerText = "Convert Query To PDF"
+    print_a_query.classList.add("print-a")
     print_a_query.addEventListener("click", function () {
         let url: string = "/myadmin/get_hostels/download/"
         const searchTerm = search_input.value
@@ -431,10 +439,3 @@ function load_booking(table: HTMLTableElement, data: Booking[]) {
         table.appendChild(tr);
     });
 }
-
-// function formatDateForInput(date: Date): string {
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-//     const day = String(date.getDate()).padStart(2, '0');
-//     return `${year}-${month}-${day}`;
-//   }
