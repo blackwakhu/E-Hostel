@@ -73,6 +73,7 @@ async function displayBookings(url: string, book_div: HTMLDivElement) {
             btn.innerText = "Admit?";
             div_status.appendChild(btn);
 
+
             let div_content: HTMLDivElement = document.createElement("div");
             div_content.classList.add("dropdown-content");
             let accept_btn: HTMLButtonElement =
@@ -96,6 +97,7 @@ async function displayBookings(url: string, book_div: HTMLDivElement) {
             let btn: HTMLButtonElement = document.createElement("button");
             btn.classList.add("end-lease-book-btn");
             btn.innerText = "End Lease?";
+            btn.classList.add("print-a")
             btn.dataset.id = booking.id;
             div_status.appendChild(btn);
           }

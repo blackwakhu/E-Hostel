@@ -79,6 +79,7 @@ function displayBookings(url, book_div) {
                             let btn = document.createElement("button");
                             btn.classList.add("end-lease-book-btn");
                             btn.innerText = "End Lease?";
+                            btn.classList.add("print-a");
                             btn.dataset.id = booking.id;
                             div_status.appendChild(btn);
                         }

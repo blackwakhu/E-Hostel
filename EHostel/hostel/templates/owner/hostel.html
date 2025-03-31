@@ -208,25 +208,25 @@
             </form>
           </div>
           <div class="booking-active-div hide-elem table-list-student">
-            <h1>Active Students</h1>
+            <div  class="admin-header">
+              <img src="{% static "images/e-hostel-logo.png" %}" alt="logo"/>
+              <h2 id="admin-title">Active Students in the {{hostel.hostel_name}}</h2>
+              <hr>
+            </div>
             <div class="print-a-div">
             <a
               href="{% url 'download_active_student' hostel.id 'Active'%}"
               class="print-a"
-              >Print Active Students</a>
-              <a
-              href="{% url 'download_active_student' hostel.id 'Pending'%}"
-              class="print-a"
-              >Print Pending Students</a>
-              <a
-              href="{% url 'download_active_student' hostel.id 'Accept'%}"
-              class="print-a"
-              >Print Accepted Students</a>
+              >Convert To PDF</a>
             </div>
             <div id="activeHostelBookings"></div>
           </div>
           <div class="booking-history-div hide-elem table-list-student">
-            <h1>History of Students who have booked the Hostel</h1>
+            <div  class="admin-header">
+              <img src="{% static "images/e-hostel-logo.png" %}" alt="logo"/>
+              <h2 id="admin-title">Booking history of {{hostel.hostel_name}}</h2>
+              <hr>
+            </div>
             <div class="print-a-div">
             <a class="print-a" href="{% url 'download_active_student' hostel.id 'All'%}">Convert To PDF</a>
             </div>

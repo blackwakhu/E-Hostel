@@ -104,6 +104,7 @@ document.getElementById('add-review-button')?.addEventListener("click", () => {
     const comment: string = document.querySelector<HTMLInputElement>('#review-comment').value
     const rating: number = parseInt(document.querySelector<HTMLInputElement>('input[name="rating"]:checked').value)
     createReview(comment, rating)
+    alert("successfully created a review")
 })
 
 new HostelReviews()
@@ -154,6 +155,11 @@ let booking_btn_list_map: { btn: HTMLButtonElement, status: string }[] = [
 booking_btn_list_map.forEach(bbtm => {
     bbtm.btn.addEventListener("click", function () {
         console.log("clicked")
+        if (bbtm.status === "Pending") {
+            alert("You have successfully sent a booking request")
+        } else if (bbtm.status === "Cancel") {
+            alert("You have successfully cancelled a booking request")
+        }
         booking_status_change(admin_number, hostel_id, bbtm.status)
     })
 })
