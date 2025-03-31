@@ -284,11 +284,35 @@ book_btn.addEventListener("click", function () {
         stop_button.type = "date";
         stop_button.value = new Date().toISOString().split('T')[0];
         print_div.appendChild(stop_button);
-        let input_status = document.createElement("input");
+        let input_status = document.createElement("select");
+        let options = ["All", "Accept", "Pending", "Reject", "End Lease", "Cancel"];
+        add_select(input_status, options, "All");
         print_div.appendChild(input_status);
         let input_button = document.createElement("button");
         input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
         let booking_table = document.createElement("table");
+        input_button.addEventListener("click", function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                booking_table.innerHTML = "";
+                let start = start_button.value;
+                let stop = stop_button.value;
+                let search_term = input_search.value.toLowerCase();
+                let status = input_status.value;
+                const data = yield getData("/myadmin/get_bookings/");
+                let mydata = data.filter((book) => {
+                    const dateRange = book.created <= stop && book.created >= start;
+                    const book_status = status === "All" || book.status === status;
+                    return ((book.sfname.toLowerCase().includes(search_term) ||
+                        book.slname.toLowerCase().includes(search_term) ||
+                        book.ofname.toLowerCase().includes(search_term) ||
+                        book.olname.toLowerCase().includes(search_term) ||
+                        book.hostel.toLowerCase().includes(search_term))
+                        && dateRange
+                        && book_status);
+                });
+                load_booking(booking_table, mydata);
+            });
+        });
         print_div.appendChild(input_button);
         let print_a = document.createElement("a");
         print_a.innerText = "Convert To PDF";
@@ -305,6 +329,7 @@ book_btn.addEventListener("click", function () {
             let status = input_status.value;
             if (search_term || start || stop || status) {
                 url += `${search_term || "null"}/${start}/${stop}/${status}/`;
+                console.log(url);
             }
             window.location.href = url;
         });

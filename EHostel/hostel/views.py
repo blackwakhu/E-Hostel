@@ -1094,16 +1094,17 @@ def admin_get_bookings_download_query(request, search_term, start_date, stop_dat
     try:
         # bookings = Booking.objects.all()
         # Parse the date strings into datetime objects
+        print(start_date, stop_date)
         start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
         stop_date_obj = datetime.strptime(stop_date, '%Y-%m-%d').date()
 
         # Build the filter query
         filter_query = Q(created_at__date__gte=start_date_obj) & Q(created_at__date__lte=stop_date_obj)
 
-        if status:
+        if status and status != "All":
             filter_query &= Q(status=status)
 
-        if search_term:
+        if search_term  and search_term !="null":
             filter_query &= (
                 Q(student__first_name__icontains=search_term) |
                 Q(student__last_name__icontains=search_term) |

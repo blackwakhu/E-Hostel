@@ -174,9 +174,9 @@ owner_btn.addEventListener("click", async function () {
     admin_div.appendChild(print_div);
 
     let owner_div: HTMLDivElement = document.createElement("div");
-    let data:Person[] = await getData("/myadmin/get_owners/")
+    let data: Person[] = await getData("/myadmin/get_owners/")
     load_owner(owner_table, data);
-    
+
 
     owner_div.appendChild(owner_table);
 
@@ -186,7 +186,7 @@ owner_btn.addEventListener("click", async function () {
 hostel_btn.addEventListener("click", async function () {
     admin_title.innerText = "Hostel Registry Report";
     admin_div.innerHTML = "";
-    
+
 
     let print_div: HTMLDivElement = document.createElement("div");
     print_div.classList.add("print-a-div");
@@ -194,7 +194,7 @@ hostel_btn.addEventListener("click", async function () {
     let search_input: HTMLInputElement = document.createElement("input")
 
     search_input.placeholder = "Enter Hostel Name or Location"
-    
+
     let search_button: HTMLButtonElement = document.createElement("button")
     search_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
     print_div.appendChild(search_input)
@@ -222,9 +222,9 @@ hostel_btn.addEventListener("click", async function () {
             const priceRange = hostel.rent <= max_rent && hostel.rent >= min_rent
             const room_type = select_search.value === "All" || hostel.type === select_search.value
             return (
-                (hostel.name.toLowerCase().includes(search_term_inp) || 
+                (hostel.name.toLowerCase().includes(search_term_inp) ||
                     hostel.locality.toLocaleLowerCase().includes(search_term_inp))
-                && priceRange 
+                && priceRange
                 && room_type
             )
         })
@@ -323,20 +323,44 @@ book_btn.addEventListener("click", async function () {
         const currentDate = new Date();
         const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
         return tenYearsAgo.toISOString().split('T')[0];
-      }
-      
+    }
+
     start_button.value = getDateTenYearsAgo();
     print_div.appendChild(start_button)
     let stop_button: HTMLInputElement = document.createElement("input")
     stop_button.type = "date"
     stop_button.value = new Date().toISOString().split('T')[0];
     print_div.appendChild(stop_button)
-    let input_status = document.createElement("input")
+    let input_status: HTMLSelectElement = document.createElement("select")
+    let options: string[] = ["All", "Accept", "Pending", "Reject", "End Lease", "Cancel"]
+    add_select(input_status, options, "All")
     print_div.appendChild(input_status)
     let input_button: HTMLButtonElement = document.createElement("button")
     input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
 
     let booking_table: HTMLTableElement = document.createElement("table")
+    input_button.addEventListener("click", async function () {
+        booking_table.innerHTML = ""
+        let start = start_button.value
+        let stop = stop_button.value
+        let search_term = input_search.value.toLowerCase()
+        let status = input_status.value
+        const data: Booking[] = await getData("/myadmin/get_bookings/")
+        let mydata: Booking[]= data.filter((book) => {
+            const dateRange = book.created <= stop && book.created >= start
+            const book_status = status === "All" || book.status === status
+            return (
+                (book.sfname.toLowerCase().includes(search_term) ||
+                    book.slname.toLowerCase().includes(search_term) ||
+                    book.ofname.toLowerCase().includes(search_term) ||
+                    book.olname.toLowerCase().includes(search_term) ||
+                    book.hostel.toLowerCase().includes(search_term))
+                && dateRange
+                && book_status
+            )
+        })
+        load_booking(booking_table, mydata)
+    })
     print_div.appendChild(input_button)
     let print_a: HTMLAnchorElement = document.createElement("a")
     print_a.innerText = "Convert To PDF"
@@ -354,6 +378,7 @@ book_btn.addEventListener("click", async function () {
         let status = input_status.value
         if (search_term || start || stop || status) {
             url += `${search_term || "null"}/${start}/${stop}/${status}/`
+            console.log(url)
         }
         window.location.href = url
     })
