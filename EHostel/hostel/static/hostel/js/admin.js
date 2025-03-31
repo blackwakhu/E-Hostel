@@ -284,9 +284,11 @@ book_btn.addEventListener("click", function () {
         print_div.classList.add("print-a-div");
         let input_search = document.createElement("input");
         input_search.placeholder = "Enter hostel name or student name";
+        input_search.classList.add("print-input");
         print_div.appendChild(input_search);
         let start_button = document.createElement("input");
         start_button.type = "date";
+        start_button.classList.add("print-input");
         function getDateTenYearsAgo() {
             const currentDate = new Date();
             const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
@@ -296,14 +298,17 @@ book_btn.addEventListener("click", function () {
         print_div.appendChild(start_button);
         let stop_button = document.createElement("input");
         stop_button.type = "date";
+        stop_button.classList.add("print-input");
         stop_button.value = new Date().toISOString().split('T')[0];
         print_div.appendChild(stop_button);
         let input_status = document.createElement("select");
         let options = ["All", "Accept", "Pending", "Reject", "End Lease", "Cancel"];
+        input_status.classList.add("print-input");
         add_select(input_status, options, "All");
         print_div.appendChild(input_status);
         let input_button = document.createElement("button");
         input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+        input_button.classList.add("print-input-btn");
         let booking_table = document.createElement("table");
         input_button.addEventListener("click", function () {
             return __awaiter(this, void 0, void 0, function* () {
@@ -334,6 +339,7 @@ book_btn.addEventListener("click", function () {
         print_a.href = "/myadmin/get_bookings/download/";
         print_div.appendChild(print_a);
         let print_a_query = document.createElement("button");
+        print_a_query.classList.add("print-a");
         print_a_query.innerText = "Convert Query To PDF";
         print_a_query.addEventListener("click", function () {
             let url = "/myadmin/get_bookings/download/";
@@ -372,9 +378,3 @@ function load_booking(table, data) {
         table.appendChild(tr);
     });
 }
-// function formatDateForInput(date: Date): string {
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-//     const day = String(date.getDate()).padStart(2, '0');
-//     return `${year}-${month}-${day}`;
-//   }

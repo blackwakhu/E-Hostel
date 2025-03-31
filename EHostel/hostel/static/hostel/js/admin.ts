@@ -331,10 +331,12 @@ book_btn.addEventListener("click", async function () {
 
     let input_search: HTMLInputElement = document.createElement("input")
     input_search.placeholder = "Enter hostel name or student name"
+    input_search.classList.add("print-input")
     print_div.appendChild(input_search)
 
     let start_button: HTMLInputElement = document.createElement("input")
     start_button.type = "date"
+    start_button.classList.add("print-input")
     function getDateTenYearsAgo(): string {
         const currentDate = new Date();
         const tenYearsAgo = new Date(currentDate.getFullYear() - 10, currentDate.getMonth(), currentDate.getDate());
@@ -345,14 +347,17 @@ book_btn.addEventListener("click", async function () {
     print_div.appendChild(start_button)
     let stop_button: HTMLInputElement = document.createElement("input")
     stop_button.type = "date"
+    stop_button.classList.add("print-input")
     stop_button.value = new Date().toISOString().split('T')[0];
     print_div.appendChild(stop_button)
     let input_status: HTMLSelectElement = document.createElement("select")
     let options: string[] = ["All", "Accept", "Pending", "Reject", "End Lease", "Cancel"]
+    input_status.classList.add("print-input")
     add_select(input_status, options, "All")
     print_div.appendChild(input_status)
     let input_button: HTMLButtonElement = document.createElement("button")
     input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
+    input_button.classList.add("print-input-btn")
 
     let booking_table: HTMLTableElement = document.createElement("table")
     input_button.addEventListener("click", async function () {
@@ -385,6 +390,7 @@ book_btn.addEventListener("click", async function () {
     print_div.appendChild(print_a)
 
     let print_a_query: HTMLButtonElement = document.createElement("button")
+    print_a_query.classList.add("print-a")
     print_a_query.innerText = "Convert Query To PDF"
     print_a_query.addEventListener("click", function () {
         let url: string = "/myadmin/get_bookings/download/"
