@@ -1,13 +1,61 @@
 .admin {
-    padding: 20px;
+  padding: 20px;
 }
 
 .admin-header {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .admin-header img {
-    max-height: 100px;
-    margin-bottom: 10px;
+  max-height: 100px;
+  margin-bottom: 10px;
+}
+
+.print-input {
+  padding: 8px 12px;
+  font-size: 1.2em;
+  border: solid 2px #06de06;
+}
+
+input[type="text"] {
+  border-radius: 0 5px 5px 0;
+}
+
+.print-div {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.print-input-btn img {
+    width: 35px;
+    height: 35px;
+}
+
+.print-input-btn {
+    border: none;
+    padding: 8px 8px;
+    margin: 5px;
+}
+
+.admin-div table{
+    border-collapse: collapse;
+}
+
+.stud-admin {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.admin-div {
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.admin-div td, .admin-div th {
+    padding: 4px;
+    border: 2px solid black;
 }

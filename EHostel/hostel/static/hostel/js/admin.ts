@@ -6,6 +6,7 @@ let admin_title: HTMLHeadElement = document.querySelector("#admin-title");
 
 let admin_div: HTMLDivElement = document.querySelector(".admin-div");
 
+
 async function getData(url: string): Promise<any[]> {
     try {
         const response = await fetch(url);
@@ -31,6 +32,7 @@ async function active_thing() {
     let searchInput: HTMLInputElement = document.createElement("input");
     searchInput.placeholder = "Enter the Name or Admission Number";
     searchInput.classList.add("admin-search-input");
+    searchInput.classList.add("print-input")
     print_div.appendChild(searchInput);
 
     let searchBtn: HTMLButtonElement = document.createElement("button");
@@ -40,6 +42,7 @@ async function active_thing() {
 
     let stud_div: HTMLDivElement = document.createElement("div");
     let stud_table: HTMLTableElement = document.createElement("table");
+    searchBtn.classList.add("print-input-btn")
     searchBtn.addEventListener("click", async function () {
         let data: Person[] = await getData("/myadmin/get_students/");
         let searchTerm: string = searchInput.value.toLocaleLowerCase();
@@ -63,7 +66,8 @@ async function active_thing() {
     print_div.appendChild(print_a);
 
     let print_a_query: HTMLButtonElement = document.createElement("button")
-    print_a_query.innerText = "Conver Query Results To PDF"
+    print_a_query.innerText = "Convert Query Results To PDF"
+    print_a_query.classList.add("print-a")
     print_a_query.addEventListener("click", function () {
         let url: string = "/myadmin/get_students/download/"
         const searchTerm = searchInput.value
@@ -79,6 +83,7 @@ async function active_thing() {
     let data: Person[] = await getData("/myadmin/get_students/");
 
     load_person(stud_table, "Admission Number", data);
+    stud_div.classList.add("admin-table")
     stud_div.appendChild(stud_table);
     admin_div.appendChild(stud_div);
 }

@@ -39,6 +39,7 @@ function active_thing() {
         let searchInput = document.createElement("input");
         searchInput.placeholder = "Enter the Name or Admission Number";
         searchInput.classList.add("admin-search-input");
+        searchInput.classList.add("print-input");
         print_div.appendChild(searchInput);
         let searchBtn = document.createElement("button");
         searchBtn.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
@@ -46,6 +47,7 @@ function active_thing() {
         searchBtn.classList.add("admin-search-btn");
         let stud_div = document.createElement("div");
         let stud_table = document.createElement("table");
+        searchBtn.classList.add("print-input-btn");
         searchBtn.addEventListener("click", function () {
             return __awaiter(this, void 0, void 0, function* () {
                 let data = yield getData("/myadmin/get_students/");
@@ -66,7 +68,8 @@ function active_thing() {
         print_a.href = "/myadmin/get_students/download/";
         print_div.appendChild(print_a);
         let print_a_query = document.createElement("button");
-        print_a_query.innerText = "Conver Query Results To PDF";
+        print_a_query.innerText = "Convert Query Results To PDF";
+        print_a_query.classList.add("print-a");
         print_a_query.addEventListener("click", function () {
             let url = "/myadmin/get_students/download/";
             const searchTerm = searchInput.value;
@@ -79,6 +82,7 @@ function active_thing() {
         admin_div.appendChild(print_div);
         let data = yield getData("/myadmin/get_students/");
         load_person(stud_table, "Admission Number", data);
+        stud_div.classList.add("admin-table");
         stud_div.appendChild(stud_table);
         admin_div.appendChild(stud_div);
     });
