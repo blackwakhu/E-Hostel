@@ -1090,16 +1090,31 @@ def admin_get_bookings_download(request):
 
     return response
 
-def admin_get_bookings_download_query(request, start_date, stop_date):
+def admin_get_bookings_download_query(request, search_term, start_date, stop_date, status):
     try:
         # bookings = Booking.objects.all()
+        # Parse the date strings into datetime objects
         start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
         stop_date_obj = datetime.strptime(stop_date, '%Y-%m-%d').date()
 
-        # Filter bookings based on the created_at field
-        bookings = Booking.objects.filter(
-            Q(created_at__date__gte=start_date_obj) & Q(created_at__date__lte=stop_date_obj)
-        )
+        # Build the filter query
+        filter_query = Q(created_at__date__gte=start_date_obj) & Q(created_at__date__lte=stop_date_obj)
+
+        if status:
+            filter_query &= Q(status=status)
+
+        if search_term:
+            filter_query &= (
+                Q(student__first_name__icontains=search_term) |
+                Q(student__last_name__icontains=search_term) |
+                Q(hostel__hostel_name__icontains=search_term) |
+                Q(hostel__owner__first_name__icontains=search_term) |
+                Q(hostel__owner__last_name__icontains=search_term)
+            )
+
+        # Filter bookings based on the constructed query
+        bookings = Booking.objects.filter(filter_query)
+        
         dbookings = [{
             "sfname": book.student.first_name,
             "slname": book.student.last_name,

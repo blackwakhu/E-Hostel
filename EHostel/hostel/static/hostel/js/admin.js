@@ -284,6 +284,8 @@ book_btn.addEventListener("click", function () {
         stop_button.type = "date";
         stop_button.value = new Date().toISOString().split('T')[0];
         print_div.appendChild(stop_button);
+        let input_status = document.createElement("input");
+        print_div.appendChild(input_status);
         let input_button = document.createElement("button");
         input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
         let booking_table = document.createElement("table");
@@ -293,6 +295,20 @@ book_btn.addEventListener("click", function () {
         print_a.classList.add("print-a");
         print_a.href = "/myadmin/get_bookings/download/";
         print_div.appendChild(print_a);
+        let print_a_query = document.createElement("button");
+        print_a_query.innerText = "Convert Query To PDF";
+        print_a_query.addEventListener("click", function () {
+            let url = "/myadmin/get_bookings/download/";
+            let start = start_button.value;
+            let stop = stop_button.value;
+            let search_term = input_search.value;
+            let status = input_status.value;
+            if (search_term || start || stop || status) {
+                url += `${search_term || "null"}/${start}/${stop}/${status}/`;
+            }
+            window.location.href = url;
+        });
+        print_div.appendChild(print_a_query);
         admin_div.appendChild(print_div);
         const data = yield getData("/myadmin/get_bookings/");
         load_booking(booking_table, data);
