@@ -226,9 +226,9 @@
             <div id="activeHostelBookings"></div>
           </div>
           <div class="booking-history-div hide-elem table-list-student">
-            <h1>History of Students who have booked the Hostel</h1>
+            {% comment %} <h1>History of Students who have booked the Hostel</h1> {% endcomment %}
             <div class="print-a-div">
-            <a class="print-a" href="{% url 'download_active_student' hostel.id 'All'%}">Print</a>
+            {% comment %} <a class="print-a" href="{% url 'download_active_student' hostel.id 'All'%}">Convert To PDF</a> {% endcomment %}
             </div>
             <div id="hostelBookings"></div>
           </div>
