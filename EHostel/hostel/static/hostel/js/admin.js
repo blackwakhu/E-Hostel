@@ -126,11 +126,13 @@ owner_btn.addEventListener("click", function () {
         let print_a = document.createElement("a");
         print_a.classList.add("print-a");
         let input_search = document.createElement("input");
+        input_search.classList.add("print-input");
         input_search.placeholder = "Enter Name";
         print_div.appendChild(input_search);
         let input_button = document.createElement("button");
         input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
         let owner_table = document.createElement("table");
+        input_button.classList.add("print-input-btn");
         input_button.addEventListener("click", function () {
             return __awaiter(this, void 0, void 0, function* () {
                 let data = yield getData("/myadmin/get_owners/");
@@ -149,6 +151,7 @@ owner_btn.addEventListener("click", function () {
         print_div.appendChild(print_a);
         let print_a_query = document.createElement("button");
         print_a_query.innerText = "Convert Query To PDF";
+        print_a_query.classList.add("print-a");
         print_a_query.addEventListener("click", function () {
             let url = '/myadmin/get_owners/download/';
             const searchTerm = input_search.value;
@@ -162,6 +165,7 @@ owner_btn.addEventListener("click", function () {
         let owner_div = document.createElement("div");
         let data = yield getData("/myadmin/get_owners/");
         load_owner(owner_table, data);
+        owner_div.classList.add("admin-table");
         owner_div.appendChild(owner_table);
         admin_div.appendChild(owner_div);
     });

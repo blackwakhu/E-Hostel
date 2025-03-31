@@ -141,12 +141,14 @@ owner_btn.addEventListener("click", async function () {
     let print_a: HTMLAnchorElement = document.createElement("a");
     print_a.classList.add("print-a");
     let input_search: HTMLInputElement = document.createElement("input")
+    input_search.classList.add("print-input")
     input_search.placeholder = "Enter Name"
     print_div.appendChild(input_search)
 
     let input_button: HTMLButtonElement = document.createElement("button")
     input_button.innerHTML = "<img src='/static/admin/img/search.svg' alt='Search'>";
     let owner_table: HTMLTableElement = document.createElement("table");
+    input_button.classList.add("print-input-btn")
     input_button.addEventListener("click", async function () {
         let data: Person[] = await getData("/myadmin/get_owners/")
         let searchTerm: string = input_search.value.toLowerCase()
@@ -167,6 +169,7 @@ owner_btn.addEventListener("click", async function () {
 
     let print_a_query: HTMLButtonElement = document.createElement("button")
     print_a_query.innerText = "Convert Query To PDF"
+    print_a_query.classList.add("print-a")
     print_a_query.addEventListener("click", function () {
         let url: string = '/myadmin/get_owners/download/'
         const searchTerm = input_search.value
@@ -182,7 +185,7 @@ owner_btn.addEventListener("click", async function () {
     let data: Person[] = await getData("/myadmin/get_owners/")
     load_owner(owner_table, data);
 
-
+    owner_div.classList.add("admin-table")
     owner_div.appendChild(owner_table);
 
     admin_div.appendChild(owner_div);
